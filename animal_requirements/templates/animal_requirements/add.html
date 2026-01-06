@@ -298,150 +298,157 @@
             });
         });
 
-        // 自定义营养指标表单集处理
         document.addEventListener('DOMContentLoaded', function() {
-            const formsetContainer = document.getElementById('formset-container');
-            const addFormBtn = document.getElementById('add-form');
-            const totalFormsInput = document.querySelector('input[id$="-TOTAL_FORMS"]');
+        const formsetContainer = document.getElementById('formset-container');
+        const addFormBtn = document.getElementById('add-form');
+        const totalFormsInput = document.querySelector('input[id$="-TOTAL_FORMS"]');
 
-            // 创建表单模板
-            const formTemplate = `
-                <div class="mb-3 p-3 border rounded bg-light form-item">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="mb-0">
-                                <label for="id_custom_nutrients-__prefix__-nutrient_name">营养名称:</label>
-                                <input type="text" name="custom_nutrients-__prefix__-nutrient_name" maxlength="100" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_name">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="mb-0">
-                                <label for="id_custom_nutrients-__prefix__-nutrient_lower">下界:</label>
-                                <input type="number" name="custom_nutrients-__prefix__-nutrient_lower" step="0.01" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_lower">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="mb-0">
-                                <label for="id_custom_nutrients-__prefix__-nutrient_upper">上界:</label>
-                                <input type="number" name="custom_nutrients-__prefix__-nutrient_upper" step="0.01" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_upper">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="mb-0">
-                                <label for="id_custom_nutrients-__prefix__-unit">单位:</label>
-                                <input type="text" name="custom_nutrients-__prefix__-unit" maxlength="20" class="form-control" id="id_custom_nutrients-__prefix__-unit">
-                            </div>
-                        </div>
-                        <div class="col-md-3 d-flex align-items-end justify-content-end">
-                            <!-- 确认按钮 - 默认显示 -->
-                            <button type="button" class="btn btn-success btn-sm mr-2 confirm-form">
-                                <i class="fas fa-check"></i> 确认
-                            </button>
-                            <!-- 删除按钮 - 默认隐藏 -->
-                            <button type="button" class="btn btn-danger btn-sm remove-form"
-                                    style="display: none;">
-                                <i class="fas fa-trash"></i> 删除
-                            </button>
-                            <input type="hidden" name="custom_nutrients-__prefix__-DELETE" id="id_custom_nutrients-__prefix__-DELETE">
-                            <input type="hidden" name="custom_nutrients-__prefix__-id" id="id_custom_nutrients-__prefix__-id">
+        // 确保所有自定义营养元素字段都有form-control类！
+        const customNutrientFields = document.querySelectorAll('#formset-container input');
+        customNutrientFields.forEach(field => {
+            if (!field.classList.contains('form-control') && field.type !== 'hidden') {
+                field.classList.add('form-control');
+            }
+        });
+
+        // 创建表单模板
+        const formTemplate = `
+            <div class="mb-3 p-3 border rounded bg-light form-item">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-0">
+                            <label for="id_custom_nutrients-__prefix__-nutrient_name">营养名称:</label>
+                            <input type="text" name="custom_nutrients-__prefix__-nutrient_name" maxlength="100" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_name">
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="mb-0">
+                            <label for="id_custom_nutrients-__prefix__-nutrient_lower">下界:</label>
+                            <input type="number" name="custom_nutrients-__prefix__-nutrient_lower" step="0.01" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_lower">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-0">
+                            <label for="id_custom_nutrients-__prefix__-nutrient_upper">上界:</label>
+                            <input type="number" name="custom_nutrients-__prefix__-nutrient_upper" step="0.01" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_upper">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-0">
+                            <label for="id_custom_nutrients-__prefix__-unit">单位:</label>
+                            <input type="text" name="custom_nutrients-__prefix__-unit" maxlength="20" class="form-control" id="id_custom_nutrients-__prefix__-unit">
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end justify-content-end">
+                        <!-- 确认按钮 - 默认显示 -->
+                        <button type="button" class="btn btn-success btn-sm mr-2 confirm-form">
+                            <i class="fas fa-check"></i> 确认
+                        </button>
+                        <!-- 删除按钮 - 默认隐藏 -->
+                        <button type="button" class="btn btn-danger btn-sm remove-form"
+                                style="display: none;">
+                            <i class="fas fa-trash"></i> 删除
+                        </button>
+                        <input type="hidden" name="custom_nutrients-__prefix__-DELETE" id="id_custom_nutrients-__prefix__-DELETE">
+                        <input type="hidden" name="custom_nutrients-__prefix__-id" id="id_custom_nutrients-__prefix__-id">
+                    </div>
                 </div>
-            `;
+            </div>
+        `;
 
-            // 添加新表单
-            function addNewForm() {
-                const totalForms = parseInt(totalFormsInput.value);
-                const newForm = formTemplate.replace(/__prefix__/g, totalForms);
+        // 添加新表单
+        function addNewForm() {
+            const totalForms = parseInt(totalFormsInput.value);
+            const newForm = formTemplate.replace(/__prefix__/g, totalForms);
 
-                const newFormElement = document.createElement('div');
-                newFormElement.innerHTML = newForm;
-                formsetContainer.appendChild(newFormElement.firstElementChild);
+            const newFormElement = document.createElement('div');
+            newFormElement.innerHTML = newForm;
+            formsetContainer.appendChild(newFormElement.firstElementChild);
 
-                totalFormsInput.value = totalForms + 1;
+            totalFormsInput.value = totalForms + 1;
 
-                // 为新添加的按钮添加事件监听
-                const newFormItem = formsetContainer.lastElementChild;
-                attachConfirmEvent(newFormItem.querySelector('.confirm-form'));
-                attachRemoveEvent(newFormItem.querySelector('.remove-form'));
-            }
+            // 为新添加的按钮添加事件监听
+            const newFormItem = formsetContainer.lastElementChild;
+            attachConfirmEvent(newFormItem.querySelector('.confirm-form'));
+            attachRemoveEvent(newFormItem.querySelector('.remove-form'));
+        }
 
-            // 确认表单
-            function confirmForm(btn) {
-                const formItem = btn.closest('.form-item');
-                const inputs = formItem.querySelectorAll('input');
-                const confirmBtn = formItem.querySelector('.confirm-form');
-                const removeBtn = formItem.querySelector('.remove-form');
+        // 确认表单
+        function confirmForm(btn) {
+            const formItem = btn.closest('.form-item');
+            const inputs = formItem.querySelectorAll('input');
+            const confirmBtn = formItem.querySelector('.confirm-form');
+            const removeBtn = formItem.querySelector('.remove-form');
 
-                // 验证输入是否完整
-                let allFilled = true;
+            // 验证输入是否完整
+            let allFilled = true;
+            inputs.forEach(input => {
+                if (input.type !== 'hidden' && input.value.trim() === '') {
+                    allFilled = false;
+                }
+            });
+
+            if (allFilled) {
+                // 禁用输入框
                 inputs.forEach(input => {
-                    if (input.type !== 'hidden' && input.value.trim() === '') {
-                        allFilled = false;
+                    if (input.type !== 'hidden') {
+                        input.disabled = true;
                     }
                 });
 
-                if (allFilled) {
-                    // 禁用输入框
-                    inputs.forEach(input => {
-                        if (input.type !== 'hidden') {
-                            input.readOnly = true;
-                        }
-                    });
+                // 隐藏确认按钮，显示删除按钮
+                confirmBtn.style.display = 'none';
+                removeBtn.style.display = 'inline-block';
 
-                    // 隐藏确认按钮，显示删除按钮
-                    confirmBtn.style.display = 'none';
-                    removeBtn.style.display = 'inline-block';
-
-                    // 添加视觉反馈
-                    formItem.classList.add('bg-success', 'bg-opacity-10');
-                } else {
-                    alert('请填写所有字段后再确认');
-                }
+                // 添加视觉反馈
+                formItem.classList.add('bg-success', 'bg-opacity-10');
+            } else {
+                alert('请填写所有字段后再确认');
             }
+        }
 
-            // 删除表单
-            function removeForm(btn) {
-                const formItem = btn.closest('.form-item');
-                const deleteInput = formItem.querySelector('input[name$="-DELETE"]');
-                const formIdInput = formItem.querySelector('input[name$="-id"]');
+        // 删除表单
+        function removeForm(btn) {
+            const formItem = btn.closest('.form-item');
+            const deleteInput = formItem.querySelector('input[name$="-DELETE"]');
+            const formIdInput = formItem.querySelector('input[name$="-id"]');
 
-                if (formIdInput && formIdInput.value) {
-                    // 已存在的表单，标记为删除
-                    deleteInput.value = 'on';
-                    formItem.style.display = 'none';
-                } else {
-                    // 新添加的表单，直接移除
-                    formItem.remove();
-                    // 更新总表单数
-                    totalFormsInput.value = parseInt(totalFormsInput.value) - 1;
-                }
+            if (formIdInput && formIdInput.value) {
+                // 已存在的表单，标记为删除
+                deleteInput.value = 'on';
+                formItem.style.display = 'none';
+            } else {
+                // 新添加的表单，直接移除
+                formItem.remove();
+                // 更新总表单数
+                totalFormsInput.value = parseInt(totalFormsInput.value) - 1;
             }
+        }
 
-            // 为确认按钮添加事件监听器
-            function attachConfirmEvent(btn) {
-                btn.addEventListener('click', function() {
-                    confirmForm(this);
-                });
-            }
-
-            // 为删除按钮添加事件监听器
-            function attachRemoveEvent(btn) {
-                btn.addEventListener('click', function() {
-                    removeForm(this);
-                });
-            }
-
-            // 为添加按钮添加事件监听
-            addFormBtn.addEventListener('click', addNewForm);
-
-            // 为初始的按钮添加事件监听
-            document.querySelectorAll('.confirm-form').forEach(btn => {
-                attachConfirmEvent(btn);
+        // 为确认按钮添加事件监听器
+        function attachConfirmEvent(btn) {
+            btn.addEventListener('click', function() {
+                confirmForm(this);
             });
-            document.querySelectorAll('.remove-form').forEach(btn => {
-                attachRemoveEvent(btn);
+        }
+
+        // 为删除按钮添加事件监听器
+        function attachRemoveEvent(btn) {
+            btn.addEventListener('click', function() {
+                removeForm(this);
             });
+        }
+
+        // 为添加按钮添加事件监听
+        addFormBtn.addEventListener('click', addNewForm);
+
+        // 为初始的按钮添加事件监听 - 修复了confirm-form的事件监听
+        document.querySelectorAll('.confirm-form').forEach(btn => {
+            attachConfirmEvent(btn);
         });
-    </script>
+        document.querySelectorAll('.remove-form').forEach(btn => {
+            attachRemoveEvent(btn);
+        });
+    });
+</script>
 {% endblock %}
