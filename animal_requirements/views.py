@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -65,18 +63,85 @@ def add_animal_requirement(request):
         formset = CustomNutrientRequirementFormSet(request.POST)
 
         if form.is_valid() and formset.is_valid():
-            # 保存动物营养需求基本信息，状态默认为草稿
-            animal_requirement = form.save(commit=False)
-            animal_requirement.created_by = request.user
-            animal_requirement.status = AnimalRequirement.DRAFT  # 设置为草稿状态
+            # 只创建基本的动物营养需求记录，不保存详细的营养指标
+            animal_requirement = AnimalRequirement(
+                created_by=request.user,
+                status=AnimalRequirement.PENDING,  # 直接设置为待审核状态
+                # 基本信息字段
+                animal_type=form.cleaned_data['animal_type'],
+                body_weight=form.cleaned_data['body_weight'],
+                daily_gain=form.cleaned_data['daily_gain'],
+                # 固定营养需求字段初始化为0，审核通过后才更新
+                dm_lower=0,
+                dm_upper=0,
+                calcium_lower=0,
+                calcium_upper=0,
+                protein_lower=0,
+                protein_upper=0,
+                phosphorus_lower=0,
+                phosphorus_upper=0,
+                ndf_lower=0,
+                ndf_upper=0,
+                energy_lower=0,
+                energy_upper=0,
+                mp_lower=0,
+                mp_upper=0,
+            )
             animal_requirement.save()
 
-            # 保存自定义营养需求
-            formset.instance = animal_requirement
-            formset.save()
+            # 处理自定义营养需求数据
+            custom_nutrients_data = []
+            for custom_form in formset:
+                if custom_form.cleaned_data and not custom_form.cleaned_data.get('DELETE', False):
+                    custom_nutrients_data.append({
+                        'nutrient_name': custom_form.cleaned_data['nutrient_name'],
+                        'nutrient_lower': float(custom_form.cleaned_data['nutrient_lower']),
+                        'nutrient_upper': float(custom_form.cleaned_data['nutrient_upper']),
+                        'unit': custom_form.cleaned_data['unit']
+                    })
 
-            # 重定向到列表页面
-            return redirect('animal_requirements_list')
+            # 创建待审核变更记录，将所有营养指标数据放入临时表
+            pending_change = AnimalRequirementPendingChange(
+                requirement=animal_requirement,
+                animal_type=form.cleaned_data['animal_type'],
+                body_weight=form.cleaned_data['body_weight'],
+                daily_gain=form.cleaned_data['daily_gain'],
+                # 初始值从表单获取，默认0
+                dm_lower=0,
+                dm_upper=0,
+                calcium_lower=0,
+                calcium_upper=0,
+                protein_lower=0,
+                protein_upper=0,
+                phosphorus_lower=0,
+                phosphorus_upper=0,
+                ndf_lower=0,
+                ndf_upper=0,
+                energy_lower=0,
+                energy_upper=0,
+                mp_lower=0,
+                mp_upper=0,
+                custom_nutrients=custom_nutrients_data,
+                created_by=request.user
+            )
+
+            # 只有当用户勾选了复选框时，才更新待审核变更中的营养指标字段
+            nutrient_fields = ['dm', 'calcium', 'protein', 'phosphorus', 'ndf', 'energy', 'mp']
+            for nutrient in nutrient_fields:
+                include_field_name = f"include_{nutrient}"
+                lower_field_name = f"{nutrient}_lower"
+                upper_field_name = f"{nutrient}_upper"
+
+                if include_field_name in request.POST:
+                    # 如果勾选了复选框，使用表单数据更新对应字段
+                    setattr(pending_change, lower_field_name, form.cleaned_data[lower_field_name])
+                    setattr(pending_change, upper_field_name, form.cleaned_data[upper_field_name])
+
+            # 保存待审核变更
+            pending_change.save()
+
+            # 重定向到详情页面
+            return redirect('animal_requirement_detail', requirement_id=animal_requirement.id)
     else:
         form = AnimalRequirementForm()
         formset = CustomNutrientRequirementFormSet()
@@ -182,7 +247,8 @@ def edit_animal_requirement(request, requirement_id):
 
             # 比较自定义营养需求数据
             if sorted(custom_nutrients_data, key=lambda x: x['nutrient_name']) != sorted(original_custom_data,
-                                                                                         key=lambda x: x['nutrient_name']):
+                                                                                         key=lambda x: x[
+                                                                                             'nutrient_name']):
                 has_changes = True
 
             # 如果没有任何变化，直接重定向到详情页面
@@ -270,7 +336,6 @@ def edit_animal_requirement(request, requirement_id):
         'formset': formset,
         'requirement': requirement
     })
-
 
 
 @user_passes_test(lambda u: u.is_superuser)

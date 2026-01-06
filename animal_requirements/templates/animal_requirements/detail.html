@@ -67,26 +67,49 @@
                     </div>
                     <div class="card-body">
                         <dl class="row">
-                            <dt class="col-sm-3 mb-2">干物质(DM)</dt>
-                            <dd class="col-sm-9 mb-2">{{ requirement.dm_lower }} - {{ requirement.dm_upper }}%</dd>
+                            {% if requirement.dm_lower != 0 or requirement.dm_upper != 0 %}
+                                <dt class="col-sm-3 mb-2">干物质(DM)</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.dm_lower }} - {{ requirement.dm_upper }}%</dd>
+                            {% endif %}
 
-                            <dt class="col-sm-3 mb-2">钙(Ca)</dt>
-                            <dd class="col-sm-9 mb-2">{{ requirement.calcium_lower }} - {{ requirement.calcium_upper }}%</dd>
+                            {% if requirement.calcium_lower != 0 or requirement.calcium_upper != 0 %}
+                                <dt class="col-sm-3 mb-2">钙(Ca)</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.calcium_lower }}
+                                    - {{ requirement.calcium_upper }}%
+                                </dd>
+                            {% endif %}
 
-                            <dt class="col-sm-3 mb-2">粗蛋白(CP)</dt>
-                            <dd class="col-sm-9 mb-2">{{ requirement.protein_lower }} - {{ requirement.protein_upper }}%</dd>
+                            {% if requirement.protein_lower != 0 or requirement.protein_upper != 0 %}
+                                <dt class="col-sm-3 mb-2">粗蛋白(CP)</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.protein_lower }}
+                                    - {{ requirement.protein_upper }}%
+                                </dd>
+                            {% endif %}
 
-                            <dt class="col-sm-3 mb-2">磷(P)</dt>
-                            <dd class="col-sm-9 mb-2">{{ requirement.phosphorus_lower }} - {{ requirement.phosphorus_upper }}%</dd>
+                            {% if requirement.phosphorus_lower != 0 or requirement.phosphorus_upper != 0 %}
+                                <dt class="col-sm-3 mb-2">磷(P)</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.phosphorus_lower }}
+                                    - {{ requirement.phosphorus_upper }}%
+                                </dd>
+                            {% endif %}
 
-                            <dt class="col-sm-3 mb-2">中性洗涤纤维(NDF)</dt>
-                            <dd class="col-sm-9 mb-2">{{ requirement.ndf_lower }} - {{ requirement.ndf_upper }}%</dd>
+                            {% if requirement.ndf_lower != 0 or requirement.ndf_upper != 0 %}
+                                <dt class="col-sm-3 mb-2">中性洗涤纤维(NDF)</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.ndf_lower }} - {{ requirement.ndf_upper }}%
+                                </dd>
+                            {% endif %}
 
-                            <dt class="col-sm-3 mb-2">代谢能(ME)</dt>
-                            <dd class="col-sm-9 mb-2">{{ requirement.energy_lower }} - {{ requirement.energy_upper }} kcal/kg</dd>
+                            {% if requirement.energy_lower != 0 or requirement.energy_upper != 0 %}
+                                <dt class="col-sm-3 mb-2">代谢能(ME)</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.energy_lower }}
+                                    - {{ requirement.energy_upper }} kcal/kg
+                                </dd>
+                            {% endif %}
 
-                            <dt class="col-sm-3 mb-2">代谢蛋白(MP)</dt>
-                            <dd class="col-sm-9 mb-2">{{ requirement.mp_lower }} - {{ requirement.mp_upper }}%</dd>
+                            {% if requirement.mp_lower != 0 or requirement.mp_upper != 0 %}
+                                <dt class="col-sm-3 mb-2">代谢蛋白(MP)</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.mp_lower }} - {{ requirement.mp_upper }}%</dd>
+                            {% endif %}
                         </dl>
                     </div>
                 </div>
@@ -138,7 +161,8 @@
                             <h5>审核操作</h5>
                         </div>
                         <div class="card-body">
-                            <a href="{% url 'review_animal_requirement' requirement.id %}" class="btn btn-warning">审核该需求</a>
+                            <a href="{% url 'review_animal_requirement' requirement.id %}"
+                               class="btn btn-warning">审核该需求</a>
                         </div>
                     </div>
                 {% endif %}
