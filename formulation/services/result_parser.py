@@ -1,6 +1,4 @@
-# 修改 formulation/services/result_parser.py 文件
-
-import json  # 替换 yaml 为 json
+import json
 from ingredients.models import Ingredient
 from formulation.models import (
     FeedFormulaResult,
@@ -54,6 +52,7 @@ def import_ga_result_to_db(json_path, requirement_id, selected_ingredient_ids=No
             'requirement_id': requirement_id,
             'solution_index': idx,
             'total_cost': obj[0],
+            'custom_nutrients': {}  # 初始化自定义营养元素字典
         }
 
         # 根据营养素名称动态添加营养值
@@ -63,9 +62,12 @@ def import_ga_result_to_db(json_path, requirement_id, selected_ingredient_ids=No
                 nutrient_name_lower = nutrient_name.lower()
                 # 使用映射字典转换字段名，如果没有映射则使用原始名称
                 field_name = nutrient_mapping.get(nutrient_name_lower, nutrient_name_lower)
-                # 确保字段名在模型中存在
+                # 在循环中处理营养元素时，将未映射的营养元素保存到 custom_nutrients
                 if hasattr(FeedFormulaResult, field_name):
                     result_data[field_name] = obj[i + 1]
+                else:
+                    # 保存到自定义营养元素字段
+                    result_data['custom_nutrients'][nutrient_name] = obj[i + 1]
 
         # 创建结果记录
         result = FeedFormulaResult.objects.create(**result_data)

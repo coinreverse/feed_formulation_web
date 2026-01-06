@@ -20,6 +20,8 @@ class FeedFormulaResult(models.Model):
     ndf = models.FloatField(default=0, verbose_name="中性洗涤纤维(NDF)")
     me = models.FloatField(default=0, verbose_name="代谢能(ME)")
     mp = models.FloatField(default=0, verbose_name="代谢蛋白(MP)")
+    # 新增：存储自定义营养元素的JSON字段
+    custom_nutrients = models.JSONField(default=dict, verbose_name="自定义营养元素")
 
     created_at = models.DateTimeField(auto_now_add=True)
 

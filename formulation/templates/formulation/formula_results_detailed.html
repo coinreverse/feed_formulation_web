@@ -286,83 +286,101 @@
         function updateSolutionDisplay() {
             if (!selectedSolution) return;
 
+            // 构建固定营养元素的HTML
+            let nutrientDetailsHtml = `
+        <div class="nutrient-detail-row">
+            <span>干物质 (DM)</span>
+            <span>${selectedSolution.dm ? selectedSolution.dm.toFixed(2) : '0.00'}%</span>
+        </div>
+        <div class="nutrient-detail-row">
+            <span>钙 (Ca)</span>
+            <span>${selectedSolution.ca ? selectedSolution.ca.toFixed(2) : '0.00'}%</span>
+        </div>
+        <div class="nutrient-detail-row">
+            <span>粗蛋白 (CP)</span>
+            <span>${selectedSolution.cp ? selectedSolution.cp.toFixed(2) : '0.00'}%</span>
+        </div>
+        <div class="nutrient-detail-row">
+            <span>磷 (P)</span>
+            <span>${selectedSolution.p ? selectedSolution.p.toFixed(2) : '0.00'}%</span>
+        </div>
+        <div class="nutrient-detail-row">
+            <span>中性洗涤纤维 (NDF)</span>
+            <span>${selectedSolution.ndf ? selectedSolution.ndf.toFixed(2) : '0.00'}%</span>
+        </div>
+        <div class="nutrient-detail-row">
+            <span>代谢能 (ME)</span>
+            <span>${selectedSolution.me ? selectedSolution.me.toFixed(2) : '0.00'}%</span>
+        </div>
+        <div class="nutrient-detail-row">
+            <span>代谢蛋白 (MP)</span>
+            <span>${selectedSolution.mp ? selectedSolution.mp.toFixed(2) : '0.00'}%</span>
+        </div>
+    `;
+
+            // 添加自定义营养元素的HTML（如果存在）
+            if (selectedSolution.custom_nutrients && typeof selectedSolution.custom_nutrients === 'object') {
+                for (const [name, value] of Object.entries(selectedSolution.custom_nutrients)) {
+                    nutrientDetailsHtml += `
+                <div class="nutrient-detail-row">
+                    <span>${name}</span>
+                    <span>${value ? value.toFixed(2) : '0.00'}%</span>
+                </div>
+            `;
+                }
+            }
+
             // 更新方案详情和营养成分部分
             const detailHtml = `
-            <div class="detail-content">
-                <div class="solution-header">
-                    <h2>方案 ${selectedSolution.solution_index + 1} </h2>
-                </div>
+    <div class="detail-content">
+        <div class="solution-header">
+            <h2>方案 ${selectedSolution.solution_index + 1} </h2>
+        </div>
 
-                <div class="detail-grid">
-                    <div class="detail-card">
-                        <h3>成本信息</h3>
-                        <div class="cost-display">¥${selectedSolution.total_cost.toFixed(2)}/吨</div>
-                    </div>
+        <div class="detail-grid">
+            <div class="detail-card">
+                <h3>成本信息</h3>
+                <div class="cost-display">¥${selectedSolution.total_cost.toFixed(2)}/吨</div>
+            </div>
 
-                    <div class="detail-card">
-                        <h3>营养成分详情</h3>
-                        <div class="nutrient-details">
-                            <div class="nutrient-detail-row">
-                                <span>干物质 (DM)</span>
-                                <span>${selectedSolution.dm ? selectedSolution.dm.toFixed(2) : '0.00'}%</span>
-                            </div>
-                            <div class="nutrient-detail-row">
-                                <span>钙 (Ca)</span>
-                                <span>${selectedSolution.ca ? selectedSolution.ca.toFixed(2) : '0.00'}%</span>
-                            </div>
-                            <div class="nutrient-detail-row">
-                                <span>粗蛋白 (CP)</span>
-                                <span>${selectedSolution.cp ? selectedSolution.cp.toFixed(2) : '0.00'}%</span>
-                            </div>
-                            <div class="nutrient-detail-row">
-                                <span>磷 (P)</span>
-                                <span>${selectedSolution.p ? selectedSolution.p.toFixed(2) : '0.00'}%</span>
-                            </div>
-                            <div class="nutrient-detail-row">
-                                <span>中性洗涤纤维 (NDF)</span>
-                                <span>${selectedSolution.ndf ? selectedSolution.ndf.toFixed(2) : '0.00'}%</span>
-                            </div>
-                            <div class="nutrient-detail-row">
-                                <span>代谢能 (ME)</span>
-                                <span>${selectedSolution.me ? selectedSolution.me.toFixed(2) : '0.00'}%</span>
-                            </div>
-                            <div class="nutrient-detail-row">
-                                <span>代谢蛋白 (MP)</span>
-                                <span>${selectedSolution.mp ? selectedSolution.mp.toFixed(2) : '0.00'}%</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="detail-card">
+                <h3>营养成分详情</h3>
+                <div class="nutrient-details">
+                    ${nutrientDetailsHtml}
                 </div>
             </div>
-        `;
+        </div>
+    </div>
+    `;
 
             document.getElementById('solutionDetail').innerHTML = detailHtml;
 
             // 更新原料配比详情部分，将百分比转换为千克（按1吨=1000kg计算）
             const ingredientsHtml = `
-            <div class="detail-content">
-                <div class="detail-card">
-                    <h3>原料配比详情</h3>
-                    <div class="ingredients-list">
-                        ${selectedSolution.ingredients ? selectedSolution.ingredients.map(ing => {
-                            const kgValue = (ing.ratio * 10).toFixed(2); // 将百分比转换为千克 (ratio * 1000 / 100 = ratio * 10)
-                            return `
-                                <div class="ingredient-item">
-                                    <span class="ingredient-name-full">${ing.name}</span>
-                                    <div class="ratio-visual">
-                                        <div class="ratio-fill" style="width: ${ing.ratio}%"></div>
-                                    </div>
-                                    <span class="ratio-display">${kgValue} kg</span>
-                                </div>
-                            `;
-                        }).join('') : '<p>暂无原料配比数据</p>'}
-                    </div>
-                </div>
+    <div class="detail-content">
+        <div class="detail-card">
+            <h3>原料配比详情</h3>
+            <div class="ingredients-list">
+                ${selectedSolution.ingredients ? selectedSolution.ingredients.map(ing => {
+                const kgValue = (ing.ratio * 10).toFixed(2); // 将百分比转换为千克 (ratio * 1000 / 100 = ratio * 10)
+                return `
+                        <div class="ingredient-item">
+                            <span class="ingredient-name-full">${ing.name}</span>
+                            <div class="ratio-visual">
+                                <div class="ratio-fill" style="width: ${ing.ratio}%"></div>
+                            </div>
+                            <span class="ratio-display">${kgValue} kg</span>
+                        </div>
+                    `;
+            }).join('') : '<p>暂无原料配比数据</p>'}
             </div>
-        `;
+        </div>
+    </div>
+    `;
 
             document.getElementById('ingredientsDetail').innerHTML = ingredientsHtml;
         }
+
 
         // 页面加载时获取数据
         document.addEventListener('DOMContentLoaded', fetchResults);

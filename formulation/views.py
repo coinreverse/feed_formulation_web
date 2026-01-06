@@ -36,6 +36,7 @@ def format_formula_result_data(qs):
             "ndf": round(float(r.ndf), 2),
             "me": round(float(r.me), 2),
             "mp": round(float(r.mp), 2),
+            "custom_nutrients": r.custom_nutrients,  # 添加自定义营养元素
             "ingredients": formatted_ingredients,
             # 添加更多营养成分信息
             "营养成分": {
@@ -45,7 +46,9 @@ def format_formula_result_data(qs):
                 "磷(P)": f"{round(float(r.p), 2)}%",
                 "中性洗涤纤维(NDF)": f"{round(float(r.ndf), 2)}%",
                 "代谢能(ME)": f"{round(float(r.me), 2)}%",
-                "代谢蛋白(MP)": f"{round(float(r.mp), 2)}%"
+                "代谢蛋白(MP)": f"{round(float(r.mp), 2)}%",
+                # 添加自定义营养元素
+                **{k: f"{v}%" for k, v in r.custom_nutrients.items()}
             }
         })
 
