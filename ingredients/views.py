@@ -65,31 +65,85 @@ def add_ingredient(request):
         form = IngredientForm(request.POST)
         nutrient_form = IngredientNutrientForm(request.POST)
         custom_nutrient_formset = CustomIngredientNutrientFormSet(request.POST)
+        submit_type = request.POST.get('submit_type', 'draft')  # 获取提交类型
 
         if form.is_valid() and nutrient_form.is_valid() and custom_nutrient_formset.is_valid():
-            # 保存原料基本信息，状态设置为草稿
-            ingredient = form.save(commit=False)
-            ingredient.created_by = request.user
-            ingredient.status = Ingredient.DRAFT
-            ingredient.save()
+            # 处理自定义营养成分数据
+            custom_nutrients_data = []
+            for custom_form in custom_nutrient_formset:
+                if custom_form.cleaned_data and not custom_form.cleaned_data.get('DELETE', False):
+                    custom_nutrients_data.append({
+                        'nutrient_name': custom_form.cleaned_data['nutrient_name'],
+                        'value': float(custom_form.cleaned_data['value']),
+                        'unit': custom_form.cleaned_data['unit']
+                    })
 
-            # 保存营养成分信息
-            nutrient = nutrient_form.save(commit=False)
-            nutrient.ingredient = ingredient
-            nutrient.save()
+            if submit_type == 'draft':
+                # 保存为草稿：直接保存到主表
+                ingredient = form.save(commit=False)
+                ingredient.created_by = request.user
+                ingredient.status = Ingredient.DRAFT
+                ingredient.save()
 
-            # 保存自定义营养成分信息
-            custom_nutrients = custom_nutrient_formset.save(commit=False)
-            for custom_nutrient in custom_nutrients:
-                custom_nutrient.ingredient = ingredient
-                custom_nutrient.save()
+                # 保存营养成分信息
+                nutrient = nutrient_form.save(commit=False)
+                nutrient.ingredient = ingredient
+                nutrient.save()
 
-            # 处理删除的自定义营养成分
-            for obj in custom_nutrient_formset.deleted_objects:
-                obj.delete()
+                # 保存自定义营养成分信息
+                custom_nutrients = custom_nutrient_formset.save(commit=False)
+                for custom_nutrient in custom_nutrients:
+                    custom_nutrient.ingredient = ingredient
+                    custom_nutrient.save()
 
-            # 重定向到列表页面
-            return redirect('ingredients_list')
+                # 处理删除的自定义营养成分
+                for obj in custom_nutrient_formset.deleted_objects:
+                    obj.delete()
+            else:
+                # 提交审核：保存到主表并创建待审核变更记录
+                # 创建基本的原料记录，详细信息将保存到临时表
+                ingredient = Ingredient(
+                    created_by=request.user,
+                    status=Ingredient.PENDING,  # 设置为待审核状态
+                    # 基本信息字段
+                    name=form.cleaned_data['name'],
+                    description=form.cleaned_data['description'],
+                    cost=form.cleaned_data['cost'],
+                )
+                ingredient.save()
+
+                # 创建待审核变更记录，将所有营养指标数据放入临时表
+                pending_change = IngredientPendingChange(
+                    ingredient=ingredient,
+                    name=form.cleaned_data['name'],
+                    description=form.cleaned_data['description'],
+                    cost=form.cleaned_data['cost'],
+                    # 营养成分字段初始化为0，根据复选框状态更新
+                    dm=0,
+                    calcium=0,
+                    protein=0,
+                    phosphorus=0,
+                    ndf=0,
+                    metabolizable_energy=0,
+                    mp=0,
+                    # 自定义营养成分
+                    custom_nutrients=custom_nutrients_data,
+                    created_by=request.user
+                )
+
+                # 只有当用户勾选了复选框时，才更新待审核变更中的营养指标字段
+                nutrient_fields = ['dm', 'calcium', 'protein', 'phosphorus', 'ndf', 'metabolizable_energy', 'mp']
+                for nutrient in nutrient_fields:
+                    include_field_name = f"include_{nutrient}"
+                    if include_field_name in request.POST:
+                        # 如果勾选了复选框，使用表单数据更新对应字段
+                        setattr(pending_change, nutrient, nutrient_form.cleaned_data[nutrient])
+
+                # 保存待审核变更
+                pending_change.save()
+
+            # 重定向到详情页面
+            return redirect('ingredient_detail', ingredient_id=ingredient.id)
     else:
         form = IngredientForm()
         nutrient_form = IngredientNutrientForm()

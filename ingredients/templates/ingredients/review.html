@@ -57,90 +57,104 @@
 
             <!-- 固定营养成分 -->
             <div class="card mb-4">
-                <div class="card-header">
-                    <h5>固定营养成分</h5>
-                </div>
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-3 mb-2">干物质(DM)</dt>
-                        <dd class="col-sm-9 mb-2">
-                            {% if 'dm' in changed_fields %}
-                                <span class="text-danger">
-                                    {{ changed_fields.dm.0 }} → {{ changed_fields.dm.1 }}%
-                                </span>
-                            {% else %}
-                                {{ pending_change.dm }}%
-                            {% endif %}
-                        </dd>
+    <div class="card-header">
+        <h5>固定营养成分</h5>
+    </div>
+        <div class="card-body">
+            <dl class="row">
+                {% if pending_change.dm != 0 %}
+                    <dt class="col-sm-3 mb-2">干物质(DM)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'dm' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.dm.0 }} → {{ changed_fields.dm.1 }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.dm }}%
+                        {% endif %}
+                    </dd>
+                {% endif %}
 
-                        <dt class="col-sm-3 mb-2">钙(Ca)</dt>
-                        <dd class="col-sm-9 mb-2">
-                            {% if 'calcium' in changed_fields %}
-                                <span class="text-danger">
-                                    {{ changed_fields.calcium.0 }} → {{ changed_fields.calcium.1 }}%
-                                </span>
-                            {% else %}
-                                {{ pending_change.calcium }}%
-                            {% endif %}
-                        </dd>
+                {% if pending_change.calcium != 0 %}
+                    <dt class="col-sm-3 mb-2">钙(Ca)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'calcium' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.calcium.0 }} → {{ changed_fields.calcium.1 }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.calcium }}%
+                        {% endif %}
+                    </dd>
+                {% endif %}
 
-                        <dt class="col-sm-3 mb-2">粗蛋白(CP)</dt>
-                        <dd class="col-sm-9 mb-2">
-                            {% if 'protein' in changed_fields %}
-                                <span class="text-danger">
-                                    {{ changed_fields.protein.0 }} → {{ changed_fields.protein.1 }}%
-                                </span>
-                            {% else %}
-                                {{ pending_change.protein }}%
-                            {% endif %}
-                        </dd>
+                {% if pending_change.protein != 0 %}
+                    <dt class="col-sm-3 mb-2">粗蛋白(CP)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'protein' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.protein.0 }} → {{ changed_fields.protein.1 }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.protein }}%
+                        {% endif %}
+                    </dd>
+                {% endif %}
 
-                        <dt class="col-sm-3 mb-2">磷(P)</dt>
-                        <dd class="col-sm-9 mb-2">
-                            {% if 'phosphorus' in changed_fields %}
-                                <span class="text-danger">
-                                    {{ changed_fields.phosphorus.0 }} → {{ changed_fields.phosphorus.1 }}%
-                                </span>
-                            {% else %}
-                                {{ pending_change.phosphorus }}%
-                            {% endif %}
-                        </dd>
+                {% if pending_change.phosphorus != 0 %}
+                    <dt class="col-sm-3 mb-2">磷(P)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'phosphorus' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.phosphorus.0 }} → {{ changed_fields.phosphorus.1 }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.phosphorus }}%
+                        {% endif %}
+                    </dd>
+                {% endif %}
 
-                        <dt class="col-sm-3 mb-2">中性洗涤纤维(NDF)</dt>
-                        <dd class="col-sm-9 mb-2">
-                            {% if 'ndf' in changed_fields %}
-                                <span class="text-danger">
-                                    {{ changed_fields.ndf.0 }} → {{ changed_fields.ndf.1 }}%
-                                </span>
-                            {% else %}
-                                {{ pending_change.ndf }}%
-                            {% endif %}
-                        </dd>
+                {% if pending_change.ndf != 0 %}
+                    <dt class="col-sm-3 mb-2">中性洗涤纤维(NDF)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'ndf' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.ndf.0 }} → {{ changed_fields.ndf.1 }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.ndf }}%
+                        {% endif %}
+                    </dd>
+                {% endif %}
 
-                        <dt class="col-sm-3 mb-2">代谢能(ME)</dt>
-                        <dd class="col-sm-9 mb-2">
-                            {% if 'metabolizable_energy' in changed_fields %}
-                                <span class="text-danger">
-                                    {{ changed_fields.metabolizable_energy.0 }} → {{ changed_fields.metabolizable_energy.1 }} MJ/kg
-                                </span>
-                            {% else %}
-                                {{ pending_change.metabolizable_energy }} MJ/kg
-                            {% endif %}
-                        </dd>
+                {% if pending_change.metabolizable_energy != 0 %}
+                    <dt class="col-sm-3 mb-2">代谢能(ME)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'metabolizable_energy' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.metabolizable_energy.0 }} → {{ changed_fields.metabolizable_energy.1 }} MJ/kg
+                            </span>
+                        {% else %}
+                            {{ pending_change.metabolizable_energy }} MJ/kg
+                        {% endif %}
+                    </dd>
+                {% endif %}
 
-                        <dt class="col-sm-3 mb-2">代谢蛋白(MP)</dt>
-                        <dd class="col-sm-9 mb-2">
-                            {% if 'mp' in changed_fields %}
-                                <span class="text-danger">
-                                    {{ changed_fields.mp.0 }} → {{ changed_fields.mp.1 }}%
-                                </span>
-                            {% else %}
-                                {{ pending_change.mp }}%
-                            {% endif %}
-                        </dd>
-                    </dl>
-                </div>
-            </div>
+                {% if pending_change.mp != 0 %}
+                    <dt class="col-sm-3 mb-2">代谢蛋白(MP)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'mp' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.mp.0 }} → {{ changed_fields.mp.1 }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.mp }}%
+                        {% endif %}
+                    </dd>
+                {% endif %}
+            </dl>
+        </div>
+    </div>
 
             <!-- 自定义营养成分 -->
             {% if pending_change.custom_nutrients %}

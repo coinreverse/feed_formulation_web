@@ -14,7 +14,7 @@
         <div class="card-body">
             <p><strong>原料名称：</strong>{{ ingredient.name }}</p>
             <p><strong>原料说明：</strong>{{ ingredient.description|default:"无" }}</p>
-            <p><strong>单价：</strong>{{ ingredient.cost }} 元/kg</p>
+            <p><strong>单价：</strong>{{ ingredient.cost }} 元/吨</p>
             <p><strong>创建时间：</strong>{{ ingredient.created_at }}</p>
             <p><strong>创建用户：</strong>{{ ingredient.created_by.username }}</p>
             <p><strong>审核状态：</strong>
@@ -40,15 +40,29 @@
             {% if nutrients %}
                 <div class="row">
                     <div class="col-md-6">
-                        <p><strong>干物质(DM)：</strong>{{ nutrients.dm }}%</p>
-                        <p><strong>钙(Ca)：</strong>{{ nutrients.calcium }}%</p>
-                        <p><strong>粗蛋白(CP)：</strong>{{ nutrients.protein }}%</p>
-                        <p><strong>磷(P)：</strong>{{ nutrients.phosphorus }}%</p>
+                        {% if nutrients.dm != 0 %}
+                            <p><strong>干物质(DM)：</strong>{{ nutrients.dm }}%</p>
+                        {% endif %}
+                        {% if nutrients.calcium != 0 %}
+                            <p><strong>钙(Ca)：</strong>{{ nutrients.calcium }}%</p>
+                        {% endif %}
+                        {% if nutrients.protein != 0 %}
+                            <p><strong>粗蛋白(CP)：</strong>{{ nutrients.protein }}%</p>
+                        {% endif %}
+                        {% if nutrients.phosphorus != 0 %}
+                            <p><strong>磷(P)：</strong>{{ nutrients.phosphorus }}%</p>
+                        {% endif %}
                     </div>
                     <div class="col-md-6">
-                        <p><strong>中性洗涤纤维(NDF)：</strong>{{ nutrients.ndf }}%</p>
-                        <p><strong>代谢能(ME)：</strong>{{ nutrients.metabolizable_energy }}%</p>
-                        <p><strong>代谢蛋白(MP)：</strong>{{ nutrients.mp }}%</p>
+                        {% if nutrients.ndf != 0 %}
+                            <p><strong>中性洗涤纤维(NDF)：</strong>{{ nutrients.ndf }}%</p>
+                        {% endif %}
+                        {% if nutrients.metabolizable_energy != 0 %}
+                            <p><strong>代谢能(ME)：</strong>{{ nutrients.metabolizable_energy }}%</p>
+                        {% endif %}
+                        {% if nutrients.mp != 0 %}
+                            <p><strong>代谢蛋白(MP)：</strong>{{ nutrients.mp }}%</p>
+                        {% endif %}
                     </div>
                 </div>
             {% else %}
