@@ -1,0 +1,664 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+            padding: 30px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .run-ga-button {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .run-ga-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .run-ga-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            font-size: 18px;
+            color: #6c757d;
+        }
+
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        /* 复选框样式 */
+        .ingredient-checkbox {
+            transform: scale(1.2);
+            margin-right: 10px;
+        }
+
+        .select-all-container {
+            margin-bottom: 10px;
+        }
+
+        /* 原料自定义营养折叠样式 */
+        .ingredient-custom-nutrients {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .ingredient-toggle-icon {
+            font-size: 12px;
+            margin-left: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .ingredient-toggle-icon.expanded {
+            transform: rotate(90deg);
+        }
+
+        .ingredient-custom-nutrients-row {
+            background-color: #f8f9fa;
+        }
+
+        .ingredient-custom-nutrients-content {
+            padding-left: 20px;
+        }
+
+        .ingredient-toggle-icon.expanded {
+            transform: rotate(0deg);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="main-container">
+            <div class="header">
+                <h2>配方优化系统</h2>
+            </div>
+
+            <!-- 动物营养需求 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>动物营养需求</h3>
+                </div>
+                <div class="card-body">
+                    <div id="animalRequirementInfo">
+                        <div class="loading">正在加载动物营养需求信息...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 可用饲料原料 -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>可用饲料原料</h3>
+                    <div class="select-all-container">
+                        <label>
+                            <input type="checkbox" id="selectAllIngredients"> 全选/取消全选
+                        </label>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="ingredientsInfo">
+                        <div class="loading">正在加载饲料原料信息...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 运行遗传算法按钮 -->
+            <button class="run-ga-button" onclick="runGeneticAlgorithm()" id="runGaButton">
+                运行遗传算法
+            </button>
+
+            <!-- 运行结果后显示查看结果按钮 -->
+            <div id="viewResultsSection" style="display: none;">
+                <button class="run-ga-button" onclick="viewResults()" style="margin-top: 10px;">
+                    查看配方结果
+                </button>
+            </div>
+
+            <!-- 结果展示区域 -->
+            <div id="resultsSection" class="mt-4">
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取URL路径参数中的requirement_id
+        function getRequirementIdFromPath() {
+            const pathParts = window.location.pathname.split('/');
+            // 路径格式为 /formulation/input/1/
+            return pathParts[pathParts.length - 2];
+        }
+
+        // 获取requirement_id
+        const requirementId = getRequirementIdFromPath();
+
+        // 数据存储
+        let animalRequirement = null;
+        let ingredients = null;
+        let selectedIngredientIds = new Set(); // 初始化为空集合，不默认全选
+
+        // 获取动物营养需求信息
+        async function fetchAnimalRequirement() {
+            try {
+                // 修正API调用路径
+                const response = await fetch(`/animal_requirements/api/requirements/${requirementId}/`);
+                if (!response.ok) {
+                    throw new Error('获取动物营养需求信息失败');
+                }
+                animalRequirement = await response.json();
+                displayAnimalRequirement();
+            } catch (err) {
+                document.getElementById('animalRequirementInfo').innerHTML =
+                    `<div class="error">获取动物营养需求信息失败: ${err.message}</div>`;
+                console.error('Error fetching animal requirement:', err);
+            }
+        }
+
+        async function fetchIngredients() {
+            try {
+                const response = await fetch('/ingredients/api/ingredients/');
+                if (!response.ok) {
+                    throw new Error('获取饲料原料信息失败');
+                }
+                ingredients = await response.json();
+                displayIngredients();
+            } catch (err) {
+                document.getElementById('ingredientsInfo').innerHTML =
+                    `<div class="error">获取饲料原料信息失败: ${err.message}</div>`;
+                console.error('Error fetching ingredients:', err);
+            }
+        }
+
+        // 显示动物营养需求信息
+        function displayAnimalRequirement() {
+            if (!animalRequirement) return;
+
+            // 定义字段名称和单位的映射
+            const fieldConfig = {
+                'animal_type': {name: '动物类型', unit: ''},
+                'body_weight': {name: '体重', unit: 'kg'},
+                'daily_gain': {name: '日增重', unit: 'g'},
+                'dm': {name: '干物质', unit: '%'},
+                'ndf': {name: '中性洗涤纤维', unit: '%'},
+                'mp': {name: '代谢蛋白', unit: 'g/kg W0.75'},
+                'cp': {name: '粗蛋白', unit: 'g/kg DM'},
+                'ca': {name: '钙', unit: 'g/kg DM'},
+                'p': {name: '磷', unit: 'g/kg DM'},
+                'me': {name: '代谢能', unit: 'kcal/kg DM'},
+                'na': {name: '钠', unit: 'g/kg DM'},
+                'k': {name: '钾', unit: 'g/kg DM'},
+                'mg': {name: '镁', unit: 'g/kg DM'}
+            };
+
+            let html = `
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>营养元素</th>
+                <th>需求值</th>
+            </tr>
+        </thead>
+        <tbody>
+`;
+
+            // 添加基本信息
+            html += `
+        <tr>
+            <td>${fieldConfig.animal_type.name}</td>
+            <td>${animalRequirement.animal_type}</td>
+        </tr>
+        <tr>
+            <td>${fieldConfig.body_weight.name}</td>
+            <td>${animalRequirement.body_weight} ${fieldConfig.body_weight.unit}</td>
+        </tr>
+        <tr>
+            <td>${fieldConfig.daily_gain.name}</td>
+            <td>${animalRequirement.daily_gain} ${fieldConfig.daily_gain.unit}</td>
+        </tr>
+`;
+
+            // 添加营养需求
+            Object.keys(fieldConfig).forEach(key => {
+                if (['animal_type', 'body_weight', 'daily_gain'].includes(key)) {
+                    return; // 已经添加过的基本信息
+                }
+
+                const config = fieldConfig[key];
+                const lowerKey = `${key}_lower`;
+                const upperKey = `${key}_upper`;
+
+                if (animalRequirement[lowerKey] !== undefined && animalRequirement[upperKey] !== undefined) {
+                    const lowerValue = animalRequirement[lowerKey];
+                    const upperValue = animalRequirement[upperKey];
+                    const displayValue = `${lowerValue} - ${upperValue} ${config.unit}`;
+
+                    html += `
+        <tr>
+            <td>${config.name}</td>
+            <td>${displayValue}</td>
+        </tr>
+`;
+                }
+            });
+
+            // 添加自定义营养需求（直接作为表格行）
+            if (animalRequirement.custom_nutrients && animalRequirement.custom_nutrients.length > 0) {
+                animalRequirement.custom_nutrients.forEach(nutrient => {
+                    const displayValue = `${nutrient.lower} - ${nutrient.upper} ${nutrient.unit}`;
+                    html += `
+        <tr>
+            <td>${nutrient.name}</td>
+            <td>${displayValue}</td>
+        </tr>
+`;
+                });
+            }
+
+            html += `
+        </tbody>
+    </table>
+`;
+
+            document.getElementById('animalRequirementInfo').innerHTML = html;
+        }
+
+        // 显示饲料原料信息
+        function displayIngredients() {
+            if (!ingredients) return;
+
+            // 定义字段名称映射
+            const fieldLabels = {
+                'name': '原料名称',
+                'dm': '干物质 (%)',
+                'ndf': '中性洗涤纤维 (%)',
+                'mp': '代谢蛋白 (%)',
+                'cp': '粗蛋白 (%)',
+                'ca': '钙 (%)',
+                'p': '磷 (g/kg)',
+                'me': '代谢能 (kcal/kg)',
+                'na': '钠 (g/kg)',
+                'k': '钾 (g/kg)',
+                'mg': '镁 (g/kg)',
+                'cost': '价格 (元/吨)'
+            };
+
+            // 获取所有唯一字段名，排除custom_nutrients
+            const allFields = new Set();
+            ingredients.forEach(ingredient => {
+                Object.keys(ingredient).forEach(key => {
+                    if (key !== 'id' && key !== 'custom_nutrients') { // 排除id和custom_nutrients字段
+                        allFields.add(key);
+                    }
+                });
+            });
+
+            // 按预定义顺序排列字段
+            const orderedFields = ['name', 'dm', 'ndf', 'mp', 'cp', 'ca', 'p', 'me', 'na', 'k', 'mg', 'cost'];
+            const fieldsToShow = orderedFields.filter(field => allFields.has(field));
+            // 添加其他不在预定义列表中的字段
+            allFields.forEach(field => {
+                if (!fieldsToShow.includes(field)) {
+                    fieldsToShow.push(field);
+                }
+            });
+
+            let html = `
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>选择</th>
+     `;
+
+            // 生成表头
+            fieldsToShow.forEach(field => {
+                html += `<th>${fieldLabels[field] || field}</th>`;
+            });
+
+            html += `
+                    </tr>
+                </thead>
+                <tbody>
+     `;
+
+            // 生成表内容
+            ingredients.forEach(ingredient => {
+                html += `
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="ingredient-checkbox"
+                                   id="ingredient_${ingredient.id}"
+                                   value="${ingredient.id}"
+                                   onchange="toggleIngredientSelection(${ingredient.id})">
+                        </td>
+        `;
+
+                // 遍历显示标准字段
+                for (let i = 0; i < fieldsToShow.length; i++) {
+                    const field = fieldsToShow[i];
+                    const value = ingredient[field];
+
+                    // 如果是最后一个字段且有自定义营养元素，则添加折叠功能
+                    if (i === fieldsToShow.length - 1 && ingredient.custom_nutrients && ingredient.custom_nutrients.length > 0) {
+                        html += `<td>`;
+                        html += `${value !== null ? value : '-'}`;
+
+                        // 添加自定义营养折叠功能
+                        html += `<div class="ingredient-custom-nutrients" onclick="toggleIngredientCustomNutrients(${ingredient.id})" style="margin-left: 10px;">`;
+                        html += `<span class="ingredient-toggle-icon" id="toggleIcon_${ingredient.id}">▶</span>`;
+                        html += `</div>`;
+                        html += `</td>`;
+                    } else {
+                        html += `<td>${value !== null ? value : '-'}</td>`;
+                    }
+                }
+
+                html += `
+                    </tr>
+        `;
+
+                // 添加自定义营养元素的行（默认隐藏）
+                if (ingredient.custom_nutrients && ingredient.custom_nutrients.length > 0) {
+                    html += `<tr class="ingredient-custom-nutrients-row" id="customNutrientsRow_${ingredient.id}" style="display: none;">`;
+                    html += `<td colspan="${fieldsToShow.length + 1}">`; // +1 是因为有选择列
+                    html += `<div class="ingredient-custom-nutrients-content" id="customNutrientsContent_${ingredient.id}">`;
+
+                    // 显示自定义营养元素
+                    ingredient.custom_nutrients.forEach(nutrient => {
+                        if (nutrient.value !== null) {
+                            html += `<div>${nutrient.name}: ${nutrient.value}${nutrient.unit || '%'}</div>`;
+                        }
+                    });
+
+                    html += `</div>`;
+                    html += `</td>`;
+                    html += `</tr>`;
+                }
+            });
+
+            html += `
+                </tbody>
+            </table>
+        </div>
+    `;
+
+            document.getElementById('ingredientsInfo').innerHTML = html;
+        }
+
+        // 切换原料选择状态
+        function toggleIngredientSelection(ingredientId) {
+            if (selectedIngredientIds.has(ingredientId)) {
+                selectedIngredientIds.delete(ingredientId);
+            } else {
+                selectedIngredientIds.add(ingredientId);
+            }
+        }
+
+        // 切换原料自定义营养显示
+        function toggleIngredientCustomNutrients(ingredientId) {
+            const customNutrientsRow = document.getElementById(`customNutrientsRow_${ingredientId}`);
+            const toggleIcon = document.getElementById(`toggleIcon_${ingredientId}`);
+
+            if (customNutrientsRow.style.display === 'table-row') {
+                customNutrientsRow.style.display = 'none';
+                toggleIcon.textContent = '▶'; // 切换为横向图标
+                toggleIcon.classList.remove('expanded');
+            } else {
+                customNutrientsRow.style.display = 'table-row';
+                toggleIcon.textContent = '▼'; // 切换为向下图标
+                toggleIcon.classList.add('expanded');
+            }
+        }
+
+        // 全选/取消全选
+        document.getElementById('selectAllIngredients').addEventListener('change', function () {
+            const checkboxes = document.querySelectorAll('.ingredient-checkbox');
+            const isChecked = this.checked;
+
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+                const ingredientId = parseInt(checkbox.value);
+                if (isChecked) {
+                    selectedIngredientIds.add(ingredientId);
+                } else {
+                    selectedIngredientIds.delete(ingredientId);
+                }
+            });
+        });
+
+        // 验证所选原料是否覆盖所有必需营养元素
+        function validateSelectedIngredients() {
+            if (selectedIngredientIds.size === 0) {
+                alert('请至少选择一种饲料原料');
+                return false;
+            }
+
+            // 检查动物需求和原料数据是否已加载
+            if (!animalRequirement) {
+                alert('动物营养需求数据尚未加载，请稍后重试');
+                return false;
+            }
+
+            if (!ingredients || ingredients.length === 0) {
+                alert('饲料原料数据尚未加载，请稍后重试');
+                return false;
+            }
+
+            // 获取所选原料
+            const selectedIngredients = ingredients.filter(ingredient =>
+                selectedIngredientIds.has(ingredient.id)
+            );
+
+            // 获取动物营养需求中的所有营养元素（包括自定义）
+            const requiredNutrients = new Set();
+
+            // 添加固定营养元素
+            const fixedNutrients = ['dm', 'ndf', 'mp', 'cp', 'ca', 'p', 'me', 'na', 'k', 'mg'];
+            fixedNutrients.forEach(nutrient => {
+                const lowerKey = `${nutrient}_lower`;
+                const upperKey = `${nutrient}_upper`;
+                if (animalRequirement[lowerKey] !== undefined && animalRequirement[upperKey] !== undefined) {
+                    requiredNutrients.add(nutrient);
+                }
+            });
+
+            // 添加自定义营养元素
+            if (animalRequirement.custom_nutrients && animalRequirement.custom_nutrients.length > 0) {
+                animalRequirement.custom_nutrients.forEach(customNutrient => {
+                    if (customNutrient && customNutrient.name) {
+                        requiredNutrients.add(customNutrient.name);
+                    }
+                });
+            }
+
+            // 检查所选原料是否覆盖所有必需营养元素
+            const missingNutrients = [];
+
+            // 将Set转换为数组，以便更好地处理
+            const requiredNutrientsArray = Array.from(requiredNutrients);
+
+            requiredNutrientsArray.forEach(nutrient => {
+                let hasNutrient = false;
+
+                // 检查所选原料中是否至少有一种原料包含该营养元素
+                for (const ingredient of selectedIngredients) {
+                    // 检查固定营养元素（只检查是否存在，不检查值是否为0）
+                    if (ingredient[nutrient] !== undefined) {
+                        hasNutrient = true;
+                        break;
+                    }
+
+                    // 检查自定义营养元素
+                    if (ingredient.custom_nutrients && ingredient.custom_nutrients.length > 0) {
+                        for (const custom of ingredient.custom_nutrients) {
+                            if (custom && custom.name === nutrient) {
+                                hasNutrient = true;
+                                break;
+                            }
+                        }
+                        if (hasNutrient) {
+                            break;
+                        }
+                    }
+                }
+
+                if (!hasNutrient) {
+                    missingNutrients.push(nutrient);
+                }
+            });
+
+            if (missingNutrients.length > 0) {
+                alert(`所选原料缺少以下必需营养元素: ${missingNutrients.join(', ')}`);
+                return false;
+            }
+
+            return true;
+        }
+
+
+        // 运行遗传算法
+        async function runGeneticAlgorithm() {
+            // 验证所选原料
+            if (!validateSelectedIngredients()) {
+                return;
+            }
+
+            // 禁用运行按钮
+            const runGaButton = document.getElementById('runGaButton');
+            runGaButton.disabled = true;
+            runGaButton.textContent = '正在运行遗传算法...';
+
+            try {
+                // 将Set转换为数组
+                const selectedIngredientIdArray = Array.from(selectedIngredientIds);
+
+                const response = await fetch(`/formulation/api/run-ga/${requirementId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        selected_ingredient_ids: selectedIngredientIdArray
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('运行遗传算法失败');
+                }
+
+                const data = await response.json();
+                displayResults(data);
+
+                // 显示查看结果按钮
+                document.getElementById('viewResultsSection').style.display = 'block';
+
+            } catch (err) {
+                document.getElementById('resultsContent').innerHTML =
+                    `<div class="error">运行遗传算法失败: ${err.message}</div>`;
+                console.error('Error running genetic algorithm:', err);
+            } finally {
+                // 启用运行按钮
+                runGaButton.disabled = false;
+                runGaButton.textContent = '运行遗传算法';
+            }
+        }
+
+        // 显示结果
+        function displayResults(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('resultsContent').innerHTML = '<div class="error">没有可用的结果</div>';
+                return;
+            }
+
+            // 只显示简单的成功提示
+            let html = `
+    <div class="success"></div>
+    `;
+
+            document.getElementById('resultsContent').innerHTML = html;
+        }
+
+        // 查看结果
+        function viewResults() {
+            window.location.href = `/formulation/results/${requirementId}/`;
+        }
+
+        // 获取CSRF令牌
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // 页面加载时获取数据
+        fetchAnimalRequirement();
+        fetchIngredients();
+    </script>
+{% endblock %}

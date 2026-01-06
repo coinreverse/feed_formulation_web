@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+
+{% block title %}配方结果详情 - 饲料配方系统{% endblock %}
+
+{% block extra_css %}
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+            padding: 30px;
+            z-index: 1;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            background: #f8d7da;
+            color: #721c24;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .detail-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .ingredients-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .detail-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .detail-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .cost-display {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #27ae60;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .nutrient-details {
+            margin-top: 15px;
+        }
+
+        .nutrient-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ingredients-list {
+            margin-top: 15px;
+        }
+
+        .ingredient-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .ingredient-name-full {
+            flex: 1;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .ratio-visual {
+            width: 100px;
+            height: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+
+        .ratio-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 5px;
+        }
+
+        .ratio-display {
+            font-weight: bold;
+            color: #2c3e50;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        .no-selection {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>配方结果详情</h2>
+            <a href="{% url 'formula_results_list' %}" class="btn btn-secondary">返回列表</a>
+        </div>
+
+        <!-- 加载状态 -->
+        <div id="loading" class="loading">
+            <h2>正在加载数据...</h2>
+            <p>请稍候，我们正在获取饲料配方优化结果</p>
+        </div>
+
+        <!-- 错误提示 -->
+        <div id="error" class="error" style="display: none;">
+            <h2>数据加载失败</h2>
+            <p id="errorMessage"></p>
+        </div>
+
+        <!-- 结果展示 -->
+        <div id="resultsContainer" style="display: none;">
+            <!-- 内容布局 -->
+            <div class="content-layout">
+                <!-- 方案详情和营养成分 - 左侧 -->
+                <div class="detail-section">
+                    <h2 class="section-title">方案详情与营养成分</h2>
+                    <div class="detail-panel">
+                        <div id="solutionDetail">
+                            <div class="no-selection">
+                                <h3>正在加载方案详情</h3>
+                                <p>请稍候，系统正在获取饲料配方详细信息</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 原料配比详情 - 右侧 -->
+                <div class="ingredients-section">
+                    <h2 class="section-title">原料配比详情</h2>
+                    <div class="detail-panel">
+                        <div id="ingredientsDetail">
+                            <div class="no-selection">
+                                <h3>正在加载原料配比</h3>
+                                <p>请稍候，系统正在获取饲料原料配比信息</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let results = [];
+        let selectedSolution = null;
+        const requirementId = {{ requirement_id }}; // 从Django模板中获取
+
+        // 获取数据
+        async function fetchResults() {
+            try {
+                document.getElementById('loading').style.display = 'block';
+                document.getElementById('resultsContainer').style.display = 'none';
+                document.getElementById('error').style.display = 'none';
+
+                const response = await fetch(`/formulation/api/results/${requirementId}/`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                results = await response.json();
+
+                displayResults();
+            } catch (err) {
+                document.getElementById('errorMessage').textContent = '获取数据失败: ' + err.message;
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+                console.error('Error fetching results:', err);
+            }
+        }
+
+        // 显示结果
+        function displayResults() {
+            document.getElementById('loading').style.display = 'none';
+
+            if (!results || results.length === 0) {
+                document.getElementById('resultsContainer').style.display = 'none';
+                document.getElementById('errorMessage').textContent = '暂无优化结果，请先运行遗传算法';
+                document.getElementById('error').style.display = 'block';
+                return;
+            }
+
+            // 默认显示第一个方案
+            if (results.length > 0) {
+                selectedSolution = results[0];
+                updateSolutionDisplay();
+            }
+
+            document.getElementById('resultsContainer').style.display = 'block';
+        }
+
+        // 更新方案显示
+        function updateSolutionDisplay() {
+            if (!selectedSolution) return;
+
+            // 更新方案详情和营养成分部分
+            const detailHtml = `
+            <div class="detail-content">
+                <div class="solution-header">
+                    <h2>方案 ${selectedSolution.solution_index + 1} </h2>
+                </div>
+
+                <div class="detail-grid">
+                    <div class="detail-card">
+                        <h3>成本信息</h3>
+                        <div class="cost-display">¥${selectedSolution.total_cost.toFixed(2)}/吨</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <h3>营养成分详情</h3>
+                        <div class="nutrient-details">
+                            <div class="nutrient-detail-row">
+                                <span>干物质 (DM)</span>
+                                <span>${selectedSolution.dm ? selectedSolution.dm.toFixed(2) : '0.00'}%</span>
+                            </div>
+                            <div class="nutrient-detail-row">
+                                <span>钙 (Ca)</span>
+                                <span>${selectedSolution.ca ? selectedSolution.ca.toFixed(2) : '0.00'}%</span>
+                            </div>
+                            <div class="nutrient-detail-row">
+                                <span>粗蛋白 (CP)</span>
+                                <span>${selectedSolution.cp ? selectedSolution.cp.toFixed(2) : '0.00'}%</span>
+                            </div>
+                            <div class="nutrient-detail-row">
+                                <span>磷 (P)</span>
+                                <span>${selectedSolution.p ? selectedSolution.p.toFixed(2) : '0.00'}%</span>
+                            </div>
+                            <div class="nutrient-detail-row">
+                                <span>中性洗涤纤维 (NDF)</span>
+                                <span>${selectedSolution.ndf ? selectedSolution.ndf.toFixed(2) : '0.00'}%</span>
+                            </div>
+                            <div class="nutrient-detail-row">
+                                <span>代谢能 (ME)</span>
+                                <span>${selectedSolution.me ? selectedSolution.me.toFixed(2) : '0.00'}%</span>
+                            </div>
+                            <div class="nutrient-detail-row">
+                                <span>代谢蛋白 (MP)</span>
+                                <span>${selectedSolution.mp ? selectedSolution.mp.toFixed(2) : '0.00'}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+            document.getElementById('solutionDetail').innerHTML = detailHtml;
+
+            // 更新原料配比详情部分，将百分比转换为千克（按1吨=1000kg计算）
+            const ingredientsHtml = `
+            <div class="detail-content">
+                <div class="detail-card">
+                    <h3>原料配比详情</h3>
+                    <div class="ingredients-list">
+                        ${selectedSolution.ingredients ? selectedSolution.ingredients.map(ing => {
+                            const kgValue = (ing.ratio * 10).toFixed(2); // 将百分比转换为千克 (ratio * 1000 / 100 = ratio * 10)
+                            return `
+                                <div class="ingredient-item">
+                                    <span class="ingredient-name-full">${ing.name}</span>
+                                    <div class="ratio-visual">
+                                        <div class="ratio-fill" style="width: ${ing.ratio}%"></div>
+                                    </div>
+                                    <span class="ratio-display">${kgValue} kg</span>
+                                </div>
+                            `;
+                        }).join('') : '<p>暂无原料配比数据</p>'}
+                    </div>
+                </div>
+            </div>
+        `;
+
+            document.getElementById('ingredientsDetail').innerHTML = ingredientsHtml;
+        }
+
+        // 页面加载时获取数据
+        document.addEventListener('DOMContentLoaded', fetchResults);
+    </script>
+{% endblock %}

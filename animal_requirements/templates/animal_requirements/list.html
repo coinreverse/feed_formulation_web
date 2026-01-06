@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}动物营养需求管理{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>动物营养需求管理</h1>
+    <div>
+        <a href="{% url 'add_animal_requirement' %}" class="btn btn-primary me-2">添加动物营养需求</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">返回主页</a>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>动物类型</th>
+            <th>体重(kg)</th>
+            <th>日增重(g)</th>
+            <th>审核状态</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for requirement in requirements %}
+        <tr>
+            <td>{{ requirement.animal_type }}</td>
+            <td>{{ requirement.body_weight }}</td>
+            <td>{{ requirement.daily_gain }}</td>
+            <td>
+                {% if requirement.status == 'pending' %}
+                <span class="badge bg-warning">待审核</span>
+                {% elif requirement.status == 'approved' %}
+                <span class="badge bg-success">已通过</span>
+                {% elif requirement.status == 'rejected' %}
+                <span class="badge bg-danger">已拒绝</span>
+                {% endif %}
+            </td>
+            <td>{{ requirement.created_at|date:"Y-m-d H:i" }}</td>
+            <td>
+                <a href="{% url 'animal_requirement_detail' requirement.id %}" class="btn btn-sm btn-primary">查看详情</a>
+
+                <!-- 编辑按钮：根据状态判断是否禁用 -->
+                {% if requirement.status == 'pending' %}
+                <button class="btn btn-sm btn-secondary disabled" title="该记录已提交审核，无法编辑">编辑</button>
+                {% else %}
+                <a href="{% url 'edit_animal_requirement' requirement.id %}" class="btn btn-sm btn-secondary">编辑</a>
+                {% endif %}
+
+                {% if user.is_superuser %}
+                <a href="{% url 'review_animal_requirement' requirement.id %}" class="btn btn-sm btn-warning">审核</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center">暂无动物营养需求数据</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if user.is_authenticated %}
+    <p>欢迎, {{ user.username }}!</p>
+{% else %}
+    <p>您尚未登录，请 <a href="{% url 'login' %}">登录</a> 或 <a href="{% url 'register' %}">注册</a>。</p>
+{% endif %}
+{% endblock %}

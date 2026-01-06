@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block title %}审核动物营养需求{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>审核动物营养需求</h1>
+            <div>
+                <a href="{% url 'animal_requirement_detail' requirement.id %}" class="btn btn-secondary">返回详情</a>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>基本信息</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">动物类型</dt>
+                    <dd class="col-sm-9">
+                        {% if 'animal_type' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.animal_type.original }} → {{ changed_fields.animal_type.new }}
+                            </span>
+                        {% else %}
+                            {{ pending_change.animal_type }}
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3">体重</dt>
+                    <dd class="col-sm-9">
+                        {% if 'body_weight' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.body_weight.original }} → {{ changed_fields.body_weight.new }} kg
+                            </span>
+                        {% else %}
+                            {{ pending_change.body_weight }} kg
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3">日增重</dt>
+                    <dd class="col-sm-9">
+                        {% if 'daily_gain' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.daily_gain.original }} → {{ changed_fields.daily_gain.new }} g
+                            </span>
+                        {% else %}
+                            {{ pending_change.daily_gain }} g
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3">提交用户</dt>
+                    <dd class="col-sm-9">{{ pending_change.created_by.username }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>固定营养需求</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3 mb-2">干物质(DM)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'dm' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.dm.lower.original }} - {{ changed_fields.dm.upper.original }}%
+                                → {{ changed_fields.dm.lower.new }} - {{ changed_fields.dm.upper.new }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.dm_lower }} - {{ pending_change.dm_upper }}%
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3 mb-2">钙(Ca)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'calcium' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.calcium.lower.original }} - {{ changed_fields.calcium.upper.original }}%
+                                → {{ changed_fields.calcium.lower.new }} - {{ changed_fields.calcium.upper.new }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.calcium_lower }} - {{ pending_change.calcium_upper }}%
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3 mb-2">粗蛋白(CP)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'protein' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.protein.lower.original }} - {{ changed_fields.protein.upper.original }}%
+                                → {{ changed_fields.protein.lower.new }} - {{ changed_fields.protein.upper.new }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.protein_lower }} - {{ pending_change.protein_upper }}%
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3 mb-2">磷(P)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'phosphorus' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.phosphorus.lower.original }} - {{ changed_fields.phosphorus.upper.original }}%
+                                → {{ changed_fields.phosphorus.lower.new }} - {{ changed_fields.phosphorus.upper.new }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.phosphorus_lower }} - {{ pending_change.phosphorus_upper }}%
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3 mb-2">中性洗涤纤维(NDF)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'ndf' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.ndf.lower.original }} - {{ changed_fields.ndf.upper.original }}%
+                                → {{ changed_fields.ndf.lower.new }} - {{ changed_fields.ndf.upper.new }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.ndf_lower }} - {{ pending_change.ndf_upper }}%
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3 mb-2">代谢能(ME)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'energy' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.energy.lower.original }} - {{ changed_fields.energy.upper.original }} kcal/kg
+                                → {{ changed_fields.energy.lower.new }} - {{ changed_fields.energy.upper.new }} kcal/kg
+                            </span>
+                        {% else %}
+                            {{ pending_change.energy_lower }} - {{ pending_change.energy_upper }} kcal/kg
+                        {% endif %}
+                    </dd>
+
+                    <dt class="col-sm-3 mb-2">代谢蛋白(MP)</dt>
+                    <dd class="col-sm-9 mb-2">
+                        {% if 'mp' in changed_fields %}
+                            <span class="text-danger">
+                                {{ changed_fields.mp.lower.original }} - {{ changed_fields.mp.upper.original }}%
+                                → {{ changed_fields.mp.lower.new }} - {{ changed_fields.mp.upper.new }}%
+                            </span>
+                        {% else %}
+                            {{ pending_change.mp_lower }} - {{ pending_change.mp_upper }}%
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <!-- 自定义营养需求 -->
+        {% if pending_change.custom_nutrients %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>自定义营养需求</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        {% for custom_nutrient in pending_change.custom_nutrients %}
+                            <dt class="col-sm-3 mb-2">{{ custom_nutrient.nutrient_name }}</dt>
+                            <dd class="col-sm-9 mb-2">
+                                {% if 'custom_nutrients' in changed_fields %}
+                                    <span class="text-danger">
+                                        {% for original in changed_fields.custom_nutrients.original %}
+                                            {% if original.nutrient_name == custom_nutrient.nutrient_name %}
+                                                {{ original.nutrient_lower }}{{ original.unit }} - {{ original.nutrient_upper }}{{ original.unit }}
+                                                →
+                                            {% endif %}
+                                        {% endfor %}
+                                        {{ custom_nutrient.nutrient_lower }}{{ custom_nutrient.unit }} - {{ custom_nutrient.nutrient_upper }}{{ custom_nutrient.unit }}
+                                    </span>
+                                {% else %}
+                                    {{ custom_nutrient.nutrient_lower }}{{ custom_nutrient.unit }} - {{ custom_nutrient.nutrient_upper }}{{ custom_nutrient.unit }}
+                                {% endif %}
+                            </dd>
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>审核操作</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'review_animal_requirement' requirement.id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="action" class="form-label">审核结果</label>
+                        <select name="action" id="action" class="form-select">
+                            <option value="approve">通过</option>
+                            <option value="reject">拒绝</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comments" class="form-label">审核意见</label>
+                        <textarea name="comments" id="comments" class="form-control" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">提交审核</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,447 @@
+{% extends 'base.html' %}
+
+{% block title %}添加动物营养需求{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1>添加动物营养需求</h1>
+                <div>
+                    <a href="{% url 'animal_requirements_list' %}" class="btn btn-secondary">返回列表</a>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- 基本信息 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>基本信息</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form.animal_type.label_tag }}
+                                    {{ form.animal_type }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.body_weight.label_tag }}
+                                    {{ form.body_weight }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ form.daily_gain.label_tag }}
+                                    {{ form.daily_gain }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 已有营养指标 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>已有营养指标</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.include_dm }}
+                                        {{ form.include_dm.label_tag }}
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">下界</span>
+                                                {{ form.dm_lower }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">上界</span>
+                                                {{ form.dm_upper }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.include_calcium }}
+                                        {{ form.include_calcium.label_tag }}
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">下界</span>
+                                                {{ form.calcium_lower }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">上界</span>
+                                                {{ form.calcium_upper }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.include_protein }}
+                                        {{ form.include_protein.label_tag }}
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">下界</span>
+                                                {{ form.protein_lower }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">上界</span>
+                                                {{ form.protein_upper }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.include_phosphorus }}
+                                        {{ form.include_phosphorus.label_tag }}
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">下界</span>
+                                                {{ form.phosphorus_lower }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">上界</span>
+                                                {{ form.phosphorus_upper }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.include_ndf }}
+                                        {{ form.include_ndf.label_tag }}
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">下界</span>
+                                                {{ form.ndf_lower }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">上界</span>
+                                                {{ form.ndf_upper }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.include_energy }}
+                                        {{ form.include_energy.label_tag }}
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">下界</span>
+                                                {{ form.energy_lower }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">上界</span>
+                                                {{ form.energy_upper }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ form.include_mp }}
+                                        {{ form.include_mp.label_tag }}
+                                    </div>
+                                    <div class="row mt-1">
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">下界</span>
+                                                {{ form.mp_lower }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group">
+                                                <span class="input-group-text">上界</span>
+                                                {{ form.mp_upper }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 自定义营养指标 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>自定义营养指标</h5>
+                        <button type="button" class="btn btn-primary btn-sm float-right" id="add-form">
+                            <i class="fas fa-plus"></i> 添加营养元素
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        {{ formset.management_form }}
+                        <div id="formset-container">
+                            {% for form in formset %}
+                                <div class="mb-3 p-3 border rounded bg-light form-item">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="mb-0">
+                                                {{ form.nutrient_name.label_tag }}
+                                                {{ form.nutrient_name }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-0">
+                                                {{ form.nutrient_lower.label_tag }}
+                                                {{ form.nutrient_lower }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-0">
+                                                {{ form.nutrient_upper.label_tag }}
+                                                {{ form.nutrient_upper }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-0">
+                                                {{ form.unit.label_tag }}
+                                                {{ form.unit }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 d-flex align-items-end justify-content-end">
+                                            <!-- 确认按钮 - 默认显示 -->
+                                            <button type="button" class="btn btn-success btn-sm mr-2 confirm-form">
+                                                <i class="fas fa-check"></i> 确认
+                                            </button>
+                                            <!-- 删除按钮 - 默认隐藏 -->
+                                            <button type="button" class="btn btn-danger btn-sm remove-form"
+                                                    style="display: none;">
+                                                <i class="fas fa-trash"></i> 删除
+                                            </button>
+                                            {{ form.DELETE.as_hidden }}
+                                        </div>
+                                        {{ form.id.as_hidden }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 提交按钮 -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">提交动物营养需求</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 已有营养指标显示/隐藏控制
+        document.addEventListener('DOMContentLoaded', function() {
+            // 已有营养指标的复选框和输入框映射
+            const checkboxes = {
+                'include_dm': ['dm_lower', 'dm_upper'],
+                'include_calcium': ['calcium_lower', 'calcium_upper'],
+                'include_protein': ['protein_lower', 'protein_upper'],
+                'include_phosphorus': ['phosphorus_lower', 'phosphorus_upper'],
+                'include_ndf': ['ndf_lower', 'ndf_upper'],
+                'include_energy': ['energy_lower', 'energy_upper'],
+                'include_mp': ['mp_lower', 'mp_upper']
+            };
+
+            // 为每个复选框添加事件监听器
+            Object.keys(checkboxes).forEach(checkboxName => {
+                const checkbox = document.getElementById(`id_${checkboxName}`);
+                const inputFields = checkboxes[checkboxName].map(fieldName =>
+                    document.getElementById(`id_${fieldName}`)
+                );
+
+                if (checkbox && inputFields.every(field => field)) {
+                    // 设置初始状态
+                    inputFields.forEach(field => {
+                        field.disabled = !checkbox.checked;
+                    });
+
+                    // 添加事件监听器
+                    checkbox.addEventListener('change', function() {
+                        inputFields.forEach(field => {
+                            field.disabled = !this.checked;
+                        });
+                    });
+                }
+            });
+        });
+
+        // 自定义营养指标表单集处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const formsetContainer = document.getElementById('formset-container');
+            const addFormBtn = document.getElementById('add-form');
+            const totalFormsInput = document.querySelector('input[id$="-TOTAL_FORMS"]');
+
+            // 创建表单模板
+            const formTemplate = `
+                <div class="mb-3 p-3 border rounded bg-light form-item">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-0">
+                                <label for="id_custom_nutrients-__prefix__-nutrient_name">营养名称:</label>
+                                <input type="text" name="custom_nutrients-__prefix__-nutrient_name" maxlength="100" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_name">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-0">
+                                <label for="id_custom_nutrients-__prefix__-nutrient_lower">下界:</label>
+                                <input type="number" name="custom_nutrients-__prefix__-nutrient_lower" step="0.01" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_lower">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-0">
+                                <label for="id_custom_nutrients-__prefix__-nutrient_upper">上界:</label>
+                                <input type="number" name="custom_nutrients-__prefix__-nutrient_upper" step="0.01" class="form-control" id="id_custom_nutrients-__prefix__-nutrient_upper">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-0">
+                                <label for="id_custom_nutrients-__prefix__-unit">单位:</label>
+                                <input type="text" name="custom_nutrients-__prefix__-unit" maxlength="20" class="form-control" id="id_custom_nutrients-__prefix__-unit">
+                            </div>
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end justify-content-end">
+                            <!-- 确认按钮 - 默认显示 -->
+                            <button type="button" class="btn btn-success btn-sm mr-2 confirm-form">
+                                <i class="fas fa-check"></i> 确认
+                            </button>
+                            <!-- 删除按钮 - 默认隐藏 -->
+                            <button type="button" class="btn btn-danger btn-sm remove-form"
+                                    style="display: none;">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                            <input type="hidden" name="custom_nutrients-__prefix__-DELETE" id="id_custom_nutrients-__prefix__-DELETE">
+                            <input type="hidden" name="custom_nutrients-__prefix__-id" id="id_custom_nutrients-__prefix__-id">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // 添加新表单
+            function addNewForm() {
+                const totalForms = parseInt(totalFormsInput.value);
+                const newForm = formTemplate.replace(/__prefix__/g, totalForms);
+
+                const newFormElement = document.createElement('div');
+                newFormElement.innerHTML = newForm;
+                formsetContainer.appendChild(newFormElement.firstElementChild);
+
+                totalFormsInput.value = totalForms + 1;
+
+                // 为新添加的按钮添加事件监听
+                const newFormItem = formsetContainer.lastElementChild;
+                attachConfirmEvent(newFormItem.querySelector('.confirm-form'));
+                attachRemoveEvent(newFormItem.querySelector('.remove-form'));
+            }
+
+            // 确认表单
+            function confirmForm(btn) {
+                const formItem = btn.closest('.form-item');
+                const inputs = formItem.querySelectorAll('input');
+                const confirmBtn = formItem.querySelector('.confirm-form');
+                const removeBtn = formItem.querySelector('.remove-form');
+
+                // 验证输入是否完整
+                let allFilled = true;
+                inputs.forEach(input => {
+                    if (input.type !== 'hidden' && input.value.trim() === '') {
+                        allFilled = false;
+                    }
+                });
+
+                if (allFilled) {
+                    // 禁用输入框
+                    inputs.forEach(input => {
+                        if (input.type !== 'hidden') {
+                            input.disabled = true;
+                        }
+                    });
+
+                    // 隐藏确认按钮，显示删除按钮
+                    confirmBtn.style.display = 'none';
+                    removeBtn.style.display = 'inline-block';
+
+                    // 添加视觉反馈
+                    formItem.classList.add('bg-success', 'bg-opacity-10');
+                } else {
+                    alert('请填写所有字段后再确认');
+                }
+            }
+
+            // 删除表单
+            function removeForm(btn) {
+                const formItem = btn.closest('.form-item');
+                const deleteInput = formItem.querySelector('input[name$="-DELETE"]');
+                const formIdInput = formItem.querySelector('input[name$="-id"]');
+
+                if (formIdInput && formIdInput.value) {
+                    // 已存在的表单，标记为删除
+                    deleteInput.value = 'on';
+                    formItem.style.display = 'none';
+                } else {
+                    // 新添加的表单，直接移除
+                    formItem.remove();
+                    // 更新总表单数
+                    totalFormsInput.value = parseInt(totalFormsInput.value) - 1;
+                }
+            }
+
+            // 为确认按钮添加事件监听器
+            function attachConfirmEvent(btn) {
+                btn.addEventListener('click', function() {
+                    confirmForm(this);
+                });
+            }
+
+            // 为删除按钮添加事件监听器
+            function attachRemoveEvent(btn) {
+                btn.addEventListener('click', function() {
+                    removeForm(this);
+                });
+            }
+
+            // 为添加按钮添加事件监听
+            addFormBtn.addEventListener('click', addNewForm);
+
+            // 为初始的按钮添加事件监听
+            document.querySelectorAll('.confirm-form').forEach(btn => {
+                attachConfirmEvent(btn);
+            });
+            document.querySelectorAll('.remove-form').forEach(btn => {
+                attachRemoveEvent(btn);
+            });
+        });
+    </script>
+{% endblock %}

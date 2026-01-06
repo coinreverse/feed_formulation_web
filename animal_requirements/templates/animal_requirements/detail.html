@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ requirement.animal_type }} - 动物营养需求详情 - 饲料配方系统{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1>{{ requirement.animal_type }} ({{ requirement.body_weight }}kg,
+                    日增重{{ requirement.daily_gain }}g)</h1>
+                <div>
+                    <a href="{% url 'animal_requirements_list' %}" class="btn btn-secondary me-2">返回列表</a>
+                    <a href="{% url 'home' %}" class="btn btn-secondary">返回主页</a>
+                </div>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>基本信息</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3 mb-2">动物类型</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.animal_type }}</dd>
+
+                            <dt class="col-sm-3 mb-2">体重</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.body_weight }} kg</dd>
+
+                            <dt class="col-sm-3 mb-2">日增重</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.daily_gain }} g</dd>
+
+                            <dt class="col-sm-3 mb-2">提交用户</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.created_by.username }}</dd>
+
+                            <dt class="col-sm-3 mb-2">审核状态</dt>
+                            <dd class="col-sm-9 mb-2">
+                                {% if requirement.status == 'pending' %}
+                                    <span class="badge bg-warning">待审核</span>
+                                {% elif requirement.status == 'approved' %}
+                                    <span class="badge bg-success">已通过</span>
+                                {% elif requirement.status == 'rejected' %}
+                                    <span class="badge bg-danger">已拒绝</span>
+                                {% endif %}
+                            </dd>
+
+                            {% if requirement.approved_by %}
+                                <dt class="col-sm-3 mb-2">审核用户</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.approved_by.username }}</dd>
+                            {% endif %}
+
+                            {% if requirement.approved_at %}
+                                <dt class="col-sm-3 mb-2">审核时间</dt>
+                                <dd class="col-sm-9 mb-2">{{ requirement.approved_at|date:"Y-m-d H:i" }}</dd>
+                            {% endif %}
+
+                            <dt class="col-sm-3 mb-2">创建时间</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.created_at|date:"Y-m-d H:i" }}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- 其他卡片内容保持不变 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>固定营养需求</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3 mb-2">干物质(DM)</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.dm_lower }} - {{ requirement.dm_upper }}%</dd>
+
+                            <dt class="col-sm-3 mb-2">钙(Ca)</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.calcium_lower }} - {{ requirement.calcium_upper }}%</dd>
+
+                            <dt class="col-sm-3 mb-2">粗蛋白(CP)</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.protein_lower }} - {{ requirement.protein_upper }}%</dd>
+
+                            <dt class="col-sm-3 mb-2">磷(P)</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.phosphorus_lower }} - {{ requirement.phosphorus_upper }}%</dd>
+
+                            <dt class="col-sm-3 mb-2">中性洗涤纤维(NDF)</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.ndf_lower }} - {{ requirement.ndf_upper }}%</dd>
+
+                            <dt class="col-sm-3 mb-2">代谢能(ME)</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.energy_lower }} - {{ requirement.energy_upper }} kcal/kg</dd>
+
+                            <dt class="col-sm-3 mb-2">代谢蛋白(MP)</dt>
+                            <dd class="col-sm-9 mb-2">{{ requirement.mp_lower }} - {{ requirement.mp_upper }}%</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- 自定义营养需求部分 -->
+                {% if requirement.custom_nutrients %}
+                    <!-- 检查是否为RelatedManager对象（有all方法） -->
+                    {% if requirement.custom_nutrients.all %}
+                        <!-- 处理正常状态（RelatedManager对象） -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5>自定义营养需求</h5>
+                            </div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    {% for custom_nutrient in requirement.custom_nutrients.all %}
+                                        <dt class="col-sm-3 mb-2">{{ custom_nutrient.nutrient_name }}</dt>
+                                        <dd class="col-sm-9 mb-2">
+                                            {{ custom_nutrient.nutrient_lower }}{{ custom_nutrient.unit }} -
+                                            {{ custom_nutrient.nutrient_upper }}{{ custom_nutrient.unit }}</dd>
+                                    {% endfor %}
+                                </dl>
+                            </div>
+                        </div>
+                    {% elif requirement.custom_nutrients|length > 0 %}
+                        <!-- 处理待审核状态（非空列表） -->
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5>自定义营养需求</h5>
+                            </div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    {% for custom_nutrient in requirement.custom_nutrients %}
+                                        <dt class="col-sm-3 mb-2">{{ custom_nutrient.nutrient_name }}</dt>
+                                        <dd class="col-sm-9 mb-2">
+                                            {{ custom_nutrient.nutrient_lower }}{{ custom_nutrient.unit }} -
+                                            {{ custom_nutrient.nutrient_upper }}{{ custom_nutrient.unit }}</dd>
+                                    {% endfor %}
+                                </dl>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                <!-- 审核按钮 -->
+                {% if user.is_superuser and requirement.status == 'pending' %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5>审核操作</h5>
+                        </div>
+                        <div class="card-body">
+                            <a href="{% url 'review_animal_requirement' requirement.id %}" class="btn btn-warning">审核该需求</a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <p>请登录以查看动物营养需求详情。</p>
+                <a href="{% url 'login' %}" class="btn btn-primary">登录</a>
+                <a href="{% url 'register' %}" class="btn btn-secondary">注册</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
