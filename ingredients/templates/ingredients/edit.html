@@ -1,0 +1,375 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>编辑饲料原料</h2>
+        <div>
+            <a href="{% url 'ingredients_list' %}" class="btn btn-secondary">返回列表</a>
+        </div>
+    </div>
+
+    <!-- 在表单顶部添加错误信息显示 -->
+    {% if form.errors or nutrient_form.errors or custom_nutrient_formset.errors %}
+        <div class="alert alert-danger">
+            <strong>表单验证失败，请检查以下错误：</strong>
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for field in nutrient_form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for form in custom_nutrient_formset %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <li>自定义营养成分: {{ field.label }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">
+                {% csrf_token %}
+                <!-- 基本信息 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>基本信息</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.description.label_tag }}
+                            {{ form.description }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.cost.label_tag }}
+                            {{ form.cost }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 营养成分 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>营养成分</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ nutrient_form.include_dm }}
+                                        {{ nutrient_form.include_dm.label_tag }}
+                                    </div>
+                                    <div class="input-group mt-1">
+                                        <span class="input-group-text">%</span>
+                                        {{ nutrient_form.dm }}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ nutrient_form.include_calcium }}
+                                        {{ nutrient_form.include_calcium.label_tag }}
+                                    </div>
+                                    <div class="input-group mt-1">
+                                        <span class="input-group-text">%</span>
+                                        {{ nutrient_form.calcium }}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ nutrient_form.include_protein }}
+                                        {{ nutrient_form.include_protein.label_tag }}
+                                    </div>
+                                    <div class="input-group mt-1">
+                                        <span class="input-group-text">%</span>
+                                        {{ nutrient_form.protein }}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ nutrient_form.include_phosphorus }}
+                                        {{ nutrient_form.include_phosphorus.label_tag }}
+                                    </div>
+                                    <div class="input-group mt-1">
+                                        <span class="input-group-text">%</span>
+                                        {{ nutrient_form.phosphorus }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ nutrient_form.include_ndf }}
+                                        {{ nutrient_form.include_ndf.label_tag }}
+                                    </div>
+                                    <div class="input-group mt-1">
+                                        <span class="input-group-text">%</span>
+                                        {{ nutrient_form.ndf }}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ nutrient_form.include_me }}
+                                        {{ nutrient_form.include_me.label_tag }}
+                                    </div>
+                                    <div class="input-group mt-1">
+                                        <span class="input-group-text">%</span>
+                                        {{ nutrient_form.metabolizable_energy }}
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        {{ nutrient_form.include_mp }}
+                                        {{ nutrient_form.include_mp.label_tag }}
+                                    </div>
+                                    <div class="input-group mt-1">
+                                        <span class="input-group-text">%</span>
+                                        {{ nutrient_form.mp }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 自定义营养成分 -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>自定义营养成分</h5>
+                        <button type="button" class="btn btn-primary btn-sm float-right" id="add-form">
+                            <i class="fas fa-plus"></i> 添加营养元素
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        {{ custom_nutrient_formset.management_form }}
+                        <div id="formset-container">
+                            {% for form in custom_nutrient_formset %}
+                                <div class="mb-3 p-3 border rounded bg-light form-item">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="mb-0">
+                                                {{ form.nutrient_name.label_tag }}
+                                                {{ form.nutrient_name }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-0">
+                                                {{ form.value.label_tag }}
+                                                {{ form.value }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-0">
+                                                {{ form.unit.label_tag }}
+                                                {{ form.unit }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 d-flex align-items-end justify-content-end">
+                                            <!-- 确认按钮 - 默认显示 -->
+                                            <button type="button" class="btn btn-success btn-sm mr-2 confirm-form">
+                                                <i class="fas fa-check"></i> 确认
+                                            </button>
+                                            <!-- 删除按钮 - 默认隐藏 -->
+                                            <button type="button" class="btn btn-danger btn-sm remove-form"
+                                                    style="display: none;">
+                                                <i class="fas fa-trash"></i> 删除
+                                            </button>
+                                            {{ form.DELETE.as_hidden }}
+                                            {{ form.id.as_hidden }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 提交按钮 -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">提交修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 营养成分显示/隐藏控制
+        document.addEventListener('DOMContentLoaded', function () {
+            // 营养成分的复选框和输入框映射
+            const checkboxes = {
+                'include_dm': 'dm',
+                'include_calcium': 'calcium',
+                'include_protein': 'protein',
+                'include_phosphorus': 'phosphorus',
+                'include_ndf': 'ndf',
+                'include_me': 'metabolizable_energy',
+                'include_mp': 'mp'
+            };
+
+            // 为每个复选框添加事件监听器
+            Object.keys(checkboxes).forEach(checkboxName => {
+                const checkbox = document.getElementById(`id_${checkboxName}`);
+                const inputField = document.getElementById(`id_${checkboxes[checkboxName]}`);
+
+                if (checkbox && inputField) {
+                    // 设置初始状态
+                    inputField.disabled = !checkbox.checked;
+
+                    // 添加事件监听器
+                    checkbox.addEventListener('change', function () {
+                        inputField.disabled = !this.checked;
+                    });
+                }
+            });
+        });
+
+        // 自定义营养成分表单集处理
+        document.addEventListener('DOMContentLoaded', function () {
+            const formsetContainer = document.getElementById('formset-container');
+            const addFormBtn = document.getElementById('add-form');
+            const totalFormsInput = document.querySelector('input[id$="-TOTAL_FORMS"]');
+
+            // 创建表单模板
+            const formTemplate = `
+                <div class="mb-3 p-3 border rounded bg-light form-item">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-0">
+                                <label for="id_customingredientnutrient_set-__prefix__-nutrient_name">营养元素名称</label>
+                                <input type="text" name="customingredientnutrient_set-__prefix__-nutrient_name" class="form-control" id="id_customingredientnutrient_set-__prefix__-nutrient_name">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-0">
+                                <label for="id_customingredientnutrient_set-__prefix__-value">含量</label>
+                                <input type="number" name="customingredientnutrient_set-__prefix__-value" step="0.01" min="0" class="form-control" id="id_customingredientnutrient_set-__prefix__-value">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-0">
+                                <label for="id_customingredientnutrient_set-__prefix__-unit">单位</label>
+                                <input type="text" name="customingredientnutrient_set-__prefix__-unit" placeholder="%" class="form-control" id="id_customingredientnutrient_set-__prefix__-unit">
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex align-items-end justify-content-end">
+                            <button type="button" class="btn btn-success btn-sm mr-2 confirm-form">
+                                <i class="fas fa-check"></i> 确认
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm remove-form" style="display: none;">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                            <input type="hidden" name="customingredientnutrient_set-__prefix__-DELETE" id="id_customingredientnutrient_set-__prefix__-DELETE">
+                            <input type="hidden" name="customingredientnutrient_set-__prefix__-id" id="id_customingredientnutrient_set-__prefix__-id">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // 添加新表单
+            function addNewForm() {
+                const totalForms = parseInt(totalFormsInput.value);
+                const newForm = formTemplate.replace(/__prefix__/g, totalForms);
+
+                const newFormElement = document.createElement('div');
+                newFormElement.innerHTML = newForm;
+                const newFormItem = newFormElement.firstElementChild;
+                formsetContainer.appendChild(newFormItem);
+
+                totalFormsInput.value = totalForms + 1;
+
+                // 为新添加的按钮添加事件监听
+                attachConfirmEvent(newFormItem.querySelector('.confirm-form'));
+                attachRemoveEvent(newFormItem.querySelector('.remove-form'));
+            }
+
+            // 确认表单
+            function confirmForm(btn) {
+                const formItem = btn.closest('.form-item');
+                const inputs = formItem.querySelectorAll('input');
+                const confirmBtn = formItem.querySelector('.confirm-form');
+                const removeBtn = formItem.querySelector('.remove-form');
+
+                // 验证输入是否完整
+                let allFilled = true;
+                inputs.forEach(input => {
+                    if (input.type !== 'hidden' && input.value.trim() === '') {
+                        allFilled = false;
+                    }
+                });
+
+                if (allFilled) {
+                    // 禁用输入框
+                    inputs.forEach(input => {
+                        if (input.type !== 'hidden') {
+                            input.readOnly = true;
+                        }
+                    });
+
+                    // 隐藏确认按钮，显示删除按钮
+                    confirmBtn.style.display = 'none';
+                    removeBtn.style.display = 'inline-block';
+
+                    // 添加视觉反馈
+                    formItem.classList.add('bg-success', 'bg-opacity-10');
+                } else {
+                    alert('请填写所有字段后再确认');
+                }
+            }
+
+            // 删除表单
+            function removeForm(btn) {
+                const formItem = btn.closest('.form-item');
+                const deleteInput = formItem.querySelector('input[name$="-DELETE"]');
+                const formIdInput = formItem.querySelector('input[name$="-id"]');
+
+                if (formIdInput && formIdInput.value) {
+                    // 已存在的表单，标记为删除
+                    deleteInput.value = 'on';
+                    formItem.style.display = 'none';
+                } else {
+                    // 新添加的表单，直接移除
+                    formItem.remove();
+                    // 更新总表单数
+                    totalFormsInput.value = parseInt(totalFormsInput.value) - 1;
+                }
+            }
+
+            // 为确认按钮添加事件监听器
+            function attachConfirmEvent(btn) {
+                btn.addEventListener('click', function () {
+                    confirmForm(this);
+                });
+            }
+
+            // 为删除按钮添加事件监听器
+            function attachRemoveEvent(btn) {
+                btn.addEventListener('click', function () {
+                    removeForm(this);
+                });
+            }
+
+            // 为添加按钮添加事件监听
+            addFormBtn.addEventListener('click', addNewForm);
+
+            // 为初始的按钮添加事件监听
+            document.querySelectorAll('.confirm-form').forEach(btn => {
+                attachConfirmEvent(btn);
+            });
+            document.querySelectorAll('.remove-form').forEach(btn => {
+                attachRemoveEvent(btn);
+            });
+        });
+    </script>
+{% endblock %}

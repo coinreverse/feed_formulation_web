@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}首页 - 饲料配方系统{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h1>欢迎使用饲料配方系统</h1>
+        <p class="lead">这是一个基于遗传算法的饲料配方优化系统，帮助您为不同动物制定最佳饲料配方。</p>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5>系统功能</h5>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'animal_requirements_list' %}">动物营养需求管理</a>
+                        {% else %}
+                            <a href="{% url 'login' %}?next={% url 'animal_requirements_list' %}">动物营养需求管理</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'ingredients_list' %}">饲料原料管理</a>
+                        {% else %}
+                            <a href="{% url 'login' %}?next={% url 'ingredients_list' %}">饲料原料管理</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'ga_optimization_list' %}">配方优化</a>
+                        {% else %}
+                            <a href="{% url 'login' %}?next={% url 'ga_optimization_list' %}">配方优化</a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'formula_results_list' %}">配方结果</a>
+                        {% else %}
+                            <a href="{% url 'login' %}?next={% url 'formula_results_list' %}">配方结果</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

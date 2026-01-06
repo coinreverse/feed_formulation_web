@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}审核饲料原料{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1>审核饲料原料</h1>
+                <div>
+                    <a href="{% url 'ingredient_detail' ingredient.id %}" class="btn btn-secondary">返回详情</a>
+                </div>
+            </div>
+
+            <!-- 基本信息 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>基本信息</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">原料名称</dt>
+                        <dd class="col-sm-9">
+                            {% if 'name' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.name.0 }} → {{ changed_fields.name.1 }}
+                                </span>
+                            {% else %}
+                                {{ pending_change.name }}
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3">原料说明</dt>
+                        <dd class="col-sm-9">
+                            {% if 'description' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.description.0|default:"无" }} → {{ changed_fields.description.1|default:"无" }}
+                                </span>
+                            {% else %}
+                                {{ pending_change.description|default:"无" }}
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3">单价</dt>
+                        <dd class="col-sm-9">
+                            {% if 'cost' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.cost.0 }} → {{ changed_fields.cost.1 }} 元/kg
+                                </span>
+                            {% else %}
+                                {{ pending_change.cost }} 元/kg
+                            {% endif %}
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- 固定营养成分 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>固定营养成分</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-3 mb-2">干物质(DM)</dt>
+                        <dd class="col-sm-9 mb-2">
+                            {% if 'dm' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.dm.0 }} → {{ changed_fields.dm.1 }}%
+                                </span>
+                            {% else %}
+                                {{ pending_change.dm }}%
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3 mb-2">钙(Ca)</dt>
+                        <dd class="col-sm-9 mb-2">
+                            {% if 'calcium' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.calcium.0 }} → {{ changed_fields.calcium.1 }}%
+                                </span>
+                            {% else %}
+                                {{ pending_change.calcium }}%
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3 mb-2">粗蛋白(CP)</dt>
+                        <dd class="col-sm-9 mb-2">
+                            {% if 'protein' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.protein.0 }} → {{ changed_fields.protein.1 }}%
+                                </span>
+                            {% else %}
+                                {{ pending_change.protein }}%
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3 mb-2">磷(P)</dt>
+                        <dd class="col-sm-9 mb-2">
+                            {% if 'phosphorus' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.phosphorus.0 }} → {{ changed_fields.phosphorus.1 }}%
+                                </span>
+                            {% else %}
+                                {{ pending_change.phosphorus }}%
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3 mb-2">中性洗涤纤维(NDF)</dt>
+                        <dd class="col-sm-9 mb-2">
+                            {% if 'ndf' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.ndf.0 }} → {{ changed_fields.ndf.1 }}%
+                                </span>
+                            {% else %}
+                                {{ pending_change.ndf }}%
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3 mb-2">代谢能(ME)</dt>
+                        <dd class="col-sm-9 mb-2">
+                            {% if 'metabolizable_energy' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.metabolizable_energy.0 }} → {{ changed_fields.metabolizable_energy.1 }} MJ/kg
+                                </span>
+                            {% else %}
+                                {{ pending_change.metabolizable_energy }} MJ/kg
+                            {% endif %}
+                        </dd>
+
+                        <dt class="col-sm-3 mb-2">代谢蛋白(MP)</dt>
+                        <dd class="col-sm-9 mb-2">
+                            {% if 'mp' in changed_fields %}
+                                <span class="text-danger">
+                                    {{ changed_fields.mp.0 }} → {{ changed_fields.mp.1 }}%
+                                </span>
+                            {% else %}
+                                {{ pending_change.mp }}%
+                            {% endif %}
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- 自定义营养成分 -->
+            {% if pending_change.custom_nutrients %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>自定义营养成分</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            {% for custom_nutrient in pending_change.custom_nutrients %}
+                                <dt class="col-sm-3 mb-2">{{ custom_nutrient.nutrient_name }}</dt>
+                                <dd class="col-sm-9 mb-2">
+                                    {% if 'custom_nutrients' in changed_fields %}
+                                        <span class="text-danger">
+                                            {% for original in changed_fields.custom_nutrients.0 %}
+                                                {% if original.nutrient_name == custom_nutrient.nutrient_name %}
+                                                    {{ original.value }} {{ original.unit }}
+                                                    →
+                                                {% endif %}
+                                            {% endfor %}
+                                            {{ custom_nutrient.value }} {{ custom_nutrient.unit }}
+                                        </span>
+                                    {% else %}
+                                        {{ custom_nutrient.value }} {{ custom_nutrient.unit }}
+                                    {% endif %}
+                                </dd>
+                            {% endfor %}
+                        </dl>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- 审核操作 -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>审核操作</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'review_ingredient' ingredient.id %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="action" class="form-label">审核结果</label>
+                            <select name="action" id="action" class="form-select">
+                                <option value="approve">通过</option>
+                                <option value="reject">拒绝</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comments" class="form-label">审核意见</label>
+                            <textarea name="comments" id="comments" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">提交审核</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
