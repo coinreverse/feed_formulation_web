@@ -120,6 +120,16 @@
         .ingredient-toggle-icon.expanded {
             transform: rotate(0deg);
         }
+
+        /* 添加自定义营养元素的水平排列样式 */
+        .ingredient-custom-nutrient-item {
+            margin-right: 20px;
+            display: inline-block;
+        }
+
+        .ingredient-toggle-icon.expanded {
+            transform: rotate(0deg);
+        }
     </style>
 {% endblock %}
 
@@ -420,10 +430,10 @@
                     html += `<td colspan="${fieldsToShow.length + 1}">`; // +1 是因为有选择列
                     html += `<div class="ingredient-custom-nutrients-content" id="customNutrientsContent_${ingredient.id}">`;
 
-                    // 显示自定义营养元素
+                    // 显示自定义营养元素 - 使用span标签实现水平排列
                     ingredient.custom_nutrients.forEach(nutrient => {
                         if (nutrient.value !== null) {
-                            html += `<div>${nutrient.name}: ${nutrient.value}${nutrient.unit || '%'}</div>`;
+                            html += `<span class="ingredient-custom-nutrient-item">${nutrient.name}: ${nutrient.value}${nutrient.unit || '%'}</span>`;
                         }
                     });
 
