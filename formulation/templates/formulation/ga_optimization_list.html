@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}遗传算法配方优化{% endblock %}
+{% block title %}{% trans "遗传算法配方优化" %}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1>遗传算法配方优化</h1>
-    <a href="{% url 'home' %}" class="btn btn-secondary">返回主页</a>
+    <h1>{% trans "遗传算法配方优化" %}</h1>
+    <a href="{% url 'home' %}" class="btn btn-secondary">{% trans "返回主页" %}</a>
 </div>
 
 <div class="alert alert-info">
-    <p>选择一个动物营养需求配置来运行遗传算法优化，系统将为您生成最佳饲料配方。</p>
+    <p>{% translate '选择一个动物营养需求配置来运行遗传算法优化，系统将为您生成最佳饲料配方。' %}</p>
 </div>
 
 {% if requirements %}
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>动物类型</th>
-                <th>体重(kg)</th>
-                <th>日增重(g)</th>
-                <th>创建时间</th>
-                <th>操作</th>
+                <th>{% trans "动物类型" %}</th>
+                <th>{% translate '体重(kg)' %}</th>
+                <th>{% translate '日增重(g)' %}</th>
+                <th>{% trans "创建时间" %}</th>
+                <th>{% trans "操作" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +32,7 @@
                 <td>{{ requirement.daily_gain }}</td>
                 <td>{{ requirement.created_at|date:"Y-m-d H:i" }}</td>
                 <td>
-                    <a href="{% url 'formula_results_page' requirement.id %}" class="btn btn-sm btn-primary">开始优化</a>
+                    <a href="{% url 'formula_results_page' requirement.id %}" class="btn btn-sm btn-primary">{% trans "开始优化" %}</a>
                 </td>
             </tr>
             {% endfor %}
@@ -39,13 +40,13 @@
     </table>
 {% else %}
     <div class="alert alert-warning">
-        <p>暂无动物营养需求配置。请先在<a href="{% url 'animal_requirements_list' %}">动物营养需求管理</a>中添加配置。</p>
+        <p>{% trans '暂无动物营养需求配置。请先在' %}<a href="{% url 'animal_requirements_list' %}">{% trans "动物营养需求管理" %}</a>{% trans '中添加配置。' %}</p>
     </div>
 {% endif %}
 
 {% if user.is_authenticated %}
-    <p>欢迎, {{ user.username }}!</p>
+    <p>{% trans '欢迎, ' %}{{ user.username }}!</p>
 {% else %}
-    <p>您尚未登录，请 <a href="{% url 'login' %}">登录</a> 或 <a href="{% url 'register' %}">注册</a>。</p>
+    <p>{% trans '您尚未登录，请' %}<a href="{% url 'login' %}">{% trans "登录" %}</a>{% trans '或' %}<a href="{% url 'register' %}">{% trans "注册" %}</a>{% trans '。' %}</p>
 {% endif %}
 {% endblock %}

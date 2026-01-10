@@ -57,9 +57,9 @@ class FeedEvaluator:
         self.ingredient_names = self.metadata.get("ingredient_names", [])
 
         # 输入验证 - 动态检查维度
-        assert len(self.costs) == len(self.ingredient_lower_bounds), "成本向量与原料数量不匹配"
-        assert self.nutrition.shape[0] == len(self.ingredient_lower_bounds), "营养矩阵行与原料数量不匹配"
-        assert self.nutrition.shape[1] == len(self.lower_bounds), "营养矩阵列与营养素数量不匹配"
+        assert len(self.costs) == len(self.ingredient_lower_bounds), _("成本向量与原料数量不匹配")
+        assert self.nutrition.shape[0] == len(self.ingredient_lower_bounds), _("营养矩阵行与原料数量不匹配")
+        assert self.nutrition.shape[1] == len(self.lower_bounds), _("营养矩阵列与营养素数量不匹配")
 
     def __call__(self, X: torch.Tensor, tol: float = 0.05) -> torch.Tensor:
         """

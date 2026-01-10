@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from django.views.i18n import set_language
 
 
 # 简单的主页视图
@@ -30,4 +31,6 @@ urlpatterns = [
     path("ingredients/", include("ingredients.urls")),
     path("animal_requirements/", include("animal_requirements.urls")),
     path("formulation/", include("formulation.urls")),
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('set-language/', set_language, name='set_language'),
 ]

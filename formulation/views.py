@@ -6,6 +6,7 @@ from formulation.models import FeedFormulaResult
 from formulation.services.ga_service import run_ga_and_import
 from django.views.decorators.csrf import csrf_exempt
 import logging
+from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
 
@@ -151,7 +152,7 @@ def run_ga_and_show_results(request, requirement_id):
 
 def ga_optimization_list(request):
     """遗传算法优化列表页面 - 显示所有已通过审核的动物需求供用户选择进行优化"""
-    # 只显示审核状态为"已通过"的动物营养需求
+    # 只显示审核状态为_("已通过")的动物营养需求
     requirements = AnimalRequirement.objects.filter(status=AnimalRequirement.APPROVED).order_by('-created_at')
 
     context = {

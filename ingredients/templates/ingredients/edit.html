@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>编辑饲料原料</h2>
+        <h2>{% trans "编辑饲料原料" %}</h2>
         <div>
-            <a href="{% url 'ingredients_list' %}" class="btn btn-secondary">返回列表</a>
+            <a href="{% url 'ingredients_list' %}" class="btn btn-secondary">{% trans "返回列表" %}</a>
         </div>
     </div>
 
     <!-- 在表单顶部添加错误信息显示 -->
     {% if form.errors or nutrient_form.errors or custom_nutrient_formset.errors %}
         <div class="alert alert-danger">
-            <strong>表单验证失败，请检查以下错误：</strong>
+            <strong>{% translate '表单验证失败，请检查以下错误：' %}</strong>
             <ul>
                 {% for field in form %}
                     {% for error in field.errors %}
@@ -26,7 +27,7 @@
                 {% for form in custom_nutrient_formset %}
                     {% for field in form %}
                         {% for error in field.errors %}
-                            <li>自定义营养成分: {{ field.label }}: {{ error }}</li>
+                            <li>{% translate '自定义营养成分' %}: {{ field.label }}: {{ error }}</li>
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}
@@ -41,7 +42,7 @@
                 <!-- 基本信息 -->
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5>基本信息</h5>
+                        <h5>{% trans "基本信息" %}</h5>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
@@ -62,7 +63,7 @@
                 <!-- 营养成分 -->
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5>营养成分</h5>
+                        <h5>{% trans "营养成分" %}</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -147,9 +148,9 @@
                 <!-- 自定义营养成分 -->
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5>自定义营养成分</h5>
+                        <h5>{% trans "自定义营养成分" %}</h5>
                         <button type="button" class="btn btn-primary btn-sm float-right" id="add-form">
-                            <i class="fas fa-plus"></i> 添加营养元素
+                            <i class="fas fa-plus"></i> {% trans "添加自定义营养元素" %}
                         </button>
                     </div>
                     <div class="card-body">
@@ -179,12 +180,12 @@
                                         <div class="col-md-5 d-flex align-items-end justify-content-end">
                                             <!-- 确认按钮 - 默认显示 -->
                                             <button type="button" class="btn btn-success btn-sm mr-2 confirm-form">
-                                                <i class="fas fa-check"></i> 确认
+                                                <i class="fas fa-check"></i> {% trans "确认" %}
                                             </button>
                                             <!-- 删除按钮 - 默认隐藏 -->
                                             <button type="button" class="btn btn-danger btn-sm remove-form"
                                                     style="display: none;">
-                                                <i class="fas fa-trash"></i> 删除
+                                                <i class="fas fa-trash"></i> {% trans "删除" %}
                                             </button>
                                             {{ form.DELETE.as_hidden }}
                                             {{ form.id.as_hidden }}
@@ -198,7 +199,7 @@
 
                 <!-- 提交按钮 -->
                 <div class="mb-3">
-                    <button type="submit" class="btn btn-primary">提交修改</button>
+                    <button type="submit" class="btn btn-primary">{% trans "提交修改" %}</button>
                 </div>
             </form>
         </div>
@@ -247,28 +248,28 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="mb-0">
-                                <label for="id_customingredientnutrient_set-__prefix__-nutrient_name">营养元素名称</label>
+                                <label for="id_customingredientnutrient_set-__prefix__-nutrient_name">{% trans "营养元素名称" %}</label>
                                 <input type="text" name="customingredientnutrient_set-__prefix__-nutrient_name" class="form-control" id="id_customingredientnutrient_set-__prefix__-nutrient_name">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="mb-0">
-                                <label for="id_customingredientnutrient_set-__prefix__-value">含量</label>
+                                <label for="id_customingredientnutrient_set-__prefix__-value">{% trans "含量" %}</label>
                                 <input type="number" name="customingredientnutrient_set-__prefix__-value" step="0.01" min="0" class="form-control" id="id_customingredientnutrient_set-__prefix__-value">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="mb-0">
-                                <label for="id_customingredientnutrient_set-__prefix__-unit">单位</label>
+                                <label for="id_customingredientnutrient_set-__prefix__-unit">{% trans "单位" %}</label>
                                 <input type="text" name="customingredientnutrient_set-__prefix__-unit" placeholder="%" class="form-control" id="id_customingredientnutrient_set-__prefix__-unit">
                             </div>
                         </div>
                         <div class="col-md-5 d-flex align-items-end justify-content-end">
                             <button type="button" class="btn btn-success btn-sm mr-2 confirm-form">
-                                <i class="fas fa-check"></i> 确认
+                                <i class="fas fa-check"></i> {% trans "确认" %}
                             </button>
                             <button type="button" class="btn btn-danger btn-sm remove-form" style="display: none;">
-                                <i class="fas fa-trash"></i> 删除
+                                <i class="fas fa-trash"></i> {% trans "删除" %}
                             </button>
                             <input type="hidden" name="customingredientnutrient_set-__prefix__-DELETE" id="id_customingredientnutrient_set-__prefix__-DELETE">
                             <input type="hidden" name="customingredientnutrient_set-__prefix__-id" id="id_customingredientnutrient_set-__prefix__-id">
@@ -324,7 +325,7 @@
                     // 添加视觉反馈
                     formItem.classList.add('bg-success', 'bg-opacity-10');
                 } else {
-                    alert('请填写所有字段后再确认');
+                    alert('{% trans "请填写所有字段后再确认" %}');
                 }
             }
 

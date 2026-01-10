@@ -1,24 +1,25 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}饲料原料管理{% endblock %}
+{% block title %} {% trans "饲料原料管理" %} {% endblock %}
 
 {% block content %}
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>饲料原料管理</h1>
+        <h1>{% trans "饲料原料管理" %}</h1>
         <div>
-            <a href="{% url 'add_ingredient' %}" class="btn btn-primary me-2">添加原料</a>
-            <a href="{% url 'home' %}" class="btn btn-secondary">返回主页</a>
+            <a href="{% url 'add_ingredient' %}" class="btn btn-primary me-2">{% trans "添加原料" %}</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">{% trans "返回主页" %}</a>
         </div>
     </div>
 
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>原料名称</th>
-            <th>单价 (元/kg)</th>
-            <th>审核状态</th>
-            <th>创建时间</th>
-            <th>操作</th>
+            <th>{% trans "原料名称" %}</th>
+            <th>{% trans "单价 (元/kg)" %}</th>
+            <th>{% trans "审核状态" %}</th>
+            <th>{% trans "创建时间" %}</th>
+            <th>{% trans "操作" %}</th>
         </tr>
         </thead>
         <tbody>
@@ -28,43 +29,43 @@
                 <td>{{ ingredient.cost }}</td>
                 <td>
                     {% if ingredient.status == 'pending' %}
-                        <span class="badge bg-warning">待审核</span>
+                        <span class="badge bg-warning">{% trans "待审核" %}</span>
                     {% elif ingredient.status == 'approved' %}
-                        <span class="badge bg-success">已通过</span>
+                        <span class="badge bg-success">{% trans "已通过" %}</span>
                     {% elif ingredient.status == 'rejected' %}
-                        <span class="badge bg-danger">已拒绝</span>
+                        <span class="badge bg-danger">{% trans "已拒绝" %}</span>
                     {% endif %}
                 </td>
                 <td>{{ ingredient.created_at|date:"Y-m-d H:i" }}</td>
                 <td>
-                    <a href="{% url 'ingredient_detail' ingredient.id %}" class="btn btn-sm btn-primary">查看详情</a>
+                    <a href="{% url 'ingredient_detail' ingredient.id %}" class="btn btn-sm btn-primary">{% trans "查看详情" %}</a>
 
                     <!-- 编辑按钮：根据状态判断是否禁用 -->
                     {% if user.is_authenticated %}
                         {% if ingredient.status == 'pending' %}
-                            <button class="btn btn-sm btn-secondary disabled" title="该记录已提交审核，无法编辑">编辑</button>
+                            <button class="btn btn-sm btn-secondary disabled" title="{% translate '该记录已提交审核，无法编辑' %}">{% trans "编辑" %}</button>
                         {% else %}
-                            <a href="{% url 'edit_ingredient' ingredient.id %}" class="btn btn-sm btn-secondary">编辑</a>
+                            <a href="{% url 'edit_ingredient' ingredient.id %}" class="btn btn-sm btn-secondary">{% trans "编辑" %}</a>
                         {% endif %}
                     {% endif %}
 
                     <!-- 审核按钮：只有超级用户或管理员可以审核 -->
                     {% if user.is_superuser or user.is_staff %}
-                        <a href="{% url 'review_ingredient' ingredient.id %}" class="btn btn-sm btn-warning">审核</a>
+                        <a href="{% url 'review_ingredient' ingredient.id %}" class="btn btn-sm btn-warning">{% trans "审核" %}</a>
                     {% endif %}
                 </td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="5" class="text-center">暂无原料数据</td>
+                <td colspan="5" class="text-center">{% trans "暂无原料数据" %}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
     {% if user.is_authenticated %}
-        <p>欢迎, {{ user.username }}!</p>
+        <p>{% trans '欢迎' %}, {{ user.username }}!</p>
     {% else %}
-        <p>您尚未登录，请 <a href="{% url 'login' %}">登录</a> 或 <a href="{% url 'register' %}">注册</a>。</p>
+        <p>{% trans '您尚未登录，请' %} <a href="{% url 'login' %}">{% trans "登录" %}</a> {% trans '或' %} <a href="{% url 'register' %}">{% trans "注册" %}</a> {% trans '。' %}</p>
     {% endif %}
 {% endblock %}

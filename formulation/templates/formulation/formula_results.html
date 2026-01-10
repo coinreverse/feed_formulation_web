@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block extra_css %}
     <style>
@@ -137,17 +138,17 @@
     <div class="container">
         <div class="main-container">
             <div class="header">
-                <h2>配方优化系统</h2>
+                <h2>{% trans "配方优化系统" %}</h2>
             </div>
 
             <!-- 动物营养需求 -->
             <div class="card">
                 <div class="card-header">
-                    <h3>动物营养需求</h3>
+                    <h3>{% trans "动物营养需求" %}</h3>
                 </div>
                 <div class="card-body">
                     <div id="animalRequirementInfo">
-                        <div class="loading">正在加载动物营养需求信息...</div>
+                        <div class="loading">{% trans "正在加载动物营养需求信息..." %}</div>
                     </div>
                 </div>
             </div>
@@ -155,29 +156,29 @@
             <!-- 可用饲料原料 -->
             <div class="card">
                 <div class="card-header">
-                    <h3>可用饲料原料</h3>
+                    <h3>{% trans "可用饲料原料" %}</h3>
                     <div class="select-all-container">
                         <label>
-                            <input type="checkbox" id="selectAllIngredients"> 全选/取消全选
+                            <input type="checkbox" id="selectAllIngredients"> <span>{% trans "全选/取消全选" %}</span>
                         </label>
                     </div>
                 </div>
                 <div class="card-body">
                     <div id="ingredientsInfo">
-                        <div class="loading">正在加载饲料原料信息...</div>
+                        <div class="loading">{% trans "正在加载饲料原料信息..." %}</div>
                     </div>
                 </div>
             </div>
 
             <!-- 运行遗传算法按钮 -->
             <button class="run-ga-button" onclick="runGeneticAlgorithm()" id="runGaButton">
-                运行遗传算法
+                {% trans "运行遗传算法" %}
             </button>
 
             <!-- 运行结果后显示查看结果按钮 -->
             <div id="viewResultsSection" style="display: none;">
                 <button class="run-ga-button" onclick="viewResults()" style="margin-top: 10px;">
-                    查看配方结果
+                    {% trans "查看配方结果" %}
                 </button>
             </div>
 
@@ -210,13 +211,13 @@
                 // 修正API调用路径
                 const response = await fetch(`/animal_requirements/api/requirements/${requirementId}/`);
                 if (!response.ok) {
-                    throw new Error('获取动物营养需求信息失败');
+                    throw new Error('{% trans "获取动物营养需求信息失败" %}');
                 }
                 animalRequirement = await response.json();
                 displayAnimalRequirement();
             } catch (err) {
                 document.getElementById('animalRequirementInfo').innerHTML =
-                    `<div class="error">获取动物营养需求信息失败: ${err.message}</div>`;
+                    `<div class="error">{% trans "获取动物营养需求信息失败" %}: ${err.message}</div>`;
                 console.error('Error fetching animal requirement:', err);
             }
         }
@@ -225,13 +226,13 @@
             try {
                 const response = await fetch('/ingredients/api/ingredients/');
                 if (!response.ok) {
-                    throw new Error('获取饲料原料信息失败');
+                    throw new Error('{% trans "获取饲料原料信息失败" %}');
                 }
                 ingredients = await response.json();
                 displayIngredients();
             } catch (err) {
                 document.getElementById('ingredientsInfo').innerHTML =
-                    `<div class="error">获取饲料原料信息失败: ${err.message}</div>`;
+                    `<div class="error">{% trans "获取饲料原料信息失败" %}: ${err.message}</div>`;
                 console.error('Error fetching ingredients:', err);
             }
         }
@@ -242,27 +243,27 @@
 
             // 定义字段名称和单位的映射
             const fieldConfig = {
-                'animal_type': {name: '动物类型', unit: ''},
-                'body_weight': {name: '体重', unit: 'kg'},
-                'daily_gain': {name: '日增重', unit: 'g'},
-                'dm': {name: '干物质', unit: '%'},
-                'ndf': {name: '中性洗涤纤维', unit: '%'},
-                'mp': {name: '代谢蛋白', unit: 'g/kg W0.75'},
-                'cp': {name: '粗蛋白', unit: 'g/kg DM'},
-                'ca': {name: '钙', unit: 'g/kg DM'},
-                'p': {name: '磷', unit: 'g/kg DM'},
-                'me': {name: '代谢能', unit: 'kcal/kg DM'},
-                'na': {name: '钠', unit: 'g/kg DM'},
-                'k': {name: '钾', unit: 'g/kg DM'},
-                'mg': {name: '镁', unit: 'g/kg DM'}
+                'animal_type': {name: '{% trans "动物类型" %}', unit: ''},
+                'body_weight': {name: '{% trans "体重" %}', unit: 'kg'},
+                'daily_gain': {name: '{% trans "日增重" %}', unit: 'g'},
+                'dm': {name: '{% trans "干物质" %}', unit: '%'},
+                'ndf': {name: '{% trans "中性洗涤纤维" %}', unit: '%'},
+                'mp': {name: '{% trans "代谢蛋白" %}', unit: 'g/kg W0.75'},
+                'cp': {name: '{% trans "粗蛋白" %}', unit: 'g/kg DM'},
+                'ca': {name: '{% trans "钙" %}', unit: 'g/kg DM'},
+                'p': {name: '{% trans "磷" %}', unit: 'g/kg DM'},
+                'me': {name: '{% trans "代谢能" %}', unit: 'kcal/kg DM'},
+                'na': {name: '{% trans "钠" %}', unit: 'g/kg DM'},
+                'k': {name: '{% trans "钾" %}', unit: 'g/kg DM'},
+                'mg': {name: '{% trans "镁" %}', unit: 'g/kg DM'}
             };
 
             let html = `
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>营养元素</th>
-                <th>需求值</th>
+                <th>{% trans "营养元素" %}</th>
+                <th>{% trans "需求值" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -335,18 +336,18 @@
 
             // 定义字段名称映射
             const fieldLabels = {
-                'name': '原料名称',
-                'dm': '干物质 (%)',
-                'ndf': '中性洗涤纤维 (%)',
-                'mp': '代谢蛋白 (%)',
-                'cp': '粗蛋白 (%)',
-                'ca': '钙 (%)',
-                'p': '磷 (g/kg)',
-                'me': '代谢能 (kcal/kg)',
-                'na': '钠 (g/kg)',
-                'k': '钾 (g/kg)',
-                'mg': '镁 (g/kg)',
-                'cost': '价格 (元/吨)'
+                'name': '{% trans "原料名称" %}',
+                'dm': '{% trans "干物质" %} (%)',
+                'ndf': '{% trans "中性洗涤纤维" %} (%)',
+                'mp': '{% trans "代谢蛋白" %} (%)',
+                'cp': '{% trans "粗蛋白" %} (%)',
+                'ca': '{% trans "钙" %} (%)',
+                'p': '{% trans "磷" %} (g/kg)',
+                'me': '{% trans "代谢能" %} (kcal/kg)',
+                'na': '{% trans "钠" %} (g/kg)',
+                'k': '{% trans "钾" %} (g/kg)',
+                'mg': '{% trans "镁" %} (g/kg)',
+                'cost': '{% trans "价格" %} (元/吨)'
             };
 
             // 获取所有唯一字段名，排除custom_nutrients
@@ -374,7 +375,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>选择</th>
+                        <th>{% trans "选择" %}</th>
      `;
 
             // 生成表头
@@ -496,18 +497,18 @@
         // 验证所选原料是否覆盖所有必需营养元素
         function validateSelectedIngredients() {
             if (selectedIngredientIds.size === 0) {
-                alert('请至少选择一种饲料原料');
+                alert('{% trans "请至少选择一种饲料原料" %}');
                 return false;
             }
 
             // 检查动物需求和原料数据是否已加载
             if (!animalRequirement) {
-                alert('动物营养需求数据尚未加载，请稍后重试');
+                alert('{% trans "动物营养需求数据尚未加载，请稍后重试" %}');
                 return false;
             }
 
             if (!ingredients || ingredients.length === 0) {
-                alert('饲料原料数据尚未加载，请稍后重试');
+                alert('{% trans "饲料原料数据尚未加载，请稍后重试" %}');
                 return false;
             }
 
@@ -575,7 +576,7 @@
             });
 
             if (missingNutrients.length > 0) {
-                alert(`所选原料缺少以下必需营养元素: ${missingNutrients.join(', ')}`);
+                alert(`{% trans "所选原料缺少以下必需营养元素" %}: ${missingNutrients.join(', ')}`);
                 return false;
             }
 
@@ -593,7 +594,7 @@
             // 禁用运行按钮
             const runGaButton = document.getElementById('runGaButton');
             runGaButton.disabled = true;
-            runGaButton.textContent = '正在运行遗传算法...';
+            runGaButton.textContent = '{% trans "正在运行遗传算法..." %}';
 
             try {
                 // 将Set转换为数组
@@ -611,7 +612,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('运行遗传算法失败');
+                    throw new Error('{% trans "运行遗传算法失败" %}');
                 }
 
                 const data = await response.json();
@@ -622,19 +623,19 @@
 
             } catch (err) {
                 document.getElementById('resultsContent').innerHTML =
-                    `<div class="error">运行遗传算法失败: ${err.message}</div>`;
+                    `<div class="error"><% trans "运行遗传算法失败" %}: ${err.message}</div>`;
                 console.error('Error running genetic algorithm:', err);
             } finally {
                 // 启用运行按钮
                 runGaButton.disabled = false;
-                runGaButton.textContent = '运行遗传算法';
+                runGaButton.textContent = '{% trans "运行遗传算法" %}';
             }
         }
 
         // 显示结果
         function displayResults(data) {
             if (!data || data.length === 0) {
-                document.getElementById('resultsContent').innerHTML = '<div class="error">没有可用的结果</div>';
+                document.getElementById('resultsContent').innerHTML = '<div class="error">{% trans "没有可用的结果" %}</div>';
                 return;
             }
 

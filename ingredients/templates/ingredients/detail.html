@@ -1,72 +1,73 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>{{ ingredient.name }}</h2>
         <div>
-            <a href="{% url 'ingredients_list' %}" class="btn btn-secondary">返回列表</a>
-            <a href="{% url 'edit_ingredient' ingredient.id %}" class="btn btn-primary">编辑</a>
+            <a href="{% url 'ingredients_list' %}" class="btn btn-secondary">{% trans "返回列表" %}</a>
+            <a href="{% url 'edit_ingredient' ingredient.id %}" class="btn btn-primary">{% trans "编辑" %}</a>
         </div>
     </div>
 
     <div class="card mb-4">
-        <div class="card-header">基本信息</div>
+        <div class="card-header">{% trans "基本信息" %}</div>
         <div class="card-body">
-            <p><strong>原料名称：</strong>{{ ingredient.name }}</p>
-            <p><strong>原料说明：</strong>{{ ingredient.description|default:"无" }}</p>
-            <p><strong>单价：</strong>{{ ingredient.cost }} 元/吨</p>
-            <p><strong>创建时间：</strong>{{ ingredient.created_at }}</p>
-            <p><strong>创建用户：</strong>{{ ingredient.created_by.username }}</p>
-            <p><strong>审核状态：</strong>
+            <p><strong>{% trans "原料名称" %}：</strong>{{ ingredient.name }}</p>
+            <p><strong>{% trans "原料说明" %}：</strong>{{ ingredient.description|default:{% trans "无" %} }}</p>
+            <p><strong>{% trans "单价" %}：</strong>{{ ingredient.cost }} {% trans "元/吨" %}</p>
+            <p><strong>{% trans "创建时间" %}：</strong>{{ ingredient.created_at }}</p>
+            <p><strong>{% trans "创建用户" %}：</strong>{{ ingredient.created_by.username }}</p>
+            <p><strong>{% trans "审核状态" %}：</strong>
                 {% if ingredient.status == 'pending' %}
-                    <span class="badge bg-warning">待审核</span>
+                    <span class="badge bg-warning">{% trans "待审核" %}</span>
                 {% elif ingredient.status == 'approved' %}
-                    <span class="badge bg-success">已通过</span>
+                    <span class="badge bg-success">{% trans "已通过" %}</span>
                 {% elif ingredient.status == 'rejected' %}
-                    <span class="badge bg-danger">已拒绝</span>
+                    <span class="badge bg-danger">{% trans "已拒绝" %}</span>
                 {% endif %}
             </p>
             {% if ingredient.approved_by %}
-                <p><strong>审核用户：</strong>{{ ingredient.approved_by.username }}</p>
-                <p><strong>审核时间：</strong>{{ ingredient.approved_at }}</p>
+                <p><strong>{% trans "审核用户" %}：</strong>{{ ingredient.approved_by.username }}</p>
+                <p><strong>{% trans "审核时间" %}：</strong>{{ ingredient.approved_at }}</p>
             {% endif %}
         </div>
     </div>
 
     <!-- 营养成分部分保持不变 -->
     <div class="card mb-4">
-        <div class="card-header">营养成分</div>
+        <div class="card-header">{% trans "营养成分" %}</div>
         <div class="card-body">
             {% if nutrients %}
                 <div class="row">
                     <div class="col-md-6">
                         {% if nutrients.dm != 0 %}
-                            <p><strong>干物质(DM)：</strong>{{ nutrients.dm }}%</p>
+                            <p><strong>{% trans "干物质(DM)" %}：</strong>{{ nutrients.dm }}%</p>
                         {% endif %}
                         {% if nutrients.calcium != 0 %}
-                            <p><strong>钙(Ca)：</strong>{{ nutrients.calcium }}%</p>
+                            <p><strong>{% trans "钙(Ca)" %}：</strong>{{ nutrients.calcium }}%</p>
                         {% endif %}
                         {% if nutrients.protein != 0 %}
-                            <p><strong>粗蛋白(CP)：</strong>{{ nutrients.protein }}%</p>
+                            <p><strong>{% trans "粗蛋白(CP)" %}：</strong>{{ nutrients.protein }}%</p>
                         {% endif %}
                         {% if nutrients.phosphorus != 0 %}
-                            <p><strong>磷(P)：</strong>{{ nutrients.phosphorus }}%</p>
+                            <p><strong>{% trans "磷(P)" %}：</strong>{{ nutrients.phosphorus }}%</p>
                         {% endif %}
                     </div>
                     <div class="col-md-6">
                         {% if nutrients.ndf != 0 %}
-                            <p><strong>中性洗涤纤维(NDF)：</strong>{{ nutrients.ndf }}%</p>
+                            <p><strong>{% trans "中性洗涤纤维(NDF)" %}：</strong>{{ nutrients.ndf }}%</p>
                         {% endif %}
                         {% if nutrients.metabolizable_energy != 0 %}
-                            <p><strong>代谢能(ME)：</strong>{{ nutrients.metabolizable_energy }}%</p>
+                            <p><strong>{% trans "代谢能(ME)" %}：</strong>{{ nutrients.metabolizable_energy }}%</p>
                         {% endif %}
                         {% if nutrients.mp != 0 %}
-                            <p><strong>代谢蛋白(MP)：</strong>{{ nutrients.mp }}%</p>
+                            <p><strong>{% trans "代谢蛋白(MP)" %}：</strong>{{ nutrients.mp }}%</p>
                         {% endif %}
                     </div>
                 </div>
             {% else %}
-                <p>暂无营养成分数据</p>
+                <p>{% trans "暂无营养成分数据" %}</p>
             {% endif %}
         </div>
     </div>
@@ -74,7 +75,7 @@
     <!-- 添加自定义营养成分显示部分 -->
     {% if custom_nutrients %}
         <div class="card mb-4">
-            <div class="card-header">自定义营养成分</div>
+            <div class="card-header">{% trans "自定义营养成分" %}</div>
             <div class="card-body">
                 <dl class="row">
                     {% for custom_nutrient in custom_nutrients %}
@@ -90,10 +91,10 @@
     {% if user.is_superuser and ingredient.status == 'pending' %}
         <div class="card mb-4">
             <div class="card-header">
-                <h5>审核操作</h5>
+                <h5>{% trans "审核操作" %}</h5>
             </div>
             <div class="card-body">
-                <a href="{% url 'review_ingredient' ingredient.id %}" class="btn btn-warning">审核该原料</a>
+                <a href="{% url 'review_ingredient' ingredient.id %}" class="btn btn-warning">{% trans "审核该原料" %}</a>
             </div>
         </div>
     {% endif %}

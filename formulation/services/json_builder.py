@@ -53,7 +53,7 @@ def build_feed_json(requirement_id, selected_ingredient_ids=None):
     new_filtered_fields = []
     for field in filtered_fields:
         if field.endswith('_lower') or field.endswith('_upper'):
-            nutrient_name = field[:-6]  # 移除"_lower"或"_upper"
+            nutrient_name = field[:-6]  # 移除"_lower_("或")_upper"
             new_filtered_fields.append(nutrient_name)
             if nutrient_name not in nutrient_fields:
                 nutrient_fields.append(nutrient_name)

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}配方结果详情 - 饲料配方系统{% endblock %}
+{% block title %}{% trans "配方结果详情 - 饲料配方系统" %}{% endblock %}
 
 {% block extra_css %}
     <style>
@@ -185,19 +186,19 @@
 {% block content %}
     <div class="main-container">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>配方结果详情</h2>
-            <a href="{% url 'formula_results_list' %}" class="btn btn-secondary">返回列表</a>
+            <h2>{% trans "配方结果详情" %}</h2>
+            <a href="{% url 'formula_results_list' %}" class="btn btn-secondary">{% trans "返回列表" %}</a>
         </div>
 
         <!-- 加载状态 -->
         <div id="loading" class="loading">
-            <h2>正在加载数据...</h2>
-            <p>请稍候，我们正在获取饲料配方优化结果</p>
+            <h2>{% translate '正在加载数据...' %}</h2>
+            <p>{% trans "请稍候，系统正在获取饲料配方优化结果" %}</p>
         </div>
 
         <!-- 错误提示 -->
         <div id="error" class="error" style="display: none;">
-            <h2>数据加载失败</h2>
+            <h2>{% trans "数据加载失败" %}</h2>
             <p id="errorMessage"></p>
         </div>
 
@@ -207,12 +208,12 @@
             <div class="content-layout">
                 <!-- 方案详情和营养成分 - 左侧 -->
                 <div class="detail-section">
-                    <h2 class="section-title">方案详情与营养成分</h2>
+                    <h2 class="section-title">{% trans "方案详情与营养成分" %}</h2>
                     <div class="detail-panel">
                         <div id="solutionDetail">
                             <div class="no-selection">
-                                <h3>正在加载方案详情</h3>
-                                <p>请稍候，系统正在获取饲料配方详细信息</p>
+                                <h3>{% trans "正在加载方案详情" %}</h3>
+                                <p>{% trans "请稍候，系统正在获取饲料配方详细信息" %}</p>
                             </div>
                         </div>
                     </div>
@@ -220,12 +221,12 @@
 
                 <!-- 原料配比详情 - 右侧 -->
                 <div class="ingredients-section">
-                    <h2 class="section-title">原料配比详情</h2>
+                    <h2 class="section-title">{% trans "原料配比详情" %}</h2>
                     <div class="detail-panel">
                         <div id="ingredientsDetail">
                             <div class="no-selection">
-                                <h3>正在加载原料配比</h3>
-                                <p>请稍候，系统正在获取饲料原料配比信息</p>
+                                <h3>{% trans "正在加载原料配比" %}</h3>
+                                <p>{% trans "请稍候，系统正在获取饲料原料配比信息" %}</p>
                             </div>
                         </div>
                     </div>
@@ -255,7 +256,7 @@
 
                 displayResults();
             } catch (err) {
-                document.getElementById('errorMessage').textContent = '获取数据失败: ' + err.message;
+                document.getElementById('errorMessage').textContent = '{% trans "获取数据失败" %}: ' + err.message;
                 document.getElementById('error').style.display = 'block';
                 document.getElementById('loading').style.display = 'none';
                 console.error('Error fetching results:', err);
@@ -268,7 +269,7 @@
 
             if (!results || results.length === 0) {
                 document.getElementById('resultsContainer').style.display = 'none';
-                document.getElementById('errorMessage').textContent = '暂无优化结果，请先运行遗传算法';
+                document.getElementById('errorMessage').textContent = '{% trans "暂无优化结果，请先运行遗传算法" %}';
                 document.getElementById('error').style.display = 'block';
                 return;
             }
@@ -289,31 +290,31 @@
             // 构建固定营养元素的HTML
             let nutrientDetailsHtml = `
         <div class="nutrient-detail-row">
-            <span>干物质 (DM)</span>
+            <span>{% trans "干物质 (DM)" %}</span>
             <span>${selectedSolution.dm ? selectedSolution.dm.toFixed(2) : '0.00'}%</span>
         </div>
         <div class="nutrient-detail-row">
-            <span>钙 (Ca)</span>
+            <span>{% trans "钙 (Ca)" %}</span>
             <span>${selectedSolution.ca ? selectedSolution.ca.toFixed(2) : '0.00'}%</span>
         </div>
         <div class="nutrient-detail-row">
-            <span>粗蛋白 (CP)</span>
+            <span>{% trans "粗蛋白 (CP)" %}</span>
             <span>${selectedSolution.cp ? selectedSolution.cp.toFixed(2) : '0.00'}%</span>
         </div>
         <div class="nutrient-detail-row">
-            <span>磷 (P)</span>
+            <span>{% trans "磷 (P)" %}</span>
             <span>${selectedSolution.p ? selectedSolution.p.toFixed(2) : '0.00'}%</span>
         </div>
         <div class="nutrient-detail-row">
-            <span>中性洗涤纤维 (NDF)</span>
+            <span>{% trans "中性洗涤纤维 (NDF)" %}</span>
             <span>${selectedSolution.ndf ? selectedSolution.ndf.toFixed(2) : '0.00'}%</span>
         </div>
         <div class="nutrient-detail-row">
-            <span>代谢能 (ME)</span>
+            <span>{% trans "代谢能 (ME)" %}</span>
             <span>${selectedSolution.me ? selectedSolution.me.toFixed(2) : '0.00'}%</span>
         </div>
         <div class="nutrient-detail-row">
-            <span>代谢蛋白 (MP)</span>
+            <span>{% trans "代谢蛋白 (MP)" %}</span>
             <span>${selectedSolution.mp ? selectedSolution.mp.toFixed(2) : '0.00'}%</span>
         </div>
     `;
@@ -334,17 +335,17 @@
             const detailHtml = `
     <div class="detail-content">
         <div class="solution-header">
-            <h2>方案 ${selectedSolution.solution_index + 1} </h2>
+            <h2>{% trans "方案" %} ${selectedSolution.solution_index + 1}</h2>
         </div>
 
         <div class="detail-grid">
             <div class="detail-card">
-                <h3>成本信息</h3>
+                <h3>{% trans "成本信息" %}</h3>
                 <div class="cost-display">¥${selectedSolution.total_cost.toFixed(2)}/吨</div>
             </div>
 
             <div class="detail-card">
-                <h3>营养成分详情</h3>
+                <h3>{% trans "营养成分详情" %}</h3>
                 <div class="nutrient-details">
                     ${nutrientDetailsHtml}
                 </div>
@@ -359,7 +360,7 @@
             const ingredientsHtml = `
     <div class="detail-content">
         <div class="detail-card">
-            <h3>原料配比详情</h3>
+            <h3>{% trans "原料配比详情" %}</h3>
             <div class="ingredients-list">
                 ${selectedSolution.ingredients ? selectedSolution.ingredients.map(ing => {
                 const kgValue = (ing.ratio * 10).toFixed(2); // 将百分比转换为千克 (ratio * 1000 / 100 = ratio * 10)
@@ -372,7 +373,7 @@
                             <span class="ratio-display">${kgValue} kg</span>
                         </div>
                     `;
-            }).join('') : '<p>暂无原料配比数据</p>'}
+            }).join('') : '<p>{% trans "暂无原料配比数据" %}</p>'}
             </div>
         </div>
     </div>

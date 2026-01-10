@@ -204,7 +204,7 @@ class CustomIngredientNutrientForm(forms.ModelForm):
         """
         value = self.cleaned_data.get('value')
         if value is not None and value < 0:
-            raise forms.ValidationError("营养成分值不能为负数")
+            raise forms.ValidationError(_("营养成分值不能为负数"))
         return value
 
 

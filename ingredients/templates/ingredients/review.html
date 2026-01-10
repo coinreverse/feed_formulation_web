@@ -1,25 +1,26 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}审核饲料原料{% endblock %}
+{% block title %}{% trans "审核饲料原料" %}{% endblock %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h1>审核饲料原料</h1>
+                <h1>{% trans "审核饲料原料" %}</h1>
                 <div>
-                    <a href="{% url 'ingredient_detail' ingredient.id %}" class="btn btn-secondary">返回详情</a>
+                    <a href="{% url 'ingredient_detail' ingredient.id %}" class="btn btn-secondary">{% trans "返回详情" %}</a>
                 </div>
             </div>
 
             <!-- 基本信息 -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5>基本信息</h5>
+                    <h5>{% trans "基本信息" %}</h5>
                 </div>
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-sm-3">原料名称</dt>
+                        <dt class="col-sm-3">{% trans "原料名称" %}</dt>
                         <dd class="col-sm-9">
                             {% if 'name' in changed_fields %}
                                 <span class="text-danger">
@@ -30,25 +31,25 @@
                             {% endif %}
                         </dd>
 
-                        <dt class="col-sm-3">原料说明</dt>
+                        <dt class="col-sm-3">{% trans "原料说明" %}</dt>
                         <dd class="col-sm-9">
                             {% if 'description' in changed_fields %}
                                 <span class="text-danger">
-                                    {{ changed_fields.description.0|default:"无" }} → {{ changed_fields.description.1|default:"无" }}
+                                    {{ changed_fields.description.0|default:{% trans "无" %} }} → {{ changed_fields.description.1|default:{% trans "无" %} }}
                                 </span>
                             {% else %}
-                                {{ pending_change.description|default:"无" }}
+                                {{ pending_change.description|default:{% trans "无" %} }}
                             {% endif %}
                         </dd>
 
-                        <dt class="col-sm-3">单价</dt>
+                        <dt class="col-sm-3">{% trans "单价" %}</dt>
                         <dd class="col-sm-9">
                             {% if 'cost' in changed_fields %}
                                 <span class="text-danger">
-                                    {{ changed_fields.cost.0 }} → {{ changed_fields.cost.1 }} 元/kg
+                                    {{ changed_fields.cost.0 }} → {{ changed_fields.cost.1 }} {% trans "元/kg" %}
                                 </span>
                             {% else %}
-                                {{ pending_change.cost }} 元/kg
+                                {{ pending_change.cost }} {% trans "元/kg" %}
                             {% endif %}
                         </dd>
                     </dl>
@@ -58,12 +59,12 @@
             <!-- 固定营养成分 -->
             <div class="card mb-4">
     <div class="card-header">
-        <h5>固定营养成分</h5>
+        <h5>{% trans "固定营养成分" %}</h5>
     </div>
         <div class="card-body">
             <dl class="row">
                 {% if pending_change.dm != 0 %}
-                    <dt class="col-sm-3 mb-2">干物质(DM)</dt>
+                    <dt class="col-sm-3 mb-2">{% trans "干物质(DM)" %}</dt>
                     <dd class="col-sm-9 mb-2">
                         {% if 'dm' in changed_fields %}
                             <span class="text-danger">
@@ -76,7 +77,7 @@
                 {% endif %}
 
                 {% if pending_change.calcium != 0 %}
-                    <dt class="col-sm-3 mb-2">钙(Ca)</dt>
+                    <dt class="col-sm-3 mb-2">{% trans "钙(Ca)" %}</dt>
                     <dd class="col-sm-9 mb-2">
                         {% if 'calcium' in changed_fields %}
                             <span class="text-danger">
@@ -89,7 +90,7 @@
                 {% endif %}
 
                 {% if pending_change.protein != 0 %}
-                    <dt class="col-sm-3 mb-2">粗蛋白(CP)</dt>
+                    <dt class="col-sm-3 mb-2">{% trans "粗蛋白(CP)" %}</dt>
                     <dd class="col-sm-9 mb-2">
                         {% if 'protein' in changed_fields %}
                             <span class="text-danger">
@@ -102,7 +103,7 @@
                 {% endif %}
 
                 {% if pending_change.phosphorus != 0 %}
-                    <dt class="col-sm-3 mb-2">磷(P)</dt>
+                    <dt class="col-sm-3 mb-2">{% trans "磷(P)" %}</dt>
                     <dd class="col-sm-9 mb-2">
                         {% if 'phosphorus' in changed_fields %}
                             <span class="text-danger">
@@ -115,7 +116,7 @@
                 {% endif %}
 
                 {% if pending_change.ndf != 0 %}
-                    <dt class="col-sm-3 mb-2">中性洗涤纤维(NDF)</dt>
+                    <dt class="col-sm-3 mb-2">{% trans "中性洗涤纤维(NDF)" %}</dt>
                     <dd class="col-sm-9 mb-2">
                         {% if 'ndf' in changed_fields %}
                             <span class="text-danger">
@@ -128,7 +129,7 @@
                 {% endif %}
 
                 {% if pending_change.metabolizable_energy != 0 %}
-                    <dt class="col-sm-3 mb-2">代谢能(ME)</dt>
+                    <dt class="col-sm-3 mb-2">{% trans "代谢能(ME)" %}</dt>
                     <dd class="col-sm-9 mb-2">
                         {% if 'metabolizable_energy' in changed_fields %}
                             <span class="text-danger">
@@ -141,7 +142,7 @@
                 {% endif %}
 
                 {% if pending_change.mp != 0 %}
-                    <dt class="col-sm-3 mb-2">代谢蛋白(MP)</dt>
+                    <dt class="col-sm-3 mb-2">{% trans "代谢蛋白(MP)" %}</dt>
                     <dd class="col-sm-9 mb-2">
                         {% if 'mp' in changed_fields %}
                             <span class="text-danger">
@@ -160,7 +161,7 @@
             {% if pending_change.custom_nutrients %}
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5>自定义营养成分</h5>
+                        <h5>{% trans "自定义营养成分" %}</h5>
                     </div>
                     <div class="card-body">
                         <dl class="row">
@@ -190,23 +191,23 @@
             <!-- 审核操作 -->
             <div class="card mb-4">
                 <div class="card-header">
-                    <h5>审核操作</h5>
+                    <h5>{% trans "审核操作" %}</h5>
                 </div>
                 <div class="card-body">
                     <form method="post" action="{% url 'review_ingredient' ingredient.id %}">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="action" class="form-label">审核结果</label>
+                            <label for="action" class="form-label">{% trans "审核结果" %}</label>
                             <select name="action" id="action" class="form-select">
-                                <option value="approve">通过</option>
-                                <option value="reject">拒绝</option>
+                                <option value="approve">{% trans "通过" %}</option>
+                                <option value="reject">{% trans "拒绝" %}</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="comments" class="form-label">审核意见</label>
+                            <label for="comments" class="form-label">{% trans "审核意见" %}</label>
                             <textarea name="comments" id="comments" class="form-control" rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">提交审核</button>
+                        <button type="submit" class="btn btn-primary">{% trans "提交审核" %}</button>
                     </form>
                 </div>
             </div>

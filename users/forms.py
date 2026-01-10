@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -24,7 +25,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     password1 = forms.CharField(
-        label="密码",
+        label=_("密码"),
         strip=False,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
@@ -33,7 +34,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     password2 = forms.CharField(
-        label="确认密码",
+        label=_("确认密码"),
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'placeholder': '请再次输入密码'
@@ -66,10 +67,16 @@ class CustomAuthenticationForm(AuthenticationForm):
     )
 
     password = forms.CharField(
-        label="密码",
+        label=_(),
         strip=False,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
             'placeholder': '请输入密码'
         }),
     )
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'phone_number', 'language']
