@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from django.forms import inlineformset_factory
 from .models import Ingredient, IngredientNutrient, CustomIngredientNutrient
 
@@ -12,9 +13,9 @@ class IngredientForm(forms.ModelForm):
         model = Ingredient
         fields = ['name', 'description', 'cost']
         labels = {
-            'name': '原料名称',
-            'description': '原料说明',
-            'cost': '单价(元/kg)'
+            'name': _('原料名称'),
+            'description': _('原料说明'),
+            'cost': _('单价(元/kg)')
         }
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -31,11 +32,11 @@ class IngredientForm(forms.ModelForm):
         # 如果表单绑定到实例（self.instance.pk存在），则排除当前记录
         if self.instance.pk:
             if Ingredient.objects.exclude(pk=self.instance.pk).filter(name=name).exists():
-                raise forms.ValidationError('具有该名称的原料已存在')
+                raise forms.ValidationError(_('具有该名称的原料已存在'))
         else:
             # 如果表单没有绑定到实例（新建或编辑模式），检查是否有其他记录使用该名称
             if Ingredient.objects.filter(name=name).exists():
-                raise forms.ValidationError('具有该名称的原料已存在')
+                raise forms.ValidationError(_('具有该名称的原料已存在'))
         return name
 
 
@@ -44,13 +45,13 @@ class IngredientNutrientForm(forms.ModelForm):
     原料营养成分表单
     """
     # 添加复选框字段
-    include_dm = forms.BooleanField(required=False, label='干物质(DM)(%)')
-    include_calcium = forms.BooleanField(required=False, label='钙(Ca)(%)')
-    include_protein = forms.BooleanField(required=False, label='粗蛋白(CP)(%)')
-    include_phosphorus = forms.BooleanField(required=False, label='磷(P)(%)')
-    include_ndf = forms.BooleanField(required=False, label='中性洗涤纤维(NDF)(%)')
-    include_me = forms.BooleanField(required=False, label='代谢能(ME)(%)')
-    include_mp = forms.BooleanField(required=False, label='代谢蛋白(MP)(%)')
+    include_dm = forms.BooleanField(required=False, label=_('干物质(DM)(%)'))
+    include_calcium = forms.BooleanField(required=False, label=_('钙(Ca)(%)'))
+    include_protein = forms.BooleanField(required=False, label=_('粗蛋白(CP)(%)'))
+    include_phosphorus = forms.BooleanField(required=False, label=_('磷(P)(%)'))
+    include_ndf = forms.BooleanField(required=False, label=_('中性洗涤纤维(NDF)(%)'))
+    include_me = forms.BooleanField(required=False, label=_('代谢能(ME)(%)'))
+    include_mp = forms.BooleanField(required=False, label=_('代谢蛋白(MP)(%)'))
 
     # 将所有营养成分字段设置为非必填
     dm = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='')
@@ -146,7 +147,7 @@ class IngredientNutrientForm(forms.ModelForm):
                 # 获取include字段的标签
                 include_label = self.fields[include_field_name].label
                 # 添加错误信息
-                self.add_error(field, f'{include_label}不能为负数')
+                self.add_error(field, f'{include_label}{_("不能为负数")}')
 
         return cleaned_data
 
@@ -188,9 +189,9 @@ class CustomIngredientNutrientForm(forms.ModelForm):
         model = CustomIngredientNutrient
         fields = ['nutrient_name', 'value', 'unit']
         labels = {
-            'nutrient_name': '营养元素名称',
-            'value': '含量',
-            'unit': '单位'
+            'nutrient_name': _('营养元素名称'),
+            'value': _('含量'),
+            'unit': _('单位')
         }
         widgets = {
             'nutrient_name': forms.TextInput(attrs={'class': 'form-control'}),

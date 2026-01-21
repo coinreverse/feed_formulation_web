@@ -18,8 +18,8 @@ class Command(BaseCommand):
 
         # ===== 导入原料和价格 =====
         ingredient_names = [
-            _("大麦皮"), _("小麦麸"), _("玉米"), _("高粱"), _("大豆粕"), _("棉籽粕"), _("花生仁粕"),
-            _("羊草"), _("苜蓿青贮"), _("玉米秸秆"), _("大豆秸秆"), _("玉米秸秆青贮"), _("磷酸氢钙")
+            "大麦皮", "小麦麸", "玉米", "高粱", "大豆粕", "棉籽粕", "花生仁粕",
+            "羊草", "苜蓿青贮", "玉米秸秆", "大豆秸秆", "玉米秸秆青贮", "磷酸氢钙"
         ]
         costs = data.get("costs", [])
 
@@ -59,7 +59,7 @@ class Command(BaseCommand):
         lower = nutrient_bounds.get("lower", [0] * 7)
 
         animal_req, created = AnimalRequirement.objects.get_or_create(
-            animal_type=_("未填"),
+            animal_type="未填",
             body_weight=0,
             daily_gain=0,
             defaults={

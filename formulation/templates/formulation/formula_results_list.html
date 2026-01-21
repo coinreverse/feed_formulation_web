@@ -43,7 +43,7 @@
                                 <td>{{ result.mp|floatformat:2 }}%</td>
                                 <td>{{ result.created_at|date:"Y-m-d H:i" }}</td>
                                 <td>
-                                    <a href="{% url 'formula_results_detailed' result.requirement.id %}" class="btn btn-sm btn-info">{% trans "查看详情" %}</a>
+                                    <a href="{% url 'formula_results_detailed' result.requirement.id result.solution_index %}" class="btn btn-sm btn-info">{% trans "查看详情" %}</a>
                                 </td>
                             </tr>
                             {% endfor %}

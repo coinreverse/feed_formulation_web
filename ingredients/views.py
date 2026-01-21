@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse
 from .models import Ingredient, IngredientNutrient, CustomIngredientNutrient, IngredientPendingChange
 from .forms import IngredientForm, IngredientNutrientForm, CustomIngredientNutrientFormSet
+from django.utils.translation import gettext_lazy as _
 
 
 @login_required
@@ -168,7 +169,7 @@ def edit_ingredient(request, ingredient_id):
     if ingredient.status == Ingredient.PENDING:
         return render(request, 'ingredients/edit.html', {
             'ingredient': ingredient,
-            'error': '该记录已提交审核，无法编辑'
+            'error': f"{_('该记录已提交审核，无法编辑')}"
         })
 
     if request.method == 'POST':

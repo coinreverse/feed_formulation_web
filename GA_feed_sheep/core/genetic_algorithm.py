@@ -305,7 +305,7 @@ class HVTermination(Termination):
         self.sampling_method = sampling_method  # 采样方法
 
     def _update(self, algorithm):
-        if self.sampling_method is not None and algorithm.n_gen <= 20:
+        if self.sampling_method is not None and algorithm.n_gen <= 100:
             return False
 
         # 获取当前种群

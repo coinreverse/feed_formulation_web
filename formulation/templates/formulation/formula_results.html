@@ -616,14 +616,19 @@
                 }
 
                 const data = await response.json();
+
+                // 检查结果是否有效
+                const hasValidResults = data.length > 0 && !data.every(result => result.total_cost >= 1000000.00);
+
+                if (hasValidResults) {
+                    // 只有当有有效结果时才显示"查看配方结果"按钮
+                    document.getElementById('viewResultsSection').style.display = 'block';
+                }
+
                 displayResults(data);
-
-                // 显示查看结果按钮
-                document.getElementById('viewResultsSection').style.display = 'block';
-
             } catch (err) {
                 document.getElementById('resultsContent').innerHTML =
-                    `<div class="error"><% trans "运行遗传算法失败" %}: ${err.message}</div>`;
+                    `<div class="error">{% trans "运行遗传算法失败" %}: ${err.message}</div>`;
                 console.error('Error running genetic algorithm:', err);
             } finally {
                 // 启用运行按钮
@@ -639,10 +644,18 @@
                 return;
             }
 
+            // 检查是否所有结果都是无效的（成本为1000000.00）
+            const allInvalid = data.every(result => result.total_cost >= 1000000.00);
+            if (allInvalid) {
+                document.getElementById('resultsContent').innerHTML = '<div class="error">{% trans "没有可用的结果" %}</div>';
+                return;
+            }
+
+
             // 只显示简单的成功提示
             let html = `
-    <div class="success"></div>
-    `;
+            <div class="success"></div>
+            `;
 
             document.getElementById('resultsContent').innerHTML = html;
         }

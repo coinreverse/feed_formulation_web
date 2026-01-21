@@ -82,7 +82,7 @@ def main(config_path: str = None, output_path: str = "results/ga_pareto_front.js
     np.random.seed(42)
     random.seed(42)
     # 记录总开始时间
-    start_time = time.time()
+    # start_time = time.time()
 
     # 加载配置
     ga_config, hybrid_config, feed_config = load_configs(config_path)
@@ -101,17 +101,17 @@ def main(config_path: str = None, output_path: str = "results/ga_pareto_front.js
         ref_point=ref_point,
     )
 
-    ga_time = time.time() - start_time  # 计算GA耗时
-    print(f"GA阶段耗时: {ga_time:.2f}秒")
+    # ga_time = time.time() - start_time  # 计算GA耗时
+    # print(f"GA阶段耗时: {ga_time:.2f}秒")
 
     # 4. 绘制收敛曲线
     output_dir = Path(output_path).parent
-    plot_convergence(
-        hv_history=ga_metadata["hv_history"],
-        best_solutions=ga_metadata["best_solutions"],
-        save_path="results/ga_convergence.png",  # 可选保存路径
-        show_plot=False  # 不显示图形
-    )
+    # plot_convergence(
+    #     hv_history=ga_metadata["hv_history"],
+    #     best_solutions=ga_metadata["best_solutions"],
+    #     save_path="results/ga_convergence.png",  # 可选保存路径
+    #     show_plot=False  # 不显示图形
+    # )
 
     # 最终结果处理
     elite_ga_X, elite_ga_Y = strategy.elite_selection(
@@ -126,22 +126,22 @@ def main(config_path: str = None, output_path: str = "results/ga_pareto_front.js
     save_results_json(elite_ga_X, elite_ga_Y, filename=output_path, nutrient_names=evaluator.get_nutrient_names())
 
     # 5. 绘制不同方式采样收敛与最终散点
-    plot_convergence_speed(
-        hv_history=ga_metadata["hv_history"],
-        best_solutions=ga_metadata["best_solutions"],
-        save_path="results/convergence_random_paper.png",
-        start_gen=20,
-        method_name="random",
-        show_plot=False  # 不显示图形
-    )
+    # plot_convergence_speed(
+    #     hv_history=ga_metadata["hv_history"],
+    #     best_solutions=ga_metadata["best_solutions"],
+    #     save_path="results/convergence_mixed_paper.png",
+    #     start_gen=20,
+    #     method_name="random",
+    #     show_plot=False  # 不显示图形
+    # )
     # 绘制决策空间分布
-    plot_decision_space(
-        population=ga_population,
-        population_F=ga_metadata["population_F"],
-        save_path="results/decision_random_paper.png",
-        method_name="random",
-        show_plot=False  # 不显示图形
-    )
+    # plot_decision_space(
+    #     population=ga_population,
+    #     population_F=ga_metadata["population_F"],
+    #     save_path="results/decision_mixed_paper.png",
+    #     method_name="random",
+    #     show_plot=False  # 不显示图形
+    # )
 
     # 输出最佳解
     nutrient_names = evaluator.get_nutrient_names()
@@ -175,16 +175,16 @@ def main(config_path: str = None, output_path: str = "results/ga_pareto_front.js
         energy_display_name = nutrient_names[1].upper() if len(nutrient_names) > 1 else "ENERGY"
 
     min_cost_idx = torch.argmin(elite_ga_Y[:, 0])
-    print("\nBest Solution Summary:")
-    print(f"- Cost: {elite_ga_Y[min_cost_idx, 0]:.2f} 元/T")
-    print(f"- {protein_display_name}: {elite_ga_Y[min_cost_idx, 1 + crude_protein]:.3f}%")
-    print(f"- {energy_display_name}: {elite_ga_Y[min_cost_idx, 1 + metabolic_energy]:.2f} MJ/kg")
-    print("\nOptimization completed!")
+    # print("\nBest Solution Summary:")
+    # print(f"- Cost: {elite_ga_Y[min_cost_idx, 0]:.2f} 元/T")
+    # print(f"- {protein_display_name}: {elite_ga_Y[min_cost_idx, 1 + crude_protein]:.3f}%")
+    # print(f"- {energy_display_name}: {elite_ga_Y[min_cost_idx, 1 + metabolic_energy]:.2f} MJ/kg")
+    # print("\nOptimization completed!")
 
-    total_time = time.time() - start_time
-    print("\n=== 性能统计 ===")
-    print(f"总运行时间: {total_time:.2f}秒")
-    print(f"- GA阶段: {ga_time:.2f}秒 ({ga_time / total_time * 100:.1f}%)")
+    # total_time = time.time() - start_time
+    # print("\n=== 性能统计 ===")
+    # print(f"总运行时间: {total_time:.2f}秒")
+    # print(f"- GA阶段: {ga_time:.2f}秒 ({ga_time / total_time * 100:.1f}%)")
 
 
 if __name__ == "__main__":

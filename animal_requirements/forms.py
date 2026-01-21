@@ -1,5 +1,6 @@
 from django import forms
 from .models import AnimalRequirement, CustomNutrientRequirement
+from django.utils.translation import gettext_lazy as _
 
 
 class AnimalRequirementForm(forms.ModelForm):
@@ -7,29 +8,29 @@ class AnimalRequirementForm(forms.ModelForm):
     动物营养需求表单，处理基本信息和固定营养需求
     """
     # 添加复选框字段
-    include_dm = forms.BooleanField(required=False, label='干物质(%)')
-    include_calcium = forms.BooleanField(required=False, label='钙(%)')
-    include_protein = forms.BooleanField(required=False, label='蛋白(%)')
-    include_phosphorus = forms.BooleanField(required=False, label='磷(%)')
-    include_ndf = forms.BooleanField(required=False, label='中性洗涤纤维(%)')
-    include_energy = forms.BooleanField(required=False, label='代谢能(kcal/kg)')
-    include_mp = forms.BooleanField(required=False, label='代谢蛋白(%)')
+    include_dm = forms.BooleanField(required=False, label=_('干物质(%)'))
+    include_calcium = forms.BooleanField(required=False, label=_('钙(%)'))
+    include_protein = forms.BooleanField(required=False, label=_('蛋白(%)'))
+    include_phosphorus = forms.BooleanField(required=False, label=_('磷(%)'))
+    include_ndf = forms.BooleanField(required=False, label=_('中性洗涤纤维(%)'))
+    include_energy = forms.BooleanField(required=False, label=_('代谢能(kcal/kg)'))
+    include_mp = forms.BooleanField(required=False, label=_('代谢蛋白(%)'))
 
     # 将所有上下界字段设置为非必填
-    dm_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='下界')
-    dm_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='上界')
-    calcium_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='下界')
-    calcium_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='上界')
-    protein_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='下界')
-    protein_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='上界')
-    phosphorus_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='下界')
-    phosphorus_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='上界')
-    ndf_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='下界')
-    ndf_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='上界')
-    energy_lower = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label='下界')
-    energy_upper = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label='上界')
-    mp_lower = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label='下界')
-    mp_upper = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label='上界')
+    dm_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('下界'))
+    dm_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('上界'))
+    calcium_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('下界'))
+    calcium_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('上界'))
+    protein_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('下界'))
+    protein_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('上界'))
+    phosphorus_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('下界'))
+    phosphorus_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('上界'))
+    ndf_lower = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('下界'))
+    ndf_upper = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label=_('上界'))
+    energy_lower = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label=_('下界'))
+    energy_upper = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label=_('上界'))
+    mp_lower = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label=_('下界'))
+    mp_upper = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label=_('上界'))
 
     def __init__(self, *args, **kwargs):
         """
@@ -66,23 +67,23 @@ class AnimalRequirementForm(forms.ModelForm):
             'include_mp', 'mp_lower', 'mp_upper'
         ]
         labels = {
-            'animal_type': '动物类型',
-            'body_weight': '体重(kg)',
-            'daily_gain': '日增重(g)',
-            'dm_lower': '下界',
-            'dm_upper': '上界',
-            'calcium_lower': '下界',
-            'calcium_upper': '上界',
-            'protein_lower': '下界',
-            'protein_upper': '上界',
-            'phosphorus_lower': '下界',
-            'phosphorus_upper': '上界',
-            'ndf_lower': '下界',
-            'ndf_upper': '上界',
-            'energy_lower': '下界',
-            'energy_upper': '上界',
-            'mp_lower': '下界',
-            'mp_upper': '上界'
+            'animal_type': _('动物类型'),
+            'body_weight': _('体重(kg)'),
+            'daily_gain': _('日增重(g)'),
+            'dm_lower': _('下界'),
+            'dm_upper': _('上界'),
+            'calcium_lower': _('下界'),
+            'calcium_upper': _('上界'),
+            'protein_lower': _('下界'),
+            'protein_upper': _('上界'),
+            'phosphorus_lower': _('下界'),
+            'phosphorus_upper': _('上界'),
+            'ndf_lower': _('下界'),
+            'ndf_upper': _('上界'),
+            'energy_lower': _('下界'),
+            'energy_upper': _('上界'),
+            'mp_lower': _('下界'),
+            'mp_upper': _('上界')
         }
         widgets = {
             'animal_type': forms.TextInput(attrs={'class': 'form-control'}),
@@ -130,19 +131,19 @@ class AnimalRequirementForm(forms.ModelForm):
             # 如果勾选了复选框，必须填写上下界
             if include_value:
                 if lower_value is None:
-                    self.add_error(lower_field_name, f'{self.fields[include_field_name].label}下界不能为空')
+                    self.add_error(lower_field_name, f'{self.fields[include_field_name].label}{_("下界不能为空")}')
                 if upper_value is None:
-                    self.add_error(upper_field_name, f'{self.fields[include_field_name].label}上界不能为空')
+                    self.add_error(upper_field_name, f'{self.fields[include_field_name].label}{_("上界不能为空")}')
 
                 # 确保上界大于等于下界
                 if lower_value is not None and upper_value is not None and upper_value < lower_value:
-                    self.add_error(upper_field_name, f'{self.fields[include_field_name].label}上界不能小于下界')
+                    self.add_error(upper_field_name, f'{self.fields[include_field_name].label}{_("上界不能小于下界")}')
 
                 # 确保所有数值字段不为负数
                 if lower_value is not None and lower_value < 0:
-                    self.add_error(lower_field_name, f'{self.fields[include_field_name].label}下界不能为负数')
+                    self.add_error(lower_field_name, f'{self.fields[include_field_name].label}{_("下界不能为负数")}')
                 if upper_value is not None and upper_value < 0:
-                    self.add_error(upper_field_name, f'{self.fields[include_field_name].label}上界不能为负数')
+                    self.add_error(upper_field_name, f'{self.fields[include_field_name].label}{_("上界不能为负数")}')
             # 未勾选的保持原有值不变，不再设置为0
 
         return cleaned_data
@@ -181,17 +182,17 @@ class CustomNutrientRequirementForm(forms.ModelForm):
     """
 
     # 将数值字段设置为可以为空，这样在用户没有输入时，它们会被设置为None
-    nutrient_lower = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label='下界')
-    nutrient_upper = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label='上界')
+    nutrient_lower = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label=_('下界'))
+    nutrient_upper = forms.DecimalField(required=False, max_digits=8, decimal_places=2, label=_('上界'))
 
     class Meta:
         model = CustomNutrientRequirement
         fields = ['nutrient_name', 'nutrient_lower', 'nutrient_upper', 'unit']
         labels = {
-            'nutrient_name': '营养元素名称',
-            'nutrient_lower': '下界',
-            'nutrient_upper': '上界',
-            'unit': '单位'
+            'nutrient_name': _('营养元素名称'),
+            'nutrient_lower': _('下界'),
+            'nutrient_upper': _('上界'),
+            'unit': _('单位')
         }
         widgets = {
             'nutrient_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -215,19 +216,19 @@ class CustomNutrientRequirementForm(forms.ModelForm):
 
         # 如果不是空表单，确保所有必填字段都已填写
         if not nutrient_name:
-            self.add_error('nutrient_name', '营养元素名称不能为空')
+            self.add_error('nutrient_name', _('营养元素名称不能为空'))
         if not unit:
-            self.add_error('unit', '单位不能为空')
+            self.add_error('unit', _('单位不能为空'))
 
         # 确保上界大于等于下界
         if nutrient_lower is not None and nutrient_upper is not None and nutrient_upper < nutrient_lower:
-            self.add_error('nutrient_upper', '上界不能小于下界')
+            self.add_error('nutrient_upper', _('上界不能小于下界'))
 
         # 确保所有数值字段不为负数
         if nutrient_lower is not None and nutrient_lower < 0:
-            self.add_error('nutrient_lower', '下界不能为负数')
+            self.add_error('nutrient_lower', _('下界不能为负数'))
         if nutrient_upper is not None and nutrient_upper < 0:
-            self.add_error('nutrient_upper', '上界不能为负数')
+            self.add_error('nutrient_upper', _('上界不能为负数'))
 
         # 如果数值字段为空，设置为0
         if nutrient_lower is None:

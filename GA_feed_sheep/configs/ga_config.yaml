@@ -15,7 +15,7 @@ mutation:
 
 # 其他参数
 dirichlet_ratio: 0.35
-#sampling: mixed
+sampling: mixed
 #sampling: dirichlet
 #sampling: lhs
-sampling: random
+#sampling: random

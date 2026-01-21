@@ -240,6 +240,7 @@
         let results = [];
         let selectedSolution = null;
         const requirementId = {{ requirement_id }}; // 从Django模板中获取
+        const defaultSolutionIndex = {{ solution_index }}; // 从Django模板中获取
 
         // 获取数据
         async function fetchResults() {
@@ -274,11 +275,13 @@
                 return;
             }
 
-            // 默认显示第一个方案
-            if (results.length > 0) {
-                selectedSolution = results[0];
-                updateSolutionDisplay();
+            // 根据URL参数或默认索引显示对应的方案
+            let solutionIndex = defaultSolutionIndex;
+            if (solutionIndex >= results.length) {
+                solutionIndex = 0; // 如果索引超出范围，使用第一个方案
             }
+            selectedSolution = results[solutionIndex];
+            updateSolutionDisplay();
 
             document.getElementById('resultsContainer').style.display = 'block';
         }

@@ -41,13 +41,13 @@ def format_formula_result_data(qs):
             "ingredients": formatted_ingredients,
             # 添加更多营养成分信息
             "营养成分": {
-                "干物质(DM)": f"{round(float(r.dm), 2)}%",
-                "钙(Ca)": f"{round(float(r.ca), 2)}%",
-                "粗蛋白(CP)": f"{round(float(r.cp), 2)}%",
-                "磷(P)": f"{round(float(r.p), 2)}%",
-                "中性洗涤纤维(NDF)": f"{round(float(r.ndf), 2)}%",
-                "代谢能(ME)": f"{round(float(r.me), 2)}%",
-                "代谢蛋白(MP)": f"{round(float(r.mp), 2)}%",
+                str(_('干物质(DM)')): f"{round(float(r.dm), 2)}%",
+                str(_('钙(Ca)')): f"{round(float(r.ca), 2)}%",
+                str(_('粗蛋白(CP)')): f"{round(float(r.cp), 2)}%",
+                str(_('磷(P)')): f"{round(float(r.p), 2)}%",
+                str(_('中性洗涤纤维(NDF)')): f"{round(float(r.ndf), 2)}%",
+                str(_('代谢能(ME)')): f"{round(float(r.me), 2)}%",
+                str(_('代谢蛋白(MP)')): f"{round(float(r.mp), 2)}%",
                 # 添加自定义营养元素
                 **{k: f"{v}%" for k, v in r.custom_nutrients.items()}
             }
@@ -62,7 +62,7 @@ def formula_result_list(request, requirement_id):
         AnimalRequirement.objects.get(id=requirement_id, status=AnimalRequirement.APPROVED)
     except AnimalRequirement.DoesNotExist:
         return JsonResponse(
-            {"error": f"动物营养需求记录(ID: {requirement_id})不存在或未通过审核，请先创建并审核相应的记录。"},
+            {"error": f"{_('动物营养需求记录')}(ID: {requirement_id}){_('不存在或未通过审核，请先创建并审核相应的记录。')}"},
             status=404)
 
     qs = FeedFormulaResult.objects.filter(
@@ -84,7 +84,7 @@ def formula_results_page(request, requirement_id):
         AnimalRequirement.objects.get(id=requirement_id, status=AnimalRequirement.APPROVED)
     except AnimalRequirement.DoesNotExist:
         return JsonResponse(
-            {"error": f"动物营养需求记录(ID: {requirement_id})不存在或未通过审核，请先创建并审核相应的记录。"},
+            {"error": f"{_('动物营养需求记录')}(ID: {requirement_id}){_('不存在或未通过审核，请先创建并审核相应的记录。')}"},
             status=404)
 
     context = {
@@ -93,18 +93,19 @@ def formula_results_page(request, requirement_id):
     return render(request, 'formulation/formula_results.html', context)
 
 
-def formula_results_detailed(request, requirement_id):
+def formula_results_detailed(request, requirement_id, solution_index=0):
     """渲染前端页面 - 显示详细的配方结果"""
     # 检查动物需求记录是否存在且已通过审核
     try:
         AnimalRequirement.objects.get(id=requirement_id, status=AnimalRequirement.APPROVED)
     except AnimalRequirement.DoesNotExist:
         return JsonResponse(
-            {"error": f"动物营养需求记录(ID: {requirement_id})不存在或未通过审核，请先创建并审核相应的记录。"},
+            {"error": f"{_('动物营养需求记录')}(ID: {requirement_id}){_('不存在或未通过审核，请先创建并审核相应的记录。')}"},
             status=404)
 
     context = {
-        'requirement_id': requirement_id
+        'requirement_id': requirement_id,
+        'solution_index': solution_index
     }
     return render(request, 'formulation/formula_results_detailed.html', context)
 
@@ -118,7 +119,7 @@ def run_ga_and_show_results(request, requirement_id):
             requirement = AnimalRequirement.objects.get(id=requirement_id, status=AnimalRequirement.APPROVED)
         except AnimalRequirement.DoesNotExist:
             return JsonResponse({
-                "error": f"动物营养需求记录(ID: {requirement_id})不存在或未通过审核，只有已通过审核的需求才能运行遗传算法。"},
+                "error": f"{_('动物营养需求记录')}(ID: {requirement_id}){_('不存在或未通过审核，请先创建并审核相应的记录。')}"},
                 status=404)
 
         # 获取前端传递的selected_ingredient_ids参数
@@ -146,8 +147,8 @@ def run_ga_and_show_results(request, requirement_id):
         return response
 
     except Exception as e:
-        logger.error(f"运行遗传算法时出错: {str(e)}")
-        return JsonResponse({"error": f"运行遗传算法时出错: {str(e)}"}, status=500)
+        logger.error(f"{_('运行遗传算法时出错')}: {str(e)}")
+        return JsonResponse({"error": f"{_('运行遗传算法时出错')}: {str(e)}"}, status=500)
 
 
 def ga_optimization_list(request):
