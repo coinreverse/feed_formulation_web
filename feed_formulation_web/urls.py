@@ -18,15 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
 from django.views.i18n import set_language
+from . import views
 
-
-# 简单的主页视图
-def home(request):
-    return render(request, 'home.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", home, name='home'),
+    path("", views.home, name='home'),
     path("users/", include("users.urls")),
     path("ingredients/", include("ingredients.urls")),
     path("animal_requirements/", include("animal_requirements.urls")),

@@ -15,7 +15,7 @@ class IngredientForm(forms.ModelForm):
         labels = {
             'name': _('原料名称'),
             'description': _('原料说明'),
-            'cost': _('单价(元/kg)')
+            'cost': _('单价(元/吨)')
         }
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),

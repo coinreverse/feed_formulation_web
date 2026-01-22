@@ -15,38 +15,150 @@
                 <h5>{% trans '系统功能' %}</h5>
             </div>
             <div class="card-body">
-                <ul>
-                    <li>
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'animal_requirements_list' %}">{% trans '动物营养需求管理' %}</a>
-                        {% else %}
-                            <a href="{% url 'login' %}?next={% url 'animal_requirements_list' %}">{% trans '动物营养需求管理' %}</a>
-                        {% endif %}
-                    </li>
-                    <li>
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'ingredients_list' %}">{% trans '饲料原料管理' %}</a>
-                        {% else %}
-                            <a href="{% url 'login' %}?next={% url 'ingredients_list' %}">{% trans '饲料原料管理' %}</a>
-                        {% endif %}
-                    </li>
-                    <li>
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'ga_optimization_list' %}">{% trans '配方优化' %}</a>
-                        {% else %}
-                            <a href="{% url 'login' %}?next={% url 'ga_optimization_list' %}">{% trans '配方优化' %}</a>
-                        {% endif %}
-                    </li>
-                    <li>
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'formula_results_list' %}">{% trans '配方结果' %}</a>
-                        {% else %}
-                            <a href="{% url 'login' %}?next={% url 'formula_results_list' %}">{% trans '配方结果' %}</a>
-                        {% endif %}
-                    </li>
-                </ul>
+                <div class="d-grid gap-2">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'animal_requirements_list' %}" class="btn btn-primary">
+                            {% trans '动物营养需求管理' %}
+                        </a>
+                        <a href="{% url 'ingredients_list' %}" class="btn btn-primary">
+                            {% trans '饲料原料管理' %}
+                        </a>
+                        <a href="{% url 'ga_optimization_list' %}" class="btn btn-primary">
+                            {% trans '配方优化' %}
+                        </a>
+                        <a href="{% url 'formula_results_list' %}" class="btn btn-primary">
+                            {% trans '配方结果' %}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}?next={% url 'animal_requirements_list' %}" class="btn btn-primary">
+                            {% trans '动物营养需求管理' %}
+                        </a>
+                        <a href="{% url 'login' %}?next={% url 'ingredients_list' %}" class="btn btn-primary">
+                            {% trans '饲料原料管理' %}
+                        </a>
+                        <a href="{% url 'login' %}?next={% url 'ga_optimization_list' %}" class="btn btn-primary">
+                            {% trans '配方优化' %}
+                        </a>
+                        <a href="{% url 'login' %}?next={% url 'formula_results_list' %}" class="btn btn-primary">
+                            {% trans '配方结果' %}
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- 统计卡片 -->
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-database"></i> {% trans '配方总数' %}</h5>
+                <p class="card-text display-4">{{ formula_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-seedling"></i> {% trans '饲料原料' %}</h5>
+                <p class="card-text display-4">{{ ingredient_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-users"></i> {% trans '用户数量' %}</h5>
+                <p class="card-text display-4">{{ user_count }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 图表区域 -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>{% trans '最近7天配方生成趋势' %}</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="formulaTrendChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>{% trans '最近30天访问量趋势' %}</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="accessTrendChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 配方趋势图表
+    const formulaCtx = document.getElementById('formulaTrendChart').getContext('2d');
+    const formulaTrendData = {
+        labels: [{% for item in formula_trend %}"{{ item.date }}",{% endfor %}],
+        datasets: [{
+            label: "{% trans '配方数量' %}",
+            data: [{% for item in formula_trend %}{{ item.count }},{% endfor %}],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+            fill: true,
+            tension: 0.4
+        }]
+    };
+    const formulaChart = new Chart(formulaCtx, {
+        type: 'line',
+        data: formulaTrendData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+
+    // 访问量趋势图表
+    const accessCtx = document.getElementById('accessTrendChart').getContext('2d');
+    const accessTrendData = {
+        labels: [{% for item in access_trend %}"{{ item.date }}",{% endfor %}],
+        datasets: [{
+            label: "{% trans '访问量' %}",
+            data: [{% for item in access_trend %}{{ item.count }},{% endfor %}],
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1,
+            fill: true,
+            tension: 0.4
+        }]
+    };
+    const accessChart = new Chart(accessCtx, {
+        type: 'line',
+        data: accessTrendData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}

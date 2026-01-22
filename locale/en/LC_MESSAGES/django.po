@@ -1330,3 +1330,21 @@ msgstr "Reset password"
 
 msgid "修改密码"
 msgstr "Change password"
+
+msgid "配方总数"
+msgstr "Total number of formulas"
+
+msgid "用户数量"
+msgstr "Total number of users"
+
+msgid "最近7天配方生成趋势"
+msgstr "Trend of formula generation in the last 7 days"
+
+msgid "最近30天访问量趋势"
+msgstr "Trend of daily visits in the last 30 days"
+
+msgid "配方数量"
+msgstr "Total number of formulas"
+
+msgid "访问量"
+msgstr "Total number of visits"
