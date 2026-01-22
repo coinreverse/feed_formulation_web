@@ -1236,3 +1236,97 @@ msgstr "Metabolizable energy (kcal/kg)"
 #: .\animal_requirements\forms.py:17
 msgid "代谢蛋白(%)"
 msgstr "Metabolizable protein (%)"
+
+# 忘记密码、登录表单 - 忘记密码、登录链接
+msgid "忘记密码"
+msgstr "Forgot password"
+
+msgid "忘记密码？"
+msgstr "Forgot password?"
+
+msgid "请输入邮箱地址"
+msgstr "Please enter email address"
+
+msgid "请输入验证码"
+msgstr "Please enter verification code"
+
+msgid "请输入您的邮箱地址"
+msgstr "Please enter your email address"
+
+msgid "请输入密码"
+msgstr "Please enter password"
+
+msgid "请输入用户名"
+msgstr "Please enter username"
+
+msgid "请再次输入密码"
+msgstr "Please enter password again"
+
+msgid "验证码"
+msgstr "Verification code"
+
+msgid "发送验证码"
+msgstr "Send verification code"
+
+msgid "请输入您的邮箱地址，我们将发送验证码到您的邮箱"
+msgstr "Please enter your email address, we will send a verification code to your email"
+
+msgid "返回登录"
+msgstr "Return to login"
+
+msgid "该邮箱未注册"
+msgstr "This email address is not registered"
+
+msgid "邮箱验证码"
+msgstr "Email verification code"
+
+msgid "已使用"
+msgstr "Used"
+
+msgid "未使用"
+msgstr "Unused"
+
+msgid "验证码已过期或无效"
+msgstr "Verification code has expired or is invalid"
+
+msgid "验证码不正确"
+msgstr "Verification code is incorrect"
+
+msgid "新密码"
+msgstr "New password"
+
+msgid "请输入新密码"
+msgstr "Please enter new password"
+
+msgid "确认新密码"
+msgstr "Confirm new password"
+
+msgid "请再次输入新密码"
+msgstr "Please enter new password again"
+
+msgid "请填写邮箱和验证码"
+msgstr "Please fill in email address and verification code"
+
+msgid "两次输入的密码不一致"
+msgstr "Passwords do not match"
+
+msgid "用户名或密码不正确。"
+msgstr "Username or password is incorrect."
+
+msgid "欢迎回来"
+msgstr "Welcome back"
+
+msgid "注册时间"
+msgstr "Registration time"
+
+msgid "最后登录"
+msgstr "Last login"
+
+msgid "发送失败，请稍后重试"
+msgstr "Send failed, please try again later"
+
+msgid "重置密码"
+msgstr "Reset password"
+
+msgid "修改密码"
+msgstr "Change password"

@@ -12,7 +12,7 @@ class CustomUserCreationForm(UserCreationForm):
         required=True,
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入邮箱地址'
+            'placeholder': _('请输入邮箱地址')
         })
     )
 
@@ -20,7 +20,7 @@ class CustomUserCreationForm(UserCreationForm):
         max_length=150,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入用户名'
+            'placeholder': _('请输入用户名')
         })
     )
 
@@ -29,7 +29,7 @@ class CustomUserCreationForm(UserCreationForm):
         strip=False,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入密码'
+            'placeholder': _('请输入密码')
         }),
     )
 
@@ -37,7 +37,7 @@ class CustomUserCreationForm(UserCreationForm):
         label=_("确认密码"),
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': '请再次输入密码'
+            'placeholder': _('请再次输入密码')
         }),
         strip=False,
     )
@@ -47,7 +47,7 @@ class CustomUserCreationForm(UserCreationForm):
         label=_('验证码'),
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入验证码'
+            'placeholder': _('请输入验证码')
         }),
         required=True
     )
@@ -104,7 +104,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         max_length=150,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入邮箱地址'
+            'placeholder': _('请输入邮箱地址')
         })
     )
 
@@ -113,7 +113,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         strip=False,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入密码'
+            'placeholder': _('请输入密码')
         }),
     )
 
@@ -133,7 +133,7 @@ class PasswordResetRequestForm(forms.Form):
         required=True,
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入您的邮箱地址'
+            'placeholder': _('请输入您的邮箱地址')
         })
     )
 
@@ -160,7 +160,7 @@ class PasswordResetForm(forms.Form):
         label=_('验证码'),
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入验证码'
+            'placeholder': _('请输入验证码')
         }),
         required=True
     )
@@ -169,14 +169,14 @@ class PasswordResetForm(forms.Form):
         strip=False,
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': '请输入新密码'
+            'placeholder': _('请输入新密码')
         }),
     )
     new_password2 = forms.CharField(
         label=_("确认新密码"),
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': '请再次输入新密码'
+            'placeholder': _('请再次输入新密码')
         }),
         strip=False,
     )

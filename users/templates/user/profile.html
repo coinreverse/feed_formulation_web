@@ -13,10 +13,10 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{% trans "基本信息" %}</h5>
-                <p><strong>用户名：</strong> {{ user.username }}</p>
-                <p><strong>邮箱地址：</strong> {{ user.email }}</p>
-                <p><strong>注册时间：</strong> {{ user.date_joined|date:"Y-m-d H:i" }}</p>
-                <p><strong>最后登录：</strong> {{ user.last_login|date:"Y-m-d H:i" }}</p>
+                <p><strong>{% trans "用户名" %}：</strong> {{ user.username }}</p>
+                <p><strong>{% trans "邮箱地址" %}：</strong> {{ user.email }}</p>
+                <p><strong>{% trans "注册时间" %}：</strong> {{ user.date_joined|date:"Y-m-d H:i" }}</p>
+                <p><strong>{% trans "最后登录" %}：</strong> {{ user.last_login|date:"Y-m-d H:i" }}</p>
             </div>
         </div>
     </div>
@@ -27,6 +27,7 @@
                 <h5>{% trans "操作" %}</h5>
             </div>
             <div class="card-body">
+                <a href="{% url 'password_reset_request' %}" class="btn btn-outline-primary w-100 mb-2">{% trans "修改密码" %}</a>
                 <a href="{% url 'logout' %}" class="btn btn-outline-danger w-100">{% trans "退出登录" %}</a>
             </div>
         </div>

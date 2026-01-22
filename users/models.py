@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 import uuid
 
 class CustomUser(AbstractUser):
@@ -41,11 +42,11 @@ class EmailVerificationCode(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     def __str__(self):
-        return f"{self.email} - {self.code} ({'已使用' if self.is_used else '未使用'})"
+        return f"{self.email} - {self.code} ({_('已使用') if self.is_used else _('未使用')})"
 
     class Meta:
-        verbose_name = '邮箱验证码'
-        verbose_name_plural = '邮箱验证码'
+        verbose_name = _('邮箱验证码')
+        verbose_name_plural = _('邮箱验证码')
 
     def save(self, *args, **kwargs):
         # 设置默认过期时间为5分钟后
