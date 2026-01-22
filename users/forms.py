@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import CustomUser
+from .models import CustomUser, EmailVerificationCode
 from django.utils.translation import gettext_lazy as _
 
 
@@ -42,15 +42,57 @@ class CustomUserCreationForm(UserCreationForm):
         strip=False,
     )
 
+    # 添加验证码字段
+    verification_code = forms.CharField(
+        label=_('验证码'),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': '请输入验证码'
+        }),
+        required=True
+    )
+
     class Meta:
         model = CustomUser
         fields = ("username", "email", "password1", "password2")
 
+    def clean_verification_code(self):
+        email = self.cleaned_data.get('email')
+        code = self.cleaned_data.get('verification_code')
+
+        if not email or not code:
+            raise forms.ValidationError(_('请填写邮箱和验证码'))
+
+        try:
+            verification_code = EmailVerificationCode.objects.filter(
+                email=email,
+                code=code,
+                is_used=False
+            ).latest('created_at')
+
+            if not verification_code.is_valid():
+                raise forms.ValidationError(_('验证码已过期或无效'))
+
+        except EmailVerificationCode.DoesNotExist:
+            raise forms.ValidationError(_('验证码不正确'))
+
+        return code
+
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data["email"]
+
         if commit:
             user.save()
+            # 标记验证码为已使用
+            email = self.cleaned_data.get('email')
+            code = self.cleaned_data.get('verification_code')
+            verification_code = EmailVerificationCode.objects.filter(
+                email=email, code=code
+            ).latest('created_at')
+            verification_code.is_used = True
+            verification_code.save()
+
         return user
 
 

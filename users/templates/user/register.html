@@ -31,6 +31,18 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="verification_code" class="form-label">{% trans "验证码" %}</label>
+                        <div class="input-group">
+                            {{ form.verification_code }}
+                            <button type="button" id="send-code-btn" class="btn btn-outline-secondary">{% trans "发送验证码" %}</button>
+                        </div>
+                        {% if form.verification_code.errors %}
+                            <div class="text-danger">{{ form.verification_code.errors }}</div>
+                        {% endif %}
+                        <div id="code-message" class="mt-1"></div>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="{{ form.password1.id_for_label }}" class="form-label">{% trans "密码" %}</label>
                         {{ form.password1 }}
                         {% if form.password1.errors %}
@@ -56,4 +68,65 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sendCodeBtn = document.getElementById('send-code-btn');
+        const emailInput = document.getElementById('{{ form.email.id_for_label }}');
+        const codeMessage = document.getElementById('code-message');
+
+        sendCodeBtn.addEventListener('click', function() {
+            const email = emailInput.value;
+
+            if (!email) {
+                codeMessage.innerHTML = '<span class="text-danger">{% trans "请先输入邮箱地址" %}</span>';
+                return;
+            }
+
+            // 禁用发送按钮
+            sendCodeBtn.disabled = true;
+            sendCodeBtn.innerHTML = '{% trans "发送中..." %}';
+
+            // 发送请求获取验证码
+            fetch('{% url "send_verification_code" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: `email=${encodeURIComponent(email)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    codeMessage.innerHTML = '<span class="text-success">' + data.message + '</span>';
+                    // 倒计时60秒
+                    let countdown = 60;
+                    sendCodeBtn.innerHTML = `${countdown}秒后重新发送`;
+
+                    const timer = setInterval(() => {
+                        countdown--;
+                        sendCodeBtn.innerHTML = `${countdown}秒后重新发送`;
+
+                        if (countdown <= 0) {
+                            clearInterval(timer);
+                            sendCodeBtn.disabled = false;
+                            sendCodeBtn.innerHTML = '{% trans "发送验证码" %}';
+                        }
+                    }, 1000);
+                } else {
+                    codeMessage.innerHTML = '<span class="text-danger">' + data.message + '</span>';
+                    sendCodeBtn.disabled = false;
+                    sendCodeBtn.innerHTML = '{% trans "发送验证码" %}';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                codeMessage.innerHTML = '<span class="text-danger">{% trans "发送失败，请稍后重试" %}</span>';
+                sendCodeBtn.disabled = false;
+                sendCodeBtn.innerHTML = '{% trans "发送验证码" %}';
+            });
+        });
+    });
+</script>
 {% endblock %}

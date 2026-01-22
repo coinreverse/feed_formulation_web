@@ -142,3 +142,12 @@ LANGUAGES = [
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
+
+# 邮件发送配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'  # 您可以根据需要更改为其他SMTP服务器
+EMAIL_PORT = 587
+EMAIL_USE_SSL = True  # 使用ssl
+EMAIL_HOST_USER = 'feed_formulation@163.com'  # 邮箱地址
+EMAIL_HOST_PASSWORD = 'LDgJvhBapTkciqPM'  # 邮箱授权验证码
+DEFAULT_FROM_EMAIL = 'feed_formulation@163.com'

@@ -4,8 +4,45 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CustomUserCreationForm, CustomAuthenticationForm, ProfileForm
 from django.utils.translation import gettext_lazy as _
+from django.core.mail import send_mail
+from django.conf import settings
+import random
+import string
+from .models import EmailVerificationCode
+from django.http import JsonResponse
 
 
+# 添加发送验证码的视图
+def send_verification_code(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        if not email:
+            return JsonResponse({'status': 'error', 'message': _('请输入邮箱地址')})
+
+        # 生成6位随机验证码
+        code = ''.join(random.choices(string.digits, k=6))
+
+        # 保存验证码到数据库
+        EmailVerificationCode.objects.create(
+            email=email,
+            code=code
+        )
+
+        # 发送邮件
+        subject = _('注册验证码')
+        message = _(f'您的注册验证码是：{code}，有效期为5分钟。')
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = [email]
+
+        try:
+            send_mail(subject, message, from_email, recipient_list)
+            return JsonResponse({'status': 'success', 'message': _('验证码已发送')})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': _('发送失败，请稍后重试')})
+
+    return JsonResponse({'status': 'error', 'message': _('无效的请求方式')})
+
+# 更新注册视图
 def register_view(request):
     """
     用户注册视图
