@@ -14,7 +14,8 @@
         <div class="card-header">{% trans "基本信息" %}</div>
         <div class="card-body">
             <p><strong>{% trans "原料名称" %}：</strong>{{ ingredient.name }}</p>
-            <p><strong>{% trans "原料说明" %}：</strong>{{ ingredient.description|default:{% trans "无" %} }}</p>
+            {% trans "无" as no_description %}
+            <p><strong>{% trans "原料说明" %}：</strong>{{ ingredient.description|default:no_description }}</p>
             <p><strong>{% trans "单价" %}：</strong>{{ ingredient.cost }} {% trans "元/吨" %}</p>
             <p><strong>{% trans "创建时间" %}：</strong>{{ ingredient.created_at }}</p>
             <p><strong>{% trans "创建用户" %}：</strong>{{ ingredient.created_by.username }}</p>

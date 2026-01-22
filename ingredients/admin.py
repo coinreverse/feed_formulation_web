@@ -1,8 +1,9 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 from .models import Ingredient, IngredientNutrient, CustomIngredientNutrient
 
 @admin.register(Ingredient)
-class IngredientAdmin(admin.ModelAdmin):
+class IngredientAdmin(TranslationAdmin):
     list_display = ('name', 'cost', 'status', 'created_at', 'created_by', 'approved_by', 'approved_at')
     search_fields = ('name',)
     list_filter = ('status', 'created_at', 'created_by')
@@ -13,6 +14,6 @@ class IngredientNutrientAdmin(admin.ModelAdmin):
     search_fields = ('ingredient__name',)
 
 @admin.register(CustomIngredientNutrient)
-class CustomIngredientNutrientAdmin(admin.ModelAdmin):
+class CustomIngredientNutrientAdmin(TranslationAdmin):
     list_display = ('ingredient', 'nutrient_name', 'value', 'unit')
     search_fields = ('ingredient__name', 'nutrient_name')

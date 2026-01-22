@@ -300,25 +300,33 @@
                     const upperValue = animalRequirement[upperKey];
                     const displayValue = `${lowerValue} - ${upperValue} ${config.unit}`;
 
-                    html += `
-        <tr>
-            <td>${config.name}</td>
-            <td>${displayValue}</td>
-        </tr>
-`;
+                    // 过滤掉上下界都为0的营养需求
+                    if (!(lowerValue === 0 && upperValue === 0)) {
+                        const displayValue = `${lowerValue} - ${upperValue} ${config.unit}`;
+
+                        html += `
+            <tr>
+                <td>${config.name}</td>
+                <td>${displayValue}</td>
+            </tr>
+    `;
+                    }
                 }
             });
 
             // 添加自定义营养需求（直接作为表格行）
             if (animalRequirement.custom_nutrients && animalRequirement.custom_nutrients.length > 0) {
                 animalRequirement.custom_nutrients.forEach(nutrient => {
+                   // 过滤掉上下界都为0的自定义营养需求
+                if (!(nutrient.lower === 0 && nutrient.upper === 0)) {
                     const displayValue = `${nutrient.lower} - ${nutrient.upper} ${nutrient.unit}`;
                     html += `
-        <tr>
-            <td>${nutrient.name}</td>
-            <td>${displayValue}</td>
-        </tr>
-`;
+            <tr>
+                <td>${nutrient.name}</td>
+                <td>${displayValue}</td>
+            </tr>
+        `;
+                }
                 });
             }
 

@@ -83,6 +83,18 @@ class CustomNutrientRequirement(models.Model):
     def __str__(self):
         return f"{self.nutrient_name}: {self.nutrient_lower}-{self.nutrient_upper}{self.unit}"
 
+    @property
+    def nutrient_name_translated(self):
+        from django.utils.translation import get_language
+        current_lang = get_language()
+        return getattr(self, f'nutrient_name_{current_lang}', self.nutrient_name)
+
+    @property
+    def unit_translated(self):
+        from django.utils.translation import get_language
+        current_lang = get_language()
+        return getattr(self, f'unit_{current_lang}', self.unit)
+
 
 class AnimalRequirementHistory(models.Model):
     """

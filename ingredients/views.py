@@ -375,12 +375,21 @@ def review_ingredient(request, ingredient_id):
     # 获取待审核的自定义营养成分数据
     pending_custom_data = pending_change.custom_nutrients or []
 
+    # 识别被删除的自定义营养成分
+    original_names = {item['nutrient_name'] for item in original_custom_data}
+    pending_names = {item['nutrient_name'] for item in pending_custom_data}
+    deleted_custom_nutrients = [item for item in original_custom_data if item['nutrient_name'] not in pending_names]
+
     # 比较自定义营养成分数据
     if sorted(original_custom_data, key=lambda x: x['nutrient_name']) != sorted(pending_custom_data,
                                                                                 key=lambda x: x['nutrient_name']):
         # 如果有变化，将变化的营养成分添加到changed_fields
         # 为了展示方便，我们将所有原始和新的自定义营养成分都显示出来
-        changed_fields['custom_nutrients'] = (original_custom_data, pending_custom_data)
+        changed_fields['custom_nutrients'] = {
+            'original': original_custom_data,
+            'new': pending_custom_data,
+            'deleted': deleted_custom_nutrients
+        }
 
     if request.method == 'POST':
         # 保持原有POST处理逻辑不变
@@ -465,6 +474,14 @@ def api_ingredients_list(request):
             nutrient = IngredientNutrient.objects.filter(ingredient=ingredient).first()
             custom_nutrients = CustomIngredientNutrient.objects.filter(ingredient=ingredient)
 
+            # 根据当前语言获取原料名称翻译
+            from django.utils.translation import get_language
+            current_lang = get_language()
+            if current_lang == 'en':
+                ingredient_name = getattr(ingredient, 'name_en', ingredient.name)
+            else:
+                ingredient_name = getattr(ingredient, 'name_zh_hans', ingredient.name)
+
             if nutrient:
                 ingredient_data = {
                     'id': ingredient.id,
@@ -478,9 +495,9 @@ def api_ingredients_list(request):
                     'p': float(nutrient.phosphorus),
                     'me': float(nutrient.metabolizable_energy),  # 代谢能
                     'custom_nutrients': [{
-                        'name': cn.nutrient_name,
+                        'name': getattr(cn, f'nutrient_name_{current_lang}', cn.nutrient_name),
                         'value': float(cn.value),
-                        'unit': cn.unit
+                        'unit': getattr(cn, f'unit_{current_lang}', cn.unit)
                     } for cn in custom_nutrients]
                 }
             else:

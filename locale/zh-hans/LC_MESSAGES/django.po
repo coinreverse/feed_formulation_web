@@ -1,0 +1,1227 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-10 21:40+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\GA_feed_sheep\core\evaluator.py:60
+msgid "成本向量与原料数量不匹配"
+msgstr ""
+
+#: .\GA_feed_sheep\core\evaluator.py:61
+msgid "营养矩阵行与原料数量不匹配"
+msgstr ""
+
+#: .\GA_feed_sheep\core\evaluator.py:62
+msgid "营养矩阵列与营养素数量不匹配"
+msgstr ""
+
+#: .\animal_requirements\models.py:17 .\ingredients\models.py:17
+msgid "草稿"
+msgstr ""
+
+#: .\animal_requirements\models.py:18
+#: .\animal_requirements\templates\animal_requirements\detail.html:40
+#: .\animal_requirements\templates\animal_requirements\list.html:34
+#: .\ingredients\models.py:18
+#: .\ingredients\templates\ingredients\detail.html:23
+#: .\ingredients\templates\ingredients\list.html:32
+msgid "待审核"
+msgstr ""
+
+#: .\animal_requirements\models.py:19
+#: .\animal_requirements\templates\animal_requirements\detail.html:42
+#: .\animal_requirements\templates\animal_requirements\list.html:36
+#: .\ingredients\models.py:19
+#: .\ingredients\templates\ingredients\detail.html:25
+#: .\ingredients\templates\ingredients\list.html:34
+msgid "已通过"
+msgstr ""
+
+#: .\animal_requirements\models.py:20
+#: .\animal_requirements\templates\animal_requirements\detail.html:44
+#: .\animal_requirements\templates\animal_requirements\list.html:38
+#: .\ingredients\models.py:20
+#: .\ingredients\templates\ingredients\detail.html:27
+#: .\ingredients\templates\ingredients\list.html:36
+msgid "已拒绝"
+msgstr ""
+
+#: .\animal_requirements\models.py:24
+#: .\animal_requirements\templates\animal_requirements\detail.html:37
+#: .\animal_requirements\templates\animal_requirements\list.html:21
+#: .\ingredients\models.py:29
+#: .\ingredients\templates\ingredients\detail.html:21
+#: .\ingredients\templates\ingredients\list.html:20
+msgid "审核状态"
+msgstr ""
+
+#: .\animal_requirements\models.py:26 .\animal_requirements\models.py:108
+#: .\animal_requirements\templates\animal_requirements\detail.html:25
+#: .\animal_requirements\templates\animal_requirements\list.html:18
+#: .\animal_requirements\templates\animal_requirements\review.html:22
+#: .\formulation\templates\formulation\formula_results.html:246
+#: .\formulation\templates\formulation\ga_optimization_list.html:20
+msgid "动物类型"
+msgstr ""
+
+#: .\animal_requirements\models.py:27 .\animal_requirements\models.py:109
+#: .\animal_requirements\templates\animal_requirements\list.html:19
+#: .\formulation\templates\formulation\ga_optimization_list.html:21
+msgid "体重(kg)"
+msgstr ""
+
+#: .\animal_requirements\models.py:28 .\animal_requirements\models.py:110
+#: .\animal_requirements\templates\animal_requirements\list.html:20
+#: .\formulation\templates\formulation\ga_optimization_list.html:22
+msgid "日增重(g)"
+msgstr ""
+
+#: .\animal_requirements\models.py:33 .\animal_requirements\models.py:115
+msgid "钙下界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:34 .\animal_requirements\models.py:116
+msgid "钙上界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:36 .\animal_requirements\models.py:117
+msgid "蛋白下界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:37 .\animal_requirements\models.py:118
+msgid "蛋白上界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:39 .\animal_requirements\models.py:119
+msgid "磷下界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:40 .\animal_requirements\models.py:120
+msgid "磷上界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:42 .\animal_requirements\models.py:121
+msgid "中性洗涤纤维下界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:43 .\animal_requirements\models.py:122
+msgid "中性洗涤纤维上界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:45 .\animal_requirements\models.py:123
+msgid "代谢能下界(kcal/kg))"
+msgstr ""
+
+#: .\animal_requirements\models.py:46 .\animal_requirements\models.py:124
+msgid "代谢能上界(kcal/kg))"
+msgstr ""
+
+#: .\animal_requirements\models.py:48 .\animal_requirements\models.py:125
+msgid "代谢蛋白下界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:49 .\animal_requirements\models.py:126
+msgid "代谢蛋白上界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:53
+#: .\animal_requirements\templates\animal_requirements\detail.html:34
+#: .\animal_requirements\templates\animal_requirements\review.html:54
+#: .\ingredients\models.py:31
+msgid "提交用户"
+msgstr ""
+
+#: .\animal_requirements\models.py:55
+#: .\animal_requirements\templates\animal_requirements\detail.html:49
+#: .\ingredients\models.py:33
+#: .\ingredients\templates\ingredients\detail.html:31
+msgid "审核用户"
+msgstr ""
+
+#: .\animal_requirements\models.py:56
+#: .\animal_requirements\templates\animal_requirements\detail.html:54
+#: .\ingredients\models.py:34
+#: .\ingredients\templates\ingredients\detail.html:32
+msgid "审核时间"
+msgstr ""
+
+#: .\animal_requirements\models.py:58
+#: .\animal_requirements\templates\animal_requirements\detail.html:58
+#: .\animal_requirements\templates\animal_requirements\list.html:22
+#: .\formulation\templates\formulation\formula_results_list.html:32
+#: .\formulation\templates\formulation\ga_optimization_list.html:23
+#: .\ingredients\models.py:26
+#: .\ingredients\templates\ingredients\detail.html:19
+#: .\ingredients\templates\ingredients\list.html:21
+msgid "创建时间"
+msgstr ""
+
+#: .\animal_requirements\models.py:61 .\animal_requirements\models.py:62
+#: .\formulation\templates\formulation\formula_results.html:147
+msgid "动物营养需求"
+msgstr ""
+
+#: .\animal_requirements\models.py:65
+#: .\animal_requirements\templates\animal_requirements\detail.html:11
+#: .\animal_requirements\templates\animal_requirements\detail.html:31
+#: .\animal_requirements\templates\animal_requirements\review.html:44
+#: .\formulation\templates\formulation\formula_results.html:248
+#: .\formulation\templates\formulation\formula_results_list.html:20
+msgid "日增重"
+msgstr ""
+
+#: .\animal_requirements\models.py:73
+msgid "关联的动物营养需求"
+msgstr ""
+
+#: .\animal_requirements\models.py:74
+#: .\animal_requirements\templates\animal_requirements\edit.html:363
+#: .\ingredients\models.py:88 .\ingredients\templates\ingredients\add.html:232
+#: .\ingredients\templates\ingredients\edit.html:251
+msgid "营养元素名称"
+msgstr ""
+
+#: .\animal_requirements\models.py:75
+msgid "营养元素下界"
+msgstr ""
+
+#: .\animal_requirements\models.py:76
+msgid "营养元素上界"
+msgstr ""
+
+#: .\animal_requirements\models.py:77
+#: .\animal_requirements\templates\animal_requirements\add.html:339
+#: .\animal_requirements\templates\animal_requirements\edit.html:381
+#: .\ingredients\models.py:90 .\ingredients\templates\ingredients\add.html:244
+#: .\ingredients\templates\ingredients\edit.html:263
+msgid "单位"
+msgstr ""
+
+#: .\animal_requirements\models.py:80 .\animal_requirements\models.py:81
+#: .\animal_requirements\templates\animal_requirements\detail.html:125
+#: .\animal_requirements\templates\animal_requirements\detail.html:142
+#: .\animal_requirements\templates\animal_requirements\edit.html:40
+#: .\animal_requirements\templates\animal_requirements\review.html:199
+msgid "自定义营养需求"
+msgstr ""
+
+#: .\animal_requirements\models.py:98 .\animal_requirements\models.py:99
+msgid "动物营养需求历史版本"
+msgstr ""
+
+#: .\animal_requirements\models.py:113
+msgid "干物质下界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:114
+msgid "干物质上界(%))"
+msgstr ""
+
+#: .\animal_requirements\models.py:136 .\animal_requirements\models.py:137
+msgid "动物营养需求待审核变更"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:4
+#: .\animal_requirements\templates\animal_requirements\add.html:10
+#: .\animal_requirements\templates\animal_requirements\list.html:10
+msgid "添加动物营养需求"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:12
+#: .\animal_requirements\templates\animal_requirements\detail.html:13
+#: .\formulation\templates\formulation\formula_results_detailed.html:190
+#: .\ingredients\templates\ingredients\add.html:12
+#: .\ingredients\templates\ingredients\detail.html:8
+#: .\ingredients\templates\ingredients\edit.html:8
+msgid "返回列表"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:22
+#: .\animal_requirements\templates\animal_requirements\detail.html:21
+#: .\animal_requirements\templates\animal_requirements\edit.html:59
+#: .\animal_requirements\templates\animal_requirements\review.html:18
+#: .\ingredients\templates\ingredients\add.html:22
+#: .\ingredients\templates\ingredients\detail.html:14
+#: .\ingredients\templates\ingredients\edit.html:45
+#: .\ingredients\templates\ingredients\review.html:19
+#: .\users\templates\user\profile.html:15
+msgid "基本信息"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:47
+#: .\animal_requirements\templates\animal_requirements\edit.html:84
+msgid "已有营养指标"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:60
+#: .\animal_requirements\templates\animal_requirements\add.html:80
+#: .\animal_requirements\templates\animal_requirements\add.html:100
+#: .\animal_requirements\templates\animal_requirements\add.html:120
+#: .\animal_requirements\templates\animal_requirements\add.html:142
+#: .\animal_requirements\templates\animal_requirements\add.html:162
+#: .\animal_requirements\templates\animal_requirements\add.html:182
+#: .\animal_requirements\templates\animal_requirements\add.html:327
+#: .\animal_requirements\templates\animal_requirements\edit.html:97
+#: .\animal_requirements\templates\animal_requirements\edit.html:117
+#: .\animal_requirements\templates\animal_requirements\edit.html:137
+#: .\animal_requirements\templates\animal_requirements\edit.html:157
+#: .\animal_requirements\templates\animal_requirements\edit.html:179
+#: .\animal_requirements\templates\animal_requirements\edit.html:199
+#: .\animal_requirements\templates\animal_requirements\edit.html:219
+#: .\animal_requirements\templates\animal_requirements\edit.html:369
+msgid "下界"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:66
+#: .\animal_requirements\templates\animal_requirements\add.html:86
+#: .\animal_requirements\templates\animal_requirements\add.html:106
+#: .\animal_requirements\templates\animal_requirements\add.html:126
+#: .\animal_requirements\templates\animal_requirements\add.html:148
+#: .\animal_requirements\templates\animal_requirements\add.html:168
+#: .\animal_requirements\templates\animal_requirements\add.html:188
+#: .\animal_requirements\templates\animal_requirements\add.html:333
+#: .\animal_requirements\templates\animal_requirements\edit.html:103
+#: .\animal_requirements\templates\animal_requirements\edit.html:123
+#: .\animal_requirements\templates\animal_requirements\edit.html:143
+#: .\animal_requirements\templates\animal_requirements\edit.html:163
+#: .\animal_requirements\templates\animal_requirements\edit.html:185
+#: .\animal_requirements\templates\animal_requirements\edit.html:205
+#: .\animal_requirements\templates\animal_requirements\edit.html:225
+#: .\animal_requirements\templates\animal_requirements\edit.html:375
+msgid "上界"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:202
+#: .\animal_requirements\templates\animal_requirements\edit.html:239
+msgid "自定义营养指标"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:204
+#: .\animal_requirements\templates\animal_requirements\edit.html:241
+#: .\ingredients\templates\ingredients\add.html:134
+msgid "添加营养元素"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:240
+#: .\animal_requirements\templates\animal_requirements\add.html:346
+#: .\animal_requirements\templates\animal_requirements\edit.html:277
+#: .\animal_requirements\templates\animal_requirements\edit.html:388
+#: .\ingredients\templates\ingredients\add.html:164
+#: .\ingredients\templates\ingredients\add.html:250
+#: .\ingredients\templates\ingredients\edit.html:183
+#: .\ingredients\templates\ingredients\edit.html:269
+msgid "确认"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:245
+#: .\animal_requirements\templates\animal_requirements\add.html:351
+#: .\animal_requirements\templates\animal_requirements\edit.html:282
+#: .\animal_requirements\templates\animal_requirements\edit.html:393
+#: .\ingredients\templates\ingredients\add.html:168
+#: .\ingredients\templates\ingredients\add.html:253
+#: .\ingredients\templates\ingredients\edit.html:188
+#: .\ingredients\templates\ingredients\edit.html:272
+msgid "删除"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:259
+msgid "提交动物营养需求"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\add.html:321
+msgid "营养名称"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:4
+msgid "动物营养需求详情 - 饲料配方系统"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:14
+#: .\animal_requirements\templates\animal_requirements\list.html:11
+#: .\formulation\templates\formulation\formula_results_list.html:9
+#: .\formulation\templates\formulation\ga_optimization_list.html:9
+#: .\ingredients\templates\ingredients\list.html:11
+#: .\users\templates\user\profile.html:11
+msgid "返回主页"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:28
+#: .\animal_requirements\templates\animal_requirements\review.html:33
+#: .\formulation\templates\formulation\formula_results.html:247
+msgid "体重"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:67
+#: .\animal_requirements\templates\animal_requirements\review.html:62
+msgid "固定营养需求"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:72
+#: .\animal_requirements\templates\animal_requirements\review.html:69
+#: .\animal_requirements\templates\animal_requirements\review.html:78
+#: .\formulation\models.py:17 .\ingredients\models.py:57
+#: .\ingredients\models.py:112
+#: .\ingredients\templates\ingredients\detail.html:45
+#: .\ingredients\templates\ingredients\review.html:67
+msgid "干物质(DM)"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:77
+#: .\animal_requirements\templates\animal_requirements\review.html:87
+#: .\animal_requirements\templates\animal_requirements\review.html:96
+#: .\formulation\models.py:18 .\ingredients\models.py:58
+#: .\ingredients\models.py:113
+#: .\ingredients\templates\ingredients\detail.html:48
+#: .\ingredients\templates\ingredients\review.html:80
+msgid "钙(Ca)"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:84
+#: .\animal_requirements\templates\animal_requirements\review.html:105
+#: .\animal_requirements\templates\animal_requirements\review.html:114
+#: .\formulation\models.py:19 .\ingredients\models.py:59
+#: .\ingredients\models.py:114
+#: .\ingredients\templates\ingredients\detail.html:51
+#: .\ingredients\templates\ingredients\review.html:93
+msgid "粗蛋白(CP)"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:91
+#: .\animal_requirements\templates\animal_requirements\review.html:123
+#: .\animal_requirements\templates\animal_requirements\review.html:132
+#: .\formulation\models.py:20 .\ingredients\models.py:60
+#: .\ingredients\models.py:115
+#: .\ingredients\templates\ingredients\detail.html:54
+#: .\ingredients\templates\ingredients\review.html:106
+msgid "磷(P)"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:98
+#: .\animal_requirements\templates\animal_requirements\review.html:141
+#: .\animal_requirements\templates\animal_requirements\review.html:150
+#: .\formulation\models.py:21 .\ingredients\models.py:61
+#: .\ingredients\models.py:116
+#: .\ingredients\templates\ingredients\detail.html:59
+#: .\ingredients\templates\ingredients\review.html:119
+msgid "中性洗涤纤维(NDF)"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:104
+#: .\animal_requirements\templates\animal_requirements\review.html:159
+#: .\animal_requirements\templates\animal_requirements\review.html:168
+#: .\formulation\models.py:22 .\ingredients\models.py:66
+#: .\ingredients\models.py:121
+#: .\ingredients\templates\ingredients\detail.html:62
+#: .\ingredients\templates\ingredients\review.html:132
+msgid "代谢能(ME)"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:111
+#: .\animal_requirements\templates\animal_requirements\review.html:177
+#: .\animal_requirements\templates\animal_requirements\review.html:186
+#: .\formulation\models.py:23 .\ingredients\models.py:68
+#: .\ingredients\models.py:123
+#: .\ingredients\templates\ingredients\detail.html:65
+#: .\ingredients\templates\ingredients\review.html:145
+msgid "代谢蛋白(MP)"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:162
+#: .\animal_requirements\templates\animal_requirements\review.html:228
+#: .\ingredients\templates\ingredients\detail.html:94
+#: .\ingredients\templates\ingredients\review.html:194
+msgid "审核操作"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:166
+msgid "审核该需求"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:171
+msgid "请登录以查看动物营养需求详情"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:172
+#: .\animal_requirements\templates\animal_requirements\list.html:68
+#: .\formulation\templates\formulation\formula_results_list.html:67
+#: .\formulation\templates\formulation\ga_optimization_list.html:50
+#: .\ingredients\templates\ingredients\list.html:69 .\templates\base.html:74
+#: .\users\templates\user\login.html:33
+msgid "登录"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\detail.html:173
+#: .\animal_requirements\templates\animal_requirements\list.html:68
+#: .\formulation\templates\formulation\formula_results_list.html:67
+#: .\formulation\templates\formulation\ga_optimization_list.html:50
+#: .\ingredients\templates\ingredients\list.html:69 .\templates\base.html:75
+#: .\users\templates\user\register.html:49
+msgid "注册"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\edit.html:4
+#: .\animal_requirements\templates\animal_requirements\edit.html:10
+msgid "编辑动物营养需求"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\edit.html:13
+#: .\animal_requirements\templates\animal_requirements\review.html:12
+#: .\ingredients\templates\ingredients\review.html:12
+msgid "返回详情"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\edit.html:30
+#: .\ingredients\templates\ingredients\edit.html:15
+msgid "表单验证失败，请检查以下错误："
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\edit.html:296
+msgid "更新动物营养需求"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\edit.html:449
+#: .\ingredients\templates\ingredients\add.html:309
+#: .\ingredients\templates\ingredients\edit.html:328
+msgid "请填写所有字段后再确认"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\list.html:4
+#: .\animal_requirements\templates\animal_requirements\list.html:8
+#: .\formulation\templates\formulation\ga_optimization_list.html:43
+#: .\templates\home.html:21 .\templates\home.html:23
+msgid "动物营养需求管理"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\list.html:23
+#: .\formulation\templates\formulation\formula_results_list.html:33
+#: .\formulation\templates\formulation\ga_optimization_list.html:24
+#: .\ingredients\templates\ingredients\list.html:22
+#: .\users\templates\user\profile.html:27
+msgid "操作"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\list.html:43
+#: .\formulation\templates\formulation\formula_results_list.html:46
+#: .\ingredients\templates\ingredients\list.html:41
+msgid "查看详情"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\list.html:47
+#: .\animal_requirements\templates\animal_requirements\list.html:49
+#: .\ingredients\templates\ingredients\detail.html:9
+#: .\ingredients\templates\ingredients\list.html:46
+#: .\ingredients\templates\ingredients\list.html:48
+msgid "编辑"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\list.html:53
+#: .\ingredients\templates\ingredients\list.html:54
+msgid "审核"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\list.html:59
+msgid "暂无动物营养需求数据"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\list.html:66
+#: .\formulation\templates\formulation\formula_results_list.html:65
+#: .\formulation\templates\formulation\ga_optimization_list.html:48
+msgid "欢迎, "
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\review.html:4
+#: .\animal_requirements\templates\animal_requirements\review.html:10
+msgid "审核动物营养需求"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\review.html:234
+#: .\ingredients\templates\ingredients\review.html:200
+msgid "审核结果"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\review.html:236
+#: .\ingredients\templates\ingredients\review.html:202
+msgid "通过"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\review.html:237
+#: .\ingredients\templates\ingredients\review.html:203
+msgid "拒绝"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\review.html:241
+#: .\ingredients\models.py:35
+#: .\ingredients\templates\ingredients\review.html:207
+msgid "审核意见"
+msgstr ""
+
+#: .\animal_requirements\templates\animal_requirements\review.html:244
+msgid "提交审核结果"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:21
+msgid "大麦皮"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:21
+msgid "小麦麸"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:21
+msgid "玉米"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:21
+msgid "高粱"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:21
+msgid "大豆粕"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:21
+msgid "棉籽粕"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:21
+msgid "花生仁粕"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:22
+msgid "羊草"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:22
+msgid "苜蓿青贮"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:22
+msgid "玉米秸秆"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:22
+msgid "大豆秸秆"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:22
+msgid "玉米秸秆青贮"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:22
+msgid "磷酸氢钙"
+msgstr ""
+
+#: .\formulation\management\commands\import_yaml.py:62
+msgid "未填"
+msgstr ""
+
+#: .\formulation\models.py:9
+msgid "动物需求方案"
+msgstr ""
+
+#: .\formulation\models.py:12
+msgid "帕累托序号"
+msgstr ""
+
+#: .\formulation\models.py:15
+msgid "成本"
+msgstr ""
+
+#: .\formulation\models.py:25
+msgid "自定义营养元素"
+msgstr ""
+
+#: .\formulation\models.py:45
+msgid "比例"
+msgstr ""
+
+#: .\formulation\models.py:49
+msgid "创造yaml文件所需的json数据"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:141
+msgid "配方优化系统"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:151
+msgid "正在加载动物营养需求信息..."
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:159
+msgid "可用饲料原料"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:162
+msgid "全选/取消全选"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:168
+msgid "正在加载饲料原料信息..."
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:175
+#: .\formulation\templates\formulation\formula_results.html:631
+msgid "运行遗传算法"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:181
+msgid "查看配方结果"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:214
+#: .\formulation\templates\formulation\formula_results.html:220
+msgid "获取动物营养需求信息失败"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:229
+#: .\formulation\templates\formulation\formula_results.html:235
+msgid "获取饲料原料信息失败"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:249
+#: .\formulation\templates\formulation\formula_results.html:340
+msgid "干物质"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:250
+#: .\formulation\templates\formulation\formula_results.html:341
+msgid "中性洗涤纤维"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:251
+#: .\formulation\templates\formulation\formula_results.html:342
+msgid "代谢蛋白"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:252
+#: .\formulation\templates\formulation\formula_results.html:343
+msgid "粗蛋白"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:253
+#: .\formulation\templates\formulation\formula_results.html:344
+msgid "钙"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:254
+#: .\formulation\templates\formulation\formula_results.html:345
+msgid "磷"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:255
+#: .\formulation\templates\formulation\formula_results.html:346
+msgid "代谢能"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:256
+#: .\formulation\templates\formulation\formula_results.html:347
+msgid "钠"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:257
+#: .\formulation\templates\formulation\formula_results.html:348
+msgid "钾"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:258
+#: .\formulation\templates\formulation\formula_results.html:349
+msgid "镁"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:265
+msgid "营养元素"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:266
+msgid "需求值"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:339
+#: .\ingredients\models.py:23 .\ingredients\models.py:107
+#: .\ingredients\templates\ingredients\detail.html:16
+#: .\ingredients\templates\ingredients\list.html:18
+#: .\ingredients\templates\ingredients\review.html:23
+msgid "原料名称"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:350
+msgid "价格"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:378
+msgid "选择"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:500
+msgid "请至少选择一种饲料原料"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:506
+msgid "动物营养需求数据尚未加载，请稍后重试"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:511
+msgid "饲料原料数据尚未加载，请稍后重试"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:579
+msgid "所选原料缺少以下必需营养元素"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:597
+msgid "正在运行遗传算法..."
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:615
+msgid "运行遗传算法失败"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results.html:638
+msgid "没有可用的结果"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:4
+msgid "配方结果详情 - 饲料配方系统"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:189
+msgid "配方结果详情"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:195
+msgid "正在加载数据..."
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:196
+msgid "请稍候，系统正在获取饲料配方优化结果"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:201
+msgid "数据加载失败"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:211
+msgid "方案详情与营养成分"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:215
+msgid "正在加载方案详情"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:216
+msgid "请稍候，系统正在获取饲料配方详细信息"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:224
+#: .\formulation\templates\formulation\formula_results_detailed.html:363
+msgid "原料配比详情"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:228
+msgid "正在加载原料配比"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:229
+msgid "请稍候，系统正在获取饲料原料配比信息"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:259
+msgid "获取数据失败"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:272
+msgid "暂无优化结果，请先运行遗传算法"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:293
+msgid "干物质 (DM)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:297
+msgid "钙 (Ca)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:301
+msgid "粗蛋白 (CP)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:305
+msgid "磷 (P)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:309
+msgid "中性洗涤纤维 (NDF)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:313
+msgid "代谢能 (ME)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:317
+msgid "代谢蛋白 (MP)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:338
+msgid "方案"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:343
+msgid "成本信息"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:348
+msgid "营养成分详情"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_detailed.html:376
+msgid "暂无原料配比数据"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:4
+#: .\formulation\templates\formulation\formula_results_list.html:8
+msgid "配方结果分析"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:13
+msgid "查看历史遗传算法优化结果。您可以比较不同方案的成本和营养成分。"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:27
+msgid "方案编号"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:28
+msgid "总成本(元/吨)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:29
+#, python-format
+msgid "干物质(%%)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:30
+#, python-format
+msgid "中性洗涤纤维(%%)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:31
+#, python-format
+msgid "代谢蛋白(%%)"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:53
+msgid "暂无优化结果"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:60
+msgid "暂无配方优化结果。请先在"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:60
+#: .\formulation\templates\formulation\ga_optimization_list.html:4
+#: .\formulation\templates\formulation\ga_optimization_list.html:8
+msgid "遗传算法配方优化"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:67
+#: .\formulation\templates\formulation\ga_optimization_list.html:50
+#: .\ingredients\templates\ingredients\list.html:69
+msgid "您尚未登录，请"
+msgstr ""
+
+#: .\formulation\templates\formulation\formula_results_list.html:67
+#: .\formulation\templates\formulation\ga_optimization_list.html:50
+#: .\ingredients\templates\ingredients\list.html:69
+msgid "或"
+msgstr ""
+
+#: .\formulation\templates\formulation\ga_optimization_list.html:13
+msgid ""
+"选择一个动物营养需求配置来运行遗传算法优化，系统将为您生成最佳饲料配方。"
+msgstr ""
+
+#: .\formulation\templates\formulation\ga_optimization_list.html:35
+msgid "开始优化"
+msgstr ""
+
+#: .\formulation\templates\formulation\ga_optimization_list.html:43
+msgid "暂无动物营养需求配置。请先在"
+msgstr ""
+
+#: .\formulation\templates\formulation\ga_optimization_list.html:43
+msgid "中添加配置。"
+msgstr ""
+
+#: .\formulation\templates\formulation\ga_optimization_list.html:50
+#: .\ingredients\templates\ingredients\list.html:69
+msgid "。"
+msgstr ""
+
+#: .\ingredients\forms.py:207
+msgid "营养成分值不能为负数"
+msgstr ""
+
+#: .\ingredients\models.py:24 .\ingredients\models.py:108
+#: .\ingredients\templates\ingredients\detail.html:17
+#: .\ingredients\templates\ingredients\review.html:34
+msgid "原料说明"
+msgstr ""
+
+#: .\ingredients\models.py:25
+msgid "单价(元/kg)"
+msgstr ""
+
+#: .\ingredients\models.py:38 .\ingredients\models.py:39
+msgid "原料"
+msgstr ""
+
+#: .\ingredients\models.py:53 .\ingredients\models.py:86
+msgid "所属原料"
+msgstr ""
+
+#: .\ingredients\models.py:71 .\ingredients\models.py:72
+msgid "原料营养含量"
+msgstr ""
+
+#: .\ingredients\models.py:75
+msgid "的营养含量"
+msgstr ""
+
+#: .\ingredients\models.py:89
+msgid "营养元素值"
+msgstr ""
+
+#: .\ingredients\models.py:93 .\ingredients\models.py:94
+msgid "自定义原料营养成分"
+msgstr ""
+
+#: .\ingredients\models.py:109
+msgid "单价(元/吨)"
+msgstr ""
+
+#: .\ingredients\models.py:133 .\ingredients\models.py:134
+msgid "原料待审核变更"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\add.html:4
+#: .\ingredients\templates\ingredients\add.html:10
+msgid "添加饲料原料"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\add.html:47
+#: .\ingredients\templates\ingredients\detail.html:39
+#: .\ingredients\templates\ingredients\edit.html:66
+msgid "营养成分"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\add.html:132
+#: .\ingredients\templates\ingredients\detail.html:78
+#: .\ingredients\templates\ingredients\edit.html:30
+#: .\ingredients\templates\ingredients\edit.html:151
+#: .\ingredients\templates\ingredients\review.html:164
+msgid "自定义营养成分"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\add.html:182
+msgid "保存为草稿"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\add.html:183
+#: .\ingredients\templates\ingredients\review.html:210
+msgid "提交审核"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\add.html:238
+#: .\ingredients\templates\ingredients\edit.html:257
+msgid "含量"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\detail.html:18
+#: .\ingredients\templates\ingredients\review.html:45
+msgid "单价"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\detail.html:18
+msgid "元/吨"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\detail.html:20
+msgid "创建用户"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\detail.html:70
+msgid "暂无营养成分数据"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\detail.html:97
+msgid "审核该原料"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\edit.html:6
+msgid "编辑饲料原料"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\edit.html:153
+msgid "添加自定义营养元素"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\edit.html:202
+msgid "提交修改"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\list.html:4
+#: .\ingredients\templates\ingredients\list.html:8 .\templates\home.html:28
+#: .\templates\home.html:30
+msgid "饲料原料管理"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\list.html:10
+msgid "添加原料"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\list.html:19
+msgid "单价 (元/kg)"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\list.html:46
+msgid "该记录已提交审核，无法编辑"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\list.html:60
+msgid "暂无原料数据"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\list.html:67
+msgid "欢迎"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\review.html:4
+#: .\ingredients\templates\ingredients\review.html:10
+msgid "审核饲料原料"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\review.html:49
+#: .\ingredients\templates\ingredients\review.html:52
+msgid "元/kg"
+msgstr ""
+
+#: .\ingredients\templates\ingredients\review.html:62
+msgid "固定营养成分"
+msgstr ""
+
+#: .\templates\base.html:8 .\templates\base.html:33
+msgid "饲料配方系统"
+msgstr ""
+
+#: .\templates\base.html:38
+msgid "动物需求"
+msgstr ""
+
+#: .\templates\base.html:41
+msgid "饲料原料"
+msgstr ""
+
+#: .\templates\base.html:44 .\templates\home.html:35 .\templates\home.html:37
+msgid "配方优化"
+msgstr ""
+
+#: .\templates\base.html:47 .\templates\home.html:42 .\templates\home.html:44
+msgid "配方结果"
+msgstr ""
+
+#: .\templates\base.html:54
+msgid "语言"
+msgstr ""
+
+#: .\templates\base.html:71 .\users\templates\user\profile.html:10
+msgid "个人资料"
+msgstr ""
+
+#: .\templates\base.html:72 .\users\templates\user\profile.html:30
+msgid "退出登录"
+msgstr ""
+
+#: .\templates\home.html:3
+msgid "首页 - 饲料配方系统"
+msgstr ""
+
+#: .\templates\home.html:8
+msgid "欢迎使用饲料配方系统"
+msgstr ""
+
+#: .\templates\home.html:9
+msgid ""
+"这是一个基于遗传算法的饲料配方优化系统，帮助您为不同动物制定最佳饲料配方。"
+msgstr ""
+
+#: .\templates\home.html:15
+msgid "系统功能"
+msgstr ""
+
+#: .\users\forms.py:28 .\users\templates\user\login.html:26
+#: .\users\templates\user\register.html:34
+msgid "密码"
+msgstr ""
+
+#: .\users\forms.py:37 .\users\templates\user\register.html:42
+msgid "确认密码"
+msgstr ""
+
+#: .\users\templates\user\login.html:4
+msgid "用户登录 - 饲料配方系统"
+msgstr ""
+
+#: .\users\templates\user\login.html:11
+msgid "用户登录"
+msgstr ""
+
+#: .\users\templates\user\login.html:18 .\users\templates\user\register.html:26
+msgid "邮箱地址"
+msgstr ""
+
+#: .\users\templates\user\login.html:37
+msgid "还没有账户？"
+msgstr ""
+
+#: .\users\templates\user\login.html:37
+msgid "立即注册"
+msgstr ""
+
+#: .\users\templates\user\profile.html:4
+msgid "个人资料 - 饲料配方系统"
+msgstr ""
+
+#: .\users\templates\user\register.html:4
+msgid "用户注册 - 饲料配方系统"
+msgstr ""
+
+#: .\users\templates\user\register.html:11
+msgid "用户注册"
+msgstr ""
+
+#: .\users\templates\user\register.html:18
+msgid "用户名"
+msgstr ""
+
+#: .\users\templates\user\register.html:53
+msgid "已有账户？"
+msgstr ""
+
+#: .\users\templates\user\register.html:53
+msgid "立即登录"
+msgstr ""

@@ -396,12 +396,18 @@ def review_animal_requirement(request, requirement_id):
 
     new_custom_data = pending_change.custom_nutrients or []
 
+    # 识别被删除的自定义营养需求
+    original_names = {item['nutrient_name'] for item in original_custom_data}
+    new_names = {item['nutrient_name'] for item in new_custom_data}
+    deleted_custom_nutrients = [item for item in original_custom_data if item['nutrient_name'] not in new_names]
+
     # 比较自定义营养需求数据
     if sorted(original_custom_data, key=lambda x: x['nutrient_name']) != sorted(new_custom_data,
                                                                                 key=lambda x: x['nutrient_name']):
         changed_fields['custom_nutrients'] = {
             'original': sorted(original_custom_data, key=lambda x: x['nutrient_name']),
-            'new': sorted(new_custom_data, key=lambda x: x['nutrient_name'])
+            'new': sorted(new_custom_data, key=lambda x: x['nutrient_name']),
+            'deleted': sorted(deleted_custom_nutrients, key=lambda x: x['nutrient_name'])
         }
 
     if request.method == 'POST':
@@ -489,13 +495,24 @@ def api_animal_requirement(request, requirement_id):
             }
         else:
             # 获取自定义营养需求
+            # 从数据库获取最新的自定义营养需求
             custom_nutrients = []
             for custom in requirement.custom_nutrients.all():
+                # 根据当前语言获取翻译后的字段
+                from django.utils.translation import get_language
+                current_lang = get_language()
+                if current_lang == 'en':
+                    nutrient_name = getattr(custom, 'nutrient_name_en', custom.nutrient_name)
+                    unit = getattr(custom, 'unit_en', custom.unit)
+                else:
+                    nutrient_name = getattr(custom, 'nutrient_name_zh_hans', custom.nutrient_name)
+                    unit = getattr(custom, 'unit_zh_hans', custom.unit)
+
                 custom_nutrients.append({
-                    'name': custom.nutrient_name,
+                    'name': nutrient_name,
                     'lower': float(custom.nutrient_lower),
                     'upper': float(custom.nutrient_upper),
-                    'unit': custom.unit
+                    'unit': unit
                 })
 
             data = {

@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'users',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -129,6 +130,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.CustomUser'
 # 设置登录URL
 LOGIN_URL = '/users/login/'
+# 添加模型翻译设置
+MODELTRANSLATION_LANGUAGES = ('zh-hans', 'en')
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'zh-hans'
 # 支持的语言列表
 LANGUAGES = [
     ('zh-hans', '中文'),

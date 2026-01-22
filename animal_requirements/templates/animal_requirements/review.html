@@ -192,6 +192,26 @@
             </div>
         </div>
 
+        <!-- 被删除的自定义营养需求 -->
+        {% if 'custom_nutrients' in changed_fields and changed_fields.custom_nutrients.deleted %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>{% trans "已删除的自定义营养需求" %}</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        {% for custom_nutrient in changed_fields.custom_nutrients.deleted %}
+                            <dt class="col-sm-3 mb-2"><s class="text-danger">{{ custom_nutrient.nutrient_name }}</s></dt>
+                            <dd class="col-sm-9 mb-2">
+                                <s class="text-danger">
+                                    {{ custom_nutrient.nutrient_lower }}{{ custom_nutrient.unit }} - {{ custom_nutrient.nutrient_upper }}{{ custom_nutrient.unit }}
+                                </s>
+                            </dd>
+                        {% endfor %}
+                    </dl>
+                </div>
+            </div>
+        {% endif %}
         <!-- 自定义营养需求 -->
         {% if pending_change.custom_nutrients %}
             <div class="card mb-4">
