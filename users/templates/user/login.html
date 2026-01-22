@@ -34,7 +34,7 @@
                 </form>
 
                 <div class="text-center mt-3">
-                    <p>{% trans "还没有账户？" %} <a href="{% url 'register' %}">{% trans "立即注册" %}</a></p>
+                    <p><a href="{% url 'password_reset_request' %}">{% trans "忘记密码？" %}</a>{% trans "还没有账户？" %} <a href="{% url 'register' %}">{% trans "立即注册" %}</a></p>
                 </div>
             </div>
         </div>

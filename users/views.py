@@ -1,14 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import CustomUserCreationForm, CustomAuthenticationForm, ProfileForm
+from .forms import (
+    CustomUserCreationForm, CustomAuthenticationForm, ProfileForm,
+    PasswordResetRequestForm, PasswordResetForm
+)
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
 from django.conf import settings
 import random
 import string
-from .models import EmailVerificationCode
+import logging
+from .models import CustomUser, EmailVerificationCode
 from django.http import JsonResponse
 
 
@@ -121,3 +125,81 @@ def profile_view(request):
     else:
         form = ProfileForm(instance=request.user)
     return render(request, 'user/profile.html', {'form': form})
+
+
+# 添加密码重置请求视图
+def password_reset_request_view(request):
+    """
+    密码重置请求视图
+    """
+    if request.method == 'POST':
+        form = PasswordResetRequestForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            # 生成验证码
+            code = ''.join(random.choices(string.digits, k=6))
+            # 保存验证码
+            EmailVerificationCode.objects.create(
+                email=email,
+                code=code
+            )
+            # 发送验证码
+            subject = _('密码重置验证码')
+            message = _(f'您的密码重置验证码是：{code}，有效期为5分钟。')
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [email]
+            try:
+                send_mail(subject, message, from_email, recipient_list)
+                # 存储邮箱到会话，用于后续验证
+                request.session['reset_email'] = email
+                messages.success(request, _('验证码已发送到您的邮箱'))
+                return redirect('password_reset')
+            except Exception as e:
+                messages.error(request, _('发送失败，请稍后重试'))
+                logging.error(f"发送密码重置验证码失败: {str(e)}")
+    else:
+        form = PasswordResetRequestForm()
+    return render(request, 'user/password_reset_request.html', {'form': form})
+
+
+# 添加密码重置视图
+def password_reset_view(request):
+    """
+    密码重置视图
+    """
+    # 检查会话中是否有邮箱
+    if 'reset_email' not in request.session:
+        messages.error(request, _('请先提交密码重置请求'))
+        return redirect('password_reset_request')
+
+    email = request.session['reset_email']
+
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        form.initial['email'] = email  # 设置初始邮箱值
+
+        if form.is_valid():
+            # 获取用户
+            user = CustomUser.objects.get(email=email)
+            # 设置新密码
+            new_password = form.cleaned_data['new_password1']
+            user.set_password(new_password)
+            user.save()
+
+            # 标记验证码为已使用
+            code = form.cleaned_data['verification_code']
+            verification_code = EmailVerificationCode.objects.filter(
+                email=email, code=code
+            ).latest('created_at')
+            verification_code.is_used = True
+            verification_code.save()
+
+            # 清除会话中的邮箱
+            del request.session['reset_email']
+
+            messages.success(request, _('密码已成功重置，请使用新密码登录'))
+            return redirect('login')
+    else:
+        form = PasswordResetForm(initial={'email': email})
+
+    return render(request, 'user/password_reset.html', {'form': form})
