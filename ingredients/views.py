@@ -485,7 +485,7 @@ def api_ingredients_list(request):
             if nutrient:
                 ingredient_data = {
                     'id': ingredient.id,
-                    'name': ingredient.name,
+                    'name': ingredient_name,
                     'cost': float(ingredient.cost),  # 转换为元/吨
                     'dm': float(nutrient.dm),
                     'ndf': float(nutrient.ndf),
@@ -503,7 +503,7 @@ def api_ingredients_list(request):
             else:
                 ingredient_data = {
                     'id': ingredient.id,
-                    'name': ingredient.name,
+                    'name': ingredient_name,
                     'cost': float(ingredient.cost),  # 转换为元/吨
                     'dm': 0,
                     'ndf': 0,

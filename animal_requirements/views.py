@@ -469,12 +469,22 @@ def api_animal_requirement(request, requirement_id):
     try:
         requirement = get_object_or_404(AnimalRequirement, id=requirement_id)
 
+        # 获取当前语言
+        from django.utils.translation import get_language
+        current_lang = get_language()
+
+        # 根据当前语言获取翻译后的动物类型
+        if current_lang == 'en':
+            animal_type_translated = getattr(requirement, 'animal_type_en', requirement.animal_type)
+        else:
+            animal_type_translated = getattr(requirement, 'animal_type_zh_hans', requirement.animal_type)
+
         # 如果有待审核的变更，并且状态是待审核，则使用待审核的数据
         if requirement.status == AnimalRequirement.PENDING and hasattr(requirement, 'pending_change'):
             pending = requirement.pending_change
             data = {
                 'id': requirement.id,
-                'animal_type': pending.animal_type,
+                'animal_type': animal_type_translated,
                 'body_weight': float(pending.body_weight),
                 'daily_gain': float(pending.daily_gain),
                 'dm_lower': float(pending.dm_lower),
@@ -499,8 +509,6 @@ def api_animal_requirement(request, requirement_id):
             custom_nutrients = []
             for custom in requirement.custom_nutrients.all():
                 # 根据当前语言获取翻译后的字段
-                from django.utils.translation import get_language
-                current_lang = get_language()
                 if current_lang == 'en':
                     nutrient_name = getattr(custom, 'nutrient_name_en', custom.nutrient_name)
                     unit = getattr(custom, 'unit_en', custom.unit)
@@ -517,7 +525,7 @@ def api_animal_requirement(request, requirement_id):
 
             data = {
                 'id': requirement.id,
-                'animal_type': requirement.animal_type,
+                'animal_type': animal_type_translated,
                 'body_weight': float(requirement.body_weight),
                 'daily_gain': float(requirement.daily_gain),
                 'dm_lower': float(requirement.dm_lower),

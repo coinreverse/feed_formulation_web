@@ -26,9 +26,9 @@
                             <tr>
                                 <th>{% trans "方案编号" %}</th>
                                 <th>{% trans "总成本(元/吨)" %}</th>
-                                <th>{% trans "干物质(%)" %}</th>
-                                <th>{% trans "中性洗涤纤维(%)" %}</th>
-                                <th>{% trans "代谢蛋白(%)" %}</th>
+                                <th>{% trans "干物质" %}(%)</th>
+                                <th>{% trans "中性洗涤纤维" %}(%)</th>
+                                <th>{% trans "代谢蛋白" %}(%)</th>
                                 <th>{% trans "创建时间" %}</th>
                                 <th>{% trans "操作" %}</th>
                             </tr>
@@ -38,9 +38,9 @@
                             <tr>
                                 <td>{{ result.solution_index|add:1 }}</td>
                                 <td>¥{{ result.total_cost|floatformat:2 }}</td>
-                                <td>{{ result.dm|floatformat:2 }}%</td>
-                                <td>{{ result.ndf|floatformat:2 }}%</td>
-                                <td>{{ result.mp|floatformat:2 }}%</td>
+                                <td>{{ result.dm|floatformat:2 }}</td>
+                                <td>{{ result.ndf|floatformat:2 }}</td>
+                                <td>{{ result.mp|floatformat:2 }}</td>
                                 <td>{{ result.created_at|date:"Y-m-d H:i" }}</td>
                                 <td>
                                     <a href="{% url 'formula_results_detailed' result.requirement.id result.solution_index %}" class="btn btn-sm btn-info">{% trans "查看详情" %}</a>

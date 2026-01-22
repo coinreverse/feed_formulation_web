@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -92,74 +91,50 @@ msgid "日增重(g)"
 msgstr "Daily weight gain (g)"
 
 #: .\animal_requirements\models.py:33 .\animal_requirements\models.py:115
-#, fuzzy
-#| msgid "钙下界(%)"
 msgid "钙下界(%))"
 msgstr "Calcium lower bound (%)"
 
 #: .\animal_requirements\models.py:34 .\animal_requirements\models.py:116
-#, fuzzy
-#| msgid "钙上界(%)"
 msgid "钙上界(%))"
 msgstr "Calcium upper bound (%)"
 
 #: .\animal_requirements\models.py:36 .\animal_requirements\models.py:117
-#, fuzzy
-#| msgid "蛋白下界(%)"
 msgid "蛋白下界(%))"
 msgstr "Protein lower bound (%)"
 
 #: .\animal_requirements\models.py:37 .\animal_requirements\models.py:118
-#, fuzzy
-#| msgid "蛋白上界(%)"
 msgid "蛋白上界(%))"
 msgstr "Protein upper bound (%)"
 
 #: .\animal_requirements\models.py:39 .\animal_requirements\models.py:119
-#, fuzzy
-#| msgid "磷下界(%)"
 msgid "磷下界(%))"
 msgstr "Phosphorus lower bound (%)"
 
 #: .\animal_requirements\models.py:40 .\animal_requirements\models.py:120
-#, fuzzy
-#| msgid "磷上界(%)"
 msgid "磷上界(%))"
 msgstr "Phosphorus upper bound (%)"
 
 #: .\animal_requirements\models.py:42 .\animal_requirements\models.py:121
-#, fuzzy
-#| msgid "中性洗涤纤维下界(%)"
 msgid "中性洗涤纤维下界(%))"
 msgstr "Neutral wash fiber lower bound (%)"
 
 #: .\animal_requirements\models.py:43 .\animal_requirements\models.py:122
-#, fuzzy
-#| msgid "中性洗涤纤维上界(%)"
 msgid "中性洗涤纤维上界(%))"
 msgstr "Neutral wash fiber upper bound (%)"
 
 #: .\animal_requirements\models.py:45 .\animal_requirements\models.py:123
-#, fuzzy
-#| msgid "代谢能下界(kcal/kg)"
 msgid "代谢能下界(kcal/kg))"
-msgstr "Metabolic energy lower bound (kcal/kg)"
+msgstr "Metabolizable energy lower bound (kcal/kg)"
 
 #: .\animal_requirements\models.py:46 .\animal_requirements\models.py:124
-#, fuzzy
-#| msgid "代谢能上界(kcal/kg)"
 msgid "代谢能上界(kcal/kg))"
-msgstr "Metabolic energy upper bound (kcal/kg)"
+msgstr "Metabolizable energy upper bound (kcal/kg)"
 
 #: .\animal_requirements\models.py:48 .\animal_requirements\models.py:125
-#, fuzzy
-#| msgid "代谢蛋白下界(%)"
 msgid "代谢蛋白下界(%))"
 msgstr "Metabolic protein lower bound (%)"
 
 #: .\animal_requirements\models.py:49 .\animal_requirements\models.py:126
-#, fuzzy
-#| msgid "代谢蛋白上界(%)"
 msgid "代谢蛋白上界(%))"
 msgstr "Metabolic protein upper bound (%)"
 
@@ -249,14 +224,10 @@ msgid "动物营养需求历史版本"
 msgstr "Animal requirements history"
 
 #: .\animal_requirements\models.py:113
-#, fuzzy
-#| msgid "干物质下界(%)"
 msgid "干物质下界(%))"
 msgstr "Dry matter lower bound (%)"
 
 #: .\animal_requirements\models.py:114
-#, fuzzy
-#| msgid "干物质上界(%)"
 msgid "干物质上界(%))"
 msgstr "Dry matter upper bound (%)"
 
@@ -342,8 +313,6 @@ msgstr "Custom nutrient metrics"
 #: .\animal_requirements\templates\animal_requirements\add.html:204
 #: .\animal_requirements\templates\animal_requirements\edit.html:241
 #: .\ingredients\templates\ingredients\add.html:134
-#, fuzzy
-#| msgid "营养元素"
 msgid "添加营养元素"
 msgstr "Add nutritional element"
 
@@ -355,8 +324,6 @@ msgstr "Add nutritional element"
 #: .\ingredients\templates\ingredients\add.html:250
 #: .\ingredients\templates\ingredients\edit.html:183
 #: .\ingredients\templates\ingredients\edit.html:269
-#, fuzzy
-#| msgid "确认密码"
 msgid "确认"
 msgstr "Confirm"
 
@@ -380,8 +347,6 @@ msgid "营养名称"
 msgstr "Nutrient name"
 
 #: .\animal_requirements\templates\animal_requirements\detail.html:4
-#, fuzzy
-#| msgid "首页 - 饲料配方系统"
 msgid "动物营养需求详情 - 饲料配方系统"
 msgstr "Home - Feed formulation system"
 
@@ -433,7 +398,7 @@ msgstr "Calcium"
 #: .\ingredients\templates\ingredients\detail.html:51
 #: .\ingredients\templates\ingredients\review.html:93
 msgid "粗蛋白(CP)"
-msgstr "Carbohydrate protein"
+msgstr "Crude protein"
 
 #: .\animal_requirements\templates\animal_requirements\detail.html:91
 #: .\animal_requirements\templates\animal_requirements\review.html:123
@@ -463,7 +428,7 @@ msgstr "Neutral detergent fiber"
 #: .\ingredients\templates\ingredients\detail.html:62
 #: .\ingredients\templates\ingredients\review.html:132
 msgid "代谢能(ME)"
-msgstr "Metabolic energy"
+msgstr "Metabolizable energy"
 
 #: .\animal_requirements\templates\animal_requirements\detail.html:111
 #: .\animal_requirements\templates\animal_requirements\review.html:177
@@ -473,7 +438,7 @@ msgstr "Metabolic energy"
 #: .\ingredients\templates\ingredients\detail.html:65
 #: .\ingredients\templates\ingredients\review.html:145
 msgid "代谢蛋白(MP)"
-msgstr "Metabolite protein"
+msgstr "Metabolizable protein"
 
 #: .\animal_requirements\templates\animal_requirements\detail.html:162
 #: .\animal_requirements\templates\animal_requirements\review.html:228
@@ -487,8 +452,6 @@ msgid "审核该需求"
 msgstr "Review this requirement"
 
 #: .\animal_requirements\templates\animal_requirements\detail.html:171
-#, fuzzy
-#| msgid "添加动物营养需求"
 msgid "请登录以查看动物营养需求详情"
 msgstr "Add animal requirements"
 
@@ -695,8 +658,6 @@ msgid "配方优化系统"
 msgstr "Formula optimization system"
 
 #: .\formulation\templates\formulation\formula_results.html:151
-#, fuzzy
-#| msgid "添加动物营养需求"
 msgid "正在加载动物营养需求信息..."
 msgstr "Add animal requirements"
 
@@ -709,8 +670,6 @@ msgid "全选/取消全选"
 msgstr "Select all / Deselect all"
 
 #: .\formulation\templates\formulation\formula_results.html:168
-#, fuzzy
-#| msgid "正在加载原料配比"
 msgid "正在加载饲料原料信息..."
 msgstr "Loading feed ingredient ratios"
 
@@ -720,15 +679,11 @@ msgid "运行遗传算法"
 msgstr "Run genetic algorithm"
 
 #: .\formulation\templates\formulation\formula_results.html:181
-#, fuzzy
-#| msgid "配方结果"
 msgid "查看配方结果"
 msgstr "Recipe result"
 
 #: .\formulation\templates\formulation\formula_results.html:214
 #: .\formulation\templates\formulation\formula_results.html:220
-#, fuzzy
-#| msgid "动物营养需求"
 msgid "获取动物营养需求信息失败"
 msgstr "Animal requirements"
 
@@ -739,52 +694,38 @@ msgstr "Feed ingredients"
 
 #: .\formulation\templates\formulation\formula_results.html:249
 #: .\formulation\templates\formulation\formula_results.html:340
-#, fuzzy
-#| msgid "干物质(DM)"
 msgid "干物质"
 msgstr "Dry matter"
 
 #: .\formulation\templates\formulation\formula_results.html:250
 #: .\formulation\templates\formulation\formula_results.html:341
-#, fuzzy
-#| msgid "中性洗涤纤维(NDF)"
 msgid "中性洗涤纤维"
 msgstr "Neutral detergent fiber"
 
 #: .\formulation\templates\formulation\formula_results.html:251
 #: .\formulation\templates\formulation\formula_results.html:342
-#, fuzzy
-#| msgid "代谢蛋白(MP)"
 msgid "代谢蛋白"
 msgstr "Metabolite protein"
 
 #: .\formulation\templates\formulation\formula_results.html:252
 #: .\formulation\templates\formulation\formula_results.html:343
-#, fuzzy
-#| msgid "粗蛋白(CP)"
 msgid "粗蛋白"
-msgstr "Carbohydrate protein"
+msgstr "Crude protein"
 
 #: .\formulation\templates\formulation\formula_results.html:253
 #: .\formulation\templates\formulation\formula_results.html:344
-#, fuzzy
-#| msgid "钙(Ca)"
 msgid "钙"
 msgstr "Calcium"
 
 #: .\formulation\templates\formulation\formula_results.html:254
 #: .\formulation\templates\formulation\formula_results.html:345
-#, fuzzy
-#| msgid "磷(P)"
 msgid "磷"
 msgstr "Phosphorus"
 
 #: .\formulation\templates\formulation\formula_results.html:255
 #: .\formulation\templates\formulation\formula_results.html:346
-#, fuzzy
-#| msgid "代谢能(ME)"
 msgid "代谢能"
-msgstr "Metabolic energy"
+msgstr "Metabolizable energy"
 
 #: .\formulation\templates\formulation\formula_results.html:256
 #: .\formulation\templates\formulation\formula_results.html:347
@@ -856,8 +797,6 @@ msgid "没有可用的结果"
 msgstr "No available results"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:4
-#, fuzzy
-#| msgid "首页 - 饲料配方系统"
 msgid "配方结果详情 - 饲料配方系统"
 msgstr "Home - Feed formulation system"
 
@@ -866,8 +805,6 @@ msgid "配方结果详情"
 msgstr "Formula results details"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:195
-#, fuzzy
-#| msgid "正在加载方案详情"
 msgid "正在加载数据..."
 msgstr "Loading scheme details"
 
@@ -915,48 +852,34 @@ msgstr ""
 "No optimization results available. Please run the genetic algorithm first."
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:293
-#, fuzzy
-#| msgid "干物质(DM)"
 msgid "干物质 (DM)"
 msgstr "Dry matter"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:297
-#, fuzzy
-#| msgid "钙(Ca)"
 msgid "钙 (Ca)"
 msgstr "Calcium"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:301
-#, fuzzy
-#| msgid "粗蛋白(CP)"
 msgid "粗蛋白 (CP)"
-msgstr "Carbohydrate protein"
+msgstr "Crude protein"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:305
 msgid "磷 (P)"
 msgstr "Phosphorus"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:309
-#, fuzzy
-#| msgid "中性洗涤纤维(NDF)"
 msgid "中性洗涤纤维 (NDF)"
 msgstr "Neutral detergent fiber"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:313
-#, fuzzy
-#| msgid "代谢能(ME)"
 msgid "代谢能 (ME)"
-msgstr "Metabolic energy"
+msgstr "Metabolizable energy"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:317
-#, fuzzy
-#| msgid "代谢蛋白(MP)"
 msgid "代谢蛋白 (MP)"
-msgstr "Metabolite protein"
+msgstr "Metabolizable protein"
 
 #: .\formulation\templates\formulation\formula_results_detailed.html:338
-#, fuzzy
-#| msgid "方案编号"
 msgid "方案"
 msgstr "Scheme number"
 
@@ -988,36 +911,14 @@ msgid "方案编号"
 msgstr "Scheme number"
 
 #: .\formulation\templates\formulation\formula_results_list.html:28
-#, fuzzy
-#| msgid "单价(元/kg)"
 msgid "总成本(元/吨)"
-msgstr "Unit price (per kg)"
-
-#: .\formulation\templates\formulation\formula_results_list.html:29
-#, fuzzy, python-format
-#| msgid "干物质(DM)"
-msgid "干物质(%%)"
-msgstr "Dry matter"
-
-#: .\formulation\templates\formulation\formula_results_list.html:30
-#, fuzzy, python-format
-#| msgid "中性洗涤纤维(NDF)"
-msgid "中性洗涤纤维(%%)"
-msgstr "Neutral detergent fiber"
-
-#: .\formulation\templates\formulation\formula_results_list.html:31
-#, fuzzy, python-format
-#| msgid "代谢蛋白(MP)"
-msgid "代谢蛋白(%%)"
-msgstr "Metabolite protein"
+msgstr "Unit price (per/kg)"
 
 #: .\formulation\templates\formulation\formula_results_list.html:53
 msgid "暂无优化结果"
 msgstr "No optimization results available"
 
 #: .\formulation\templates\formulation\formula_results_list.html:60
-#, fuzzy
-#| msgid "暂无优化结果"
 msgid "暂无配方优化结果。请先在"
 msgstr "No optimization results available"
 
@@ -1051,8 +952,6 @@ msgid "开始优化"
 msgstr "Start optimization"
 
 #: .\formulation\templates\formulation\ga_optimization_list.html:43
-#, fuzzy
-#| msgid "暂无动物营养需求数据"
 msgid "暂无动物营养需求配置。请先在"
 msgstr "No animal requirements data"
 
@@ -1075,9 +974,6 @@ msgstr "Nutritional element value cannot be negative"
 msgid "原料说明"
 msgstr "Feed ingredient description"
 
-#: .\ingredients\models.py:25
-msgid "单价(元/kg)"
-msgstr "Unit price (per kg)"
 
 #: .\ingredients\models.py:38 .\ingredients\models.py:39
 msgid "原料"
@@ -1104,10 +1000,8 @@ msgid "自定义原料营养成分"
 msgstr "Custom nutritional composition of the feed ingredient"
 
 #: .\ingredients\models.py:109
-#, fuzzy
-#| msgid "单价(元/kg)"
 msgid "单价(元/吨)"
-msgstr "Unit price (per kg)"
+msgstr "Unit price (per/Ton)"
 
 #: .\ingredients\models.py:133 .\ingredients\models.py:134
 msgid "原料待审核变更"
@@ -1152,10 +1046,8 @@ msgid "单价"
 msgstr "Unit price"
 
 #: .\ingredients\templates\ingredients\detail.html:18
-#, fuzzy
-#| msgid "单价(元/kg)"
 msgid "元/吨"
-msgstr "Unit price (per kg)"
+msgstr "per/Ton"
 
 #: .\ingredients\templates\ingredients\detail.html:20
 msgid "创建用户"
@@ -1174,8 +1066,6 @@ msgid "编辑饲料原料"
 msgstr "Edit feed ingredient"
 
 #: .\ingredients\templates\ingredients\edit.html:153
-#, fuzzy
-#| msgid "自定义营养元素"
 msgid "添加自定义营养元素"
 msgstr "Custom nutritional element"
 
@@ -1193,12 +1083,6 @@ msgstr "Feed ingredient management"
 msgid "添加原料"
 msgstr "Add feed ingredient"
 
-#: .\ingredients\templates\ingredients\list.html:19
-#, fuzzy
-#| msgid "单价(元/kg)"
-msgid "单价 (元/kg)"
-msgstr "Unit price (per kg)"
-
 #: .\ingredients\templates\ingredients\list.html:46
 msgid "该记录已提交审核，无法编辑"
 msgstr "This record has been submitted for review and cannot be edited."
@@ -1215,13 +1099,6 @@ msgstr "Welcome"
 #: .\ingredients\templates\ingredients\review.html:10
 msgid "审核饲料原料"
 msgstr "Review feed ingredient"
-
-#: .\ingredients\templates\ingredients\review.html:49
-#: .\ingredients\templates\ingredients\review.html:52
-#, fuzzy
-#| msgid "单价(元/kg)"
-msgid "元/kg"
-msgstr "Unit price (per kg)"
 
 #: .\ingredients\templates\ingredients\review.html:62
 msgid "固定营养成分"
@@ -1288,8 +1165,6 @@ msgid "确认密码"
 msgstr "Confirm password"
 
 #: .\users\templates\user\login.html:4
-#, fuzzy
-#| msgid "饲料配方系统"
 msgid "用户登录 - 饲料配方系统"
 msgstr "Feed formulation system"
 
@@ -1310,14 +1185,10 @@ msgid "立即注册"
 msgstr "Register now"
 
 #: .\users\templates\user\profile.html:4
-#, fuzzy
-#| msgid "首页 - 饲料配方系统"
 msgid "个人资料 - 饲料配方系统"
 msgstr "Home - Feed formulation system"
 
 #: .\users\templates\user\register.html:4
-#, fuzzy
-#| msgid "饲料配方系统"
 msgid "用户注册 - 饲料配方系统"
 msgstr "Feed formulation system"
 

@@ -259,31 +259,31 @@
             };
 
             let html = `
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>{% trans "营养元素" %}</th>
-                <th>{% trans "需求值" %}</th>
-            </tr>
-        </thead>
-        <tbody>
-`;
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{% trans "营养元素" %}</th>
+                    <th>{% trans "需求值" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
 
             // 添加基本信息
             html += `
-        <tr>
-            <td>${fieldConfig.animal_type.name}</td>
-            <td>${animalRequirement.animal_type}</td>
-        </tr>
-        <tr>
-            <td>${fieldConfig.body_weight.name}</td>
-            <td>${animalRequirement.body_weight} ${fieldConfig.body_weight.unit}</td>
-        </tr>
-        <tr>
-            <td>${fieldConfig.daily_gain.name}</td>
-            <td>${animalRequirement.daily_gain} ${fieldConfig.daily_gain.unit}</td>
-        </tr>
-`;
+            <tr>
+                <td>${fieldConfig.animal_type.name}</td>
+                <td>${animalRequirement.animal_type}</td>
+            </tr>
+            <tr>
+                <td>${fieldConfig.body_weight.name}</td>
+                <td>${animalRequirement.body_weight} ${fieldConfig.body_weight.unit}</td>
+            </tr>
+            <tr>
+                <td>${fieldConfig.daily_gain.name}</td>
+                <td>${animalRequirement.daily_gain} ${fieldConfig.daily_gain.unit}</td>
+            </tr>
+        `;
 
             // 添加营养需求
             Object.keys(fieldConfig).forEach(key => {
@@ -298,18 +298,17 @@
                 if (animalRequirement[lowerKey] !== undefined && animalRequirement[upperKey] !== undefined) {
                     const lowerValue = animalRequirement[lowerKey];
                     const upperValue = animalRequirement[upperKey];
-                    const displayValue = `${lowerValue} - ${upperValue} ${config.unit}`;
 
                     // 过滤掉上下界都为0的营养需求
                     if (!(lowerValue === 0 && upperValue === 0)) {
                         const displayValue = `${lowerValue} - ${upperValue} ${config.unit}`;
 
                         html += `
-            <tr>
-                <td>${config.name}</td>
-                <td>${displayValue}</td>
-            </tr>
-    `;
+                    <tr>
+                        <td>${config.name}</td>
+                        <td>${displayValue}</td>
+                    </tr>
+            `;
                     }
                 }
             });
@@ -321,19 +320,19 @@
                 if (!(nutrient.lower === 0 && nutrient.upper === 0)) {
                     const displayValue = `${nutrient.lower} - ${nutrient.upper} ${nutrient.unit}`;
                     html += `
-            <tr>
-                <td>${nutrient.name}</td>
-                <td>${displayValue}</td>
-            </tr>
-        `;
+                    <tr>
+                        <td>${nutrient.name}</td>
+                        <td>${displayValue}</td>
+                    </tr>
+                `;
                 }
                 });
             }
 
             html += `
-        </tbody>
-    </table>
-`;
+            </tbody>
+        </table>
+        `;
 
             document.getElementById('animalRequirementInfo').innerHTML = html;
         }
