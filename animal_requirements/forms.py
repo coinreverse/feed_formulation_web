@@ -10,7 +10,7 @@ class AnimalRequirementForm(forms.ModelForm):
     # 添加复选框字段
     include_dm = forms.BooleanField(required=False, label=_('干物质(%)'))
     include_calcium = forms.BooleanField(required=False, label=_('钙(%)'))
-    include_protein = forms.BooleanField(required=False, label=_('蛋白(%)'))
+    include_protein = forms.BooleanField(required=False, label=_('粗蛋白(%)'))
     include_phosphorus = forms.BooleanField(required=False, label=_('磷(%)'))
     include_ndf = forms.BooleanField(required=False, label=_('中性洗涤纤维(%)'))
     include_energy = forms.BooleanField(required=False, label=_('代谢能(kcal/kg)'))

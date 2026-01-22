@@ -45,13 +45,13 @@ class IngredientNutrientForm(forms.ModelForm):
     原料营养成分表单
     """
     # 添加复选框字段
-    include_dm = forms.BooleanField(required=False, label=_('干物质(DM)(%)'))
-    include_calcium = forms.BooleanField(required=False, label=_('钙(Ca)(%)'))
-    include_protein = forms.BooleanField(required=False, label=_('粗蛋白(CP)(%)'))
-    include_phosphorus = forms.BooleanField(required=False, label=_('磷(P)(%)'))
-    include_ndf = forms.BooleanField(required=False, label=_('中性洗涤纤维(NDF)(%)'))
-    include_me = forms.BooleanField(required=False, label=_('代谢能(ME)(%)'))
-    include_mp = forms.BooleanField(required=False, label=_('代谢蛋白(MP)(%)'))
+    include_dm = forms.BooleanField(required=False, label=_('干物质(%)'))
+    include_calcium = forms.BooleanField(required=False, label=_('钙(%)'))
+    include_protein = forms.BooleanField(required=False, label=_('粗蛋白(%)'))
+    include_phosphorus = forms.BooleanField(required=False, label=_('磷(%)'))
+    include_ndf = forms.BooleanField(required=False, label=_('中性洗涤纤维(%)'))
+    include_me = forms.BooleanField(required=False, label=_('代谢能(kcal/kg)'))
+    include_mp = forms.BooleanField(required=False, label=_('代谢蛋白(%)'))
 
     # 将所有营养成分字段设置为非必填
     dm = forms.DecimalField(required=False, max_digits=6, decimal_places=2, label='')

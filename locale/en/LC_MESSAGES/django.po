@@ -1208,23 +1208,31 @@ msgstr "Already have an account?"
 msgid "立即登录"
 msgstr "Login now"
 
-#~ msgid "获取营养素名称"
-#~ msgstr "Get nutrient names"
+# 动物营养需求表单 - 营养指标复选框标签
+#: .\animal_requirements\forms.py:11
+msgid "干物质(%)"
+msgstr "Dry matter (%)"
 
-#~ msgid "获取原料名称"
-#~ msgstr "Get raw material names"
+#: .\animal_requirements\forms.py:12
+msgid "钙(%)"
+msgstr "Calcium (%)"
 
-#~ msgid "执行混合采样的内部方法"
-#~ msgstr "Internal method for mixed sampling"
+#: .\animal_requirements\forms.py:13
+msgid "粗蛋白(%)"
+msgstr "Crude Protein (%)"
 
-#~ msgid "更新历史最优解集"
-#~ msgstr "Update historical best solution set"
+#: .\animal_requirements\forms.py:14
+msgid "磷(%)"
+msgstr "Phosphorus (%)"
 
-#~ msgid "加载所有配置文件"
-#~ msgstr "Load all configuration files"
+#: .\animal_requirements\forms.py:15
+msgid "中性洗涤纤维(%)"
+msgstr "Neutral detergent fiber (%)"
 
-#~ msgid "保存优化结果"
-#~ msgstr "Save optimization results"
+#: .\animal_requirements\forms.py:16
+msgid "代谢能(kcal/kg)"
+msgstr "Metabolizable energy (kcal/kg)"
 
-#~ msgid "无"
-#~ msgstr "None"
+#: .\animal_requirements\forms.py:17
+msgid "代谢蛋白(%)"
+msgstr "Metabolizable protein (%)"
